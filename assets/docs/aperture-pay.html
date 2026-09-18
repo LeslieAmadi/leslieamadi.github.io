@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aperture Pay — Payments API</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<!-- include your global <nav class="navbar"> here -->
+<main class="doc-shell">
+  <div class="doc-content">
+    <div class="doc-crumbs"><a href="portfolio.html">Portfolio</a><span class="sep">&rsaquo;</span>Developer Experience &amp; API<span class="sep">&rsaquo;</span>Aperture Pay API</div>
+    <div class="doc-hero"><span class="doc-hero-eyebrow">API Reference · Payments · Wallet Orchestration</span><h1>Aperture Pay <span>Payments API</span></h1><p class="doc-hero-desc">A REST API for charging, reversing, and reconciling payments against customer wallets with HMAC-signed requests, idempotent capture, and asynchronous settlement webhooks — from first signed call to edge-case recovery.</p><div class="doc-hero-tags"><span class="doc-hero-tag">HMAC-SHA256 signing</span><span class="doc-hero-tag">Idempotency keys</span><span class="doc-hero-tag">Charges &amp; reversals</span><span class="doc-hero-tag">Settlement webhooks</span><span class="doc-hero-tag">Delivery recovery</span></div></div>
+    <div class="doc-control"><table class="doc-ctrl-table"><tbody><tr><td class="doc-ctrl-label">Discipline</td><td>API Documentation · Developer Experience · Payments</td></tr><tr><td class="doc-ctrl-label">Base URL</td><td><code>api.aperturepay.dev/v1</code></td></tr><tr><td class="doc-ctrl-label">Auth</td><td>HMAC-SHA256 signed requests</td></tr><tr><td class="doc-ctrl-label">Media type</td><td><code>application/json</code></td></tr><tr><td class="doc-ctrl-label">My role</td><td>Senior Technical Writer — information architecture, field tables, runnable examples</td></tr><tr><td class="doc-ctrl-label">Doc type</td><td>API reference &amp; integration guide</td></tr></tbody></table></div>
+    <div class="doc-layout">
+      <div class="doc-main">
+        <section class="doc-section" id="overview"><div class="doc-section-heading"><h2>Overview</h2></div><p>Aperture Pay sits between your checkout and a customer&rsquo;s funded wallet. Your server <strong>charges</strong> a wallet synchronously and receives an authoritative balance in the response. Final settlement &mdash; clearing funds and applying any incentives &mdash; happens asynchronously, and Aperture notifies your server through a signed <strong>webhook</strong>.</p><ul class="doc-list"><li><strong>Requests you send to Aperture</strong> &mdash; charges, reversals, reads. You sign these with your secret.</li><li><strong>Webhooks Aperture sends you</strong> &mdash; settlement and reversal outcomes. Aperture signs these; you verify them.</li></ul><h3>Charge lifecycle</h3><div class="doc-code"><div class="doc-code-bar"><span class="doc-code-lang">flow</span></div><pre>customer checkout
+      │
+      ▼
+[1] POST /charges ────►  authorize against the wallet → 201 + balance
+      │
+[2] show result to the customer (succeeded / declined)
+      │
+[3] charge.settled  ◄──  Aperture webhook (async, signed) → funds cleared
+      │
+[4] reconcile in your ledger</pre></div><div class="doc-callout blue"><strong>Note</strong><p>A charge that returns <code>201</code> is committed against the wallet immediately. The settlement webhook confirms clearing and carries the final figures &mdash; it does not re-authorize the charge.</p></div></section>
+<section class="doc-section" id="auth"><div class="doc-section-heading"><h2>Authenticating requests</h2></div><p>Every request carries three headers. The signature is an HMAC-SHA256 of a canonical string built from the request, keyed by your API secret and base64-encoded.</p><table class="doc-table"><thead><tr><th>Header</th><th>Description</th></tr></thead><tbody><tr><td><code>Aperture-Key</code></td><td>Publishable key id, e.g. <code>apk_live_8Qz…</code>. Identifies the signing secret.</td></tr><tr><td><code>Aperture-Timestamp</code></td><td>Unix seconds at signing. Skew greater than &plusmn;300s is rejected.</td></tr><tr><td><code>Aperture-Signature</code></td><td>Version-prefixed signature, e.g. <code>v1=&amp;lt;base64&amp;gt;</code>.</td></tr></tbody></table><h3>The canonical string</h3><p>Concatenate four fields with a single newline between each, in order. The body hash is the lowercase hex SHA-256 of the raw body; for empty bodies, hash the empty string.</p><div class="doc-code"><div class="doc-code-bar"><span class="doc-code-lang">text</span></div><pre>canonical =  METHOD            # POST
+          + "\n" + PATH       # /v1/charges
+          + "\n" + BODY_SHA256 # hex sha256 of raw body
+          + "\n" + TIMESTAMP   # matches Aperture-Timestamp
+
+signature = base64( HMAC_SHA256( api_secret, canonical ) )
+header    = "v1=" + signature</pre></div><div class="doc-callout amber"><strong>Watch out</strong><p>Sign the <strong>raw bytes</strong> you transmit. Re-serializing the JSON after signing changes the body hash and yields <code>401 signature_mismatch</code>.</p></div><h3>Verifying inbound webhooks</h3><p>Inbound webhooks use the same construction, signed with your secret, in the <code>Aperture-Webhook-Signature</code> header. Rebuild the canonical string from the received request and compare with a constant-time check; reject anything outside the timestamp window.</p></section>
+<section class="doc-section" id="idempotency"><div class="doc-section-heading"><h2>Idempotency</h2></div><p>Network failures make it impossible to know whether a charge committed. An <strong>idempotency key</strong> lets you retry safely &mdash; Aperture performs the operation at most once.</p><table class="doc-table"><thead><tr><th>Field</th><th>Type</th><th></th><th>Description</th></tr></thead><tbody><tr><td><code>Idempotency-Key</code></td><td>string</td><td><span class="doc-req">required</span></td><td>Unique per logical operation &mdash; a UUID is ideal. Reusing a key replays the original outcome.</td></tr></tbody></table><ul class="doc-list"><li>The <strong>first</strong> request with a key executes and the result is stored for <strong>24 hours</strong>.</li><li>A <strong>replay</strong> returns the original status and body plus <code>Aperture-Idempotent-Replay: true</code> &mdash; even if the original failed.</li><li>Reusing a key with a <strong>different body</strong> returns <code>409 idempotency_conflict</code>.</li></ul></section>
+<section class="doc-section" id="charges"><div class="doc-section-heading"><h2>Charges</h2></div><h3>Create a charge</h3><p>Debits a customer wallet and returns the post-charge balance. Committed on a <code>201</code> response.</p><div class="doc-endpoint"><span class="doc-verb post">POST</span><code>/v1/charges</code></div><table class="doc-table"><thead><tr><th>Field</th><th>Type</th><th></th><th>Description</th></tr></thead><tbody><tr><td><code>wallet_id</code></td><td>string</td><td><span class="doc-req">required</span></td><td>Wallet to debit.</td></tr><tr><td><code>amount</code></td><td>integer</td><td><span class="doc-req">required</span></td><td>Minor units, e.g. <code>2500</code> = &euro;25.00.</td></tr><tr><td><code>currency</code></td><td>string</td><td><span class="doc-req">required</span></td><td>ISO 4217, lowercase, e.g. <code>eur</code>.</td></tr><tr><td><code>reference</code></td><td>string</td><td><span class="doc-req">required</span></td><td>Your order reference. Max 80 chars.</td></tr><tr><td><code>capture</code></td><td>boolean</td><td><span class="doc-opt">optional</span></td><td><code>true</code> (default) settles now; <code>false</code> authorizes only.</td></tr><tr><td><code>metadata</code></td><td>object</td><td><span class="doc-opt">optional</span></td><td>Up to 20 string pairs, echoed on related objects and webhooks.</td></tr></tbody></table><div class="doc-tabs"><div class="doc-tab-row"><button class="doc-tab is-active" data-tab="apch-0">Request</button><button class="doc-tab" data-tab="apch-1">201 Created</button><button class="doc-tab" data-tab="apch-2">402 Declined</button></div><div class="doc-tab-panel is-active" id="apch-0"><div class="doc-code"><div class="doc-code-bar"><span class="doc-code-lang">http</span></div><pre>POST /v1/charges HTTP/1.1
+Host: api.aperturepay.dev
+Aperture-Key: apk_live_8QzR2pV0
+Aperture-Timestamp: 1733930415
+Aperture-Signature: v1=b3JpZ2luYWwtc2ln…K9xQ==
+Idempotency-Key: 1c5d9f7a-2e64-4f0b-9a1c-77b0e2a4d318
+Content-Type: application/json
+
+{
+  "wallet_id": "wlt_3Tg7Kp",
+  "amount": 2500,
+  "currency": "eur",
+  "reference": "order_A1043",
+  "capture": true
+}</pre></div></div><div class="doc-tab-panel" id="apch-1"><div class="doc-code"><div class="doc-code-bar"><span class="doc-code-lang">json</span></div><pre>{
+  "id": "chg_7H2nQ4xL",
+  "status": "succeeded",
+  "amount": 2500,
+  "currency": "eur",
+  "balance_after": 14250,
+  "settlement": "pending",
+  "created_at": "2025-12-11T14:00:15Z"
+}</pre></div></div><div class="doc-tab-panel" id="apch-2"><div class="doc-code"><div class="doc-code-bar"><span class="doc-code-lang">json</span></div><pre>{
+  "error": {
+    "type": "card_error",
+    "code": "insufficient_funds",
+    "message": "The wallet balance is lower than the charge amount.",
+    "param": "amount"
+  }
+}</pre></div></div></div><div class="doc-callout blue"><strong>Note</strong><p><code>status</code> reports the authorization result; <code>settlement</code> moves from <code>pending</code> to <code>cleared</code> asynchronously, confirmed by <code>charge.settled</code>.</p></div><h3>Retrieve a charge</h3><div class="doc-endpoint"><span class="doc-verb get">GET</span><code>/v1/charges/{charge_id}</code></div></section>
+<section class="doc-section" id="reversals"><div class="doc-section-heading"><h2>Reversals</h2></div><p>A reversal returns funds to the wallet and unwinds a charge &mdash; refunds, cancellations, or recovery from a failure on your side after a charge committed. Reversals are idempotent and may be partial.</p><div class="doc-endpoint"><span class="doc-verb post">POST</span><code>/v1/charges/{charge_id}/reversals</code></div><table class="doc-table"><thead><tr><th>Field</th><th>Type</th><th></th><th>Description</th></tr></thead><tbody><tr><td><code>amount</code></td><td>integer</td><td><span class="doc-opt">optional</span></td><td>Minor units to return. Omit to reverse the full remaining amount.</td></tr><tr><td><code>reason</code></td><td>string</td><td><span class="doc-opt">optional</span></td><td>One of <code>requested_by_customer</code>, <code>duplicate</code>, <code>fraud</code>, <code>operator_recovery</code>.</td></tr></tbody></table><div class="doc-callout amber"><strong>Watch out</strong><p>Reversing a charge whose cashback already settled also claws back the cashback. The net movement is reported in <code>balance_after</code> and in <code>reversal.completed</code>.</p></div></section>
+<section class="doc-section" id="webhooks"><div class="doc-section-heading"><h2>Settlement webhooks</h2></div><p>Aperture delivers events to your registered endpoint via signed <code>POST</code>. Return a <code>2xx</code> within <strong>8 seconds</strong>; anything else is a delivery failure and is retried.</p><table class="doc-table"><thead><tr><th>Event</th><th>When it fires</th></tr></thead><tbody><tr><td><code>charge.settled</code></td><td>Funds cleared. Carries final amounts and any applied cashback.</td></tr><tr><td><code>charge.failed</code></td><td>A previously-succeeded charge could not clear. Reverse downstream effects.</td></tr><tr><td><code>reversal.completed</code></td><td>A reversal finished clearing.</td></tr><tr><td><code>cashback.granted</code></td><td>A campaign credited cashback for one of your charges.</td></tr></tbody></table><div class="doc-code"><div class="doc-code-bar"><span class="doc-code-lang">http</span></div><pre>POST /your/webhook HTTP/1.1
+Aperture-Webhook-Signature: v1=ZXZlbnQtc2ln…Qb8=
+Aperture-Timestamp: 1733931120
+Content-Type: application/json
+
+{
+  "id": "evt_5RcD8mK2",
+  "type": "charge.settled",
+  "data": {
+    "charge_id": "chg_7H2nQ4xL",
+    "amount": 2500,
+    "cashback": { "campaign_id": "cmp_Wq1", "amount": 125 }
+  }
+}</pre></div><div class="doc-callout blue"><strong>Note</strong><p>Webhooks are <strong>at-least-once</strong>. Deduplicate on <code>event.id</code> and keep handlers idempotent &mdash; a settled charge may be delivered more than once.</p></div></section>
+<section class="doc-section" id="recovery"><div class="doc-section-heading"><h2>Delivery &amp;amp; recovery</h2></div><p>If your endpoint fails to acknowledge an event, Aperture retries on an exponential back-off. Each attempt re-signs with a fresh timestamp; the <code>event.id</code> is stable across attempts.</p><table class="doc-table"><thead><tr><th>Attempt</th><th>Delay after previous</th><th>Cumulative</th></tr></thead><tbody><tr><td>1</td><td>immediate</td><td>0s</td></tr><tr><td>2</td><td>30s</td><td>30s</td></tr><tr><td>3</td><td>2m</td><td>~2m</td></tr><tr><td>4</td><td>10m</td><td>~12m</td></tr><tr><td>5</td><td>1h</td><td>~1h</td></tr><tr><td>6</td><td>6h</td><td>~7h</td></tr><tr><td>7 (final)</td><td>24h</td><td>~31h</td></tr></tbody></table><p>After the final attempt the event is marked <code>undelivered</code>. List and replay missed events:</p><div class="doc-endpoint"><span class="doc-verb get">GET</span><code>/v1/events?status=undelivered</code></div><div class="doc-endpoint"><span class="doc-verb post">POST</span><code>/v1/events/{event_id}/redeliver</code></div><div class="doc-callout red"><strong>Important</strong><p>Do not gate checkout on the settlement webhook. The synchronous <code>201</code> from <code>POST /charges</code> is the source of truth for fulfilment; webhooks reconcile afterward.</p></div></section>
+<section class="doc-section" id="campaigns"><div class="doc-section-heading"><h2>Cashback campaigns</h2></div><p>A campaign returns a percentage of qualifying charges to the wallet as cashback. Aperture evaluates campaigns automatically at settlement &mdash; you don&rsquo;t compute incentives yourself.</p><div class="doc-endpoint"><span class="doc-verb post">POST</span><code>/v1/campaigns</code></div><table class="doc-table"><thead><tr><th>Field</th><th>Type</th><th></th><th>Description</th></tr></thead><tbody><tr><td><code>rate_bps</code></td><td>integer</td><td><span class="doc-req">required</span></td><td>Cashback rate in basis points &mdash; <code>500</code> = 5%.</td></tr><tr><td><code>max_cashback</code></td><td>integer</td><td><span class="doc-opt">optional</span></td><td>Per-charge cap in minor units.</td></tr><tr><td><code>starts_at</code></td><td>string</td><td><span class="doc-req">required</span></td><td>ISO-8601 start.</td></tr><tr><td><code>ends_at</code></td><td>string</td><td><span class="doc-req">required</span></td><td>ISO-8601 end.</td></tr><tr><td><code>eligible_references</code></td><td>array</td><td><span class="doc-opt">optional</span></td><td>Only charges whose <code>reference</code> has one of these prefixes qualify.</td></tr></tbody></table><p>On settlement, the <code>charge.settled</code> webhook includes a <code>cashback</code> object and a <code>cashback.granted</code> event fires. Cashback is clawed back automatically if the charge is later reversed.</p></section>
+<section class="doc-section" id="errors"><div class="doc-section-heading"><h2>Error reference</h2></div><p>Errors return a non-<code>2xx</code> status and a structured body. <code>code</code> is stable and safe to branch on.</p><table class="doc-table"><thead><tr><th>HTTP</th><th>code</th><th>Meaning</th></tr></thead><tbody><tr><td>400</td><td><code>missing_parameter</code></td><td>A required field is absent.</td></tr><tr><td>401</td><td><code>signature_mismatch</code></td><td>Signature did not match the canonical string.</td></tr><tr><td>401</td><td><code>timestamp_out_of_range</code></td><td>Timestamp skew exceeded &plusmn;300s.</td></tr><tr><td>402</td><td><code>insufficient_funds</code></td><td>Wallet balance below charge amount.</td></tr><tr><td>404</td><td><code>resource_missing</code></td><td>No object with that id.</td></tr><tr><td>409</td><td><code>idempotency_conflict</code></td><td>Key reused with a different body.</td></tr><tr><td>429</td><td><code>too_many_requests</code></td><td>Slow down; honour <code>Retry-After</code>.</td></tr><tr><td>500</td><td><code>internal_error</code></td><td>Transient fault &mdash; safe to retry with the same idempotency key.</td></tr></tbody></table></section>
+      </div>
+      <aside class="doc-sidebar">
+        <div class="doc-toc-card">
+          <div class="doc-toc-title">On this page</div>
+          <nav class="doc-toc"><a class="toc-link" href="#overview"><span class="doc-toc-dot"></span>Overview</a><a class="toc-link" href="#auth"><span class="doc-toc-dot"></span>Authentication</a><a class="toc-link" href="#idempotency"><span class="doc-toc-dot"></span>Idempotency</a><a class="toc-link" href="#charges"><span class="doc-toc-dot"></span>Charges</a><a class="toc-link" href="#reversals"><span class="doc-toc-dot"></span>Reversals</a><a class="toc-link" href="#webhooks"><span class="doc-toc-dot"></span>Settlement webhooks</a><a class="toc-link" href="#recovery"><span class="doc-toc-dot"></span>Delivery &amp; recovery</a><a class="toc-link" href="#campaigns"><span class="doc-toc-dot"></span>Cashback campaigns</a><a class="toc-link" href="#errors"><span class="doc-toc-dot"></span>Error reference</a></nav>
+        </div>
+        <div class="doc-quick-ref">
+          <div class="doc-quick-ref-title">Quick reference</div>
+          <div class="doc-quick-ref-row"><strong>Base URL</strong><code>api.aperturepay.dev/v1</code></div><div class="doc-quick-ref-row"><strong>Auth</strong>HMAC-SHA256</div><div class="doc-quick-ref-row"><strong>Media type</strong><code>application/json</code></div><div class="doc-quick-ref-row"><strong>Idempotency</strong><code>Idempotency-Key</code></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</main>
+<script src="doc.js"></script>
+</body></html>

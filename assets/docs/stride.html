@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Stride — Platform API</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<!-- include your global <nav class="navbar"> here -->
+<main class="doc-shell">
+  <div class="doc-content">
+    <div class="doc-crumbs"><a href="portfolio.html">Portfolio</a><span class="sep">&rsaquo;</span>Developer Experience &amp; API<span class="sep">&rsaquo;</span>Stride API</div>
+    <div class="doc-hero"><span class="doc-hero-eyebrow">API Reference · B2B SaaS · Workflow &amp; Events</span><h1>Stride <span>Platform API</span></h1><p class="doc-hero-desc">A workflow automation API: trigger runs over REST with bearer auth, and receive signed, at-least-once event webhooks as those runs progress — documented so retries and duplicates never corrupt a consumer’s data.</p><div class="doc-hero-tags"><span class="doc-hero-tag">Bearer auth</span><span class="doc-hero-tag">Webhook signing</span><span class="doc-hero-tag">At-least-once delivery</span><span class="doc-hero-tag">Idempotent consumers</span><span class="doc-hero-tag">Usage credits</span></div></div>
+    <div class="doc-control"><table class="doc-ctrl-table"><tbody><tr><td class="doc-ctrl-label">Discipline</td><td>API Documentation · Developer Experience · B2B SaaS</td></tr><tr><td class="doc-ctrl-label">Base URL</td><td><code>api.stride.dev/v2</code></td></tr><tr><td class="doc-ctrl-label">Auth</td><td>Bearer tokens + signed webhooks</td></tr><tr><td class="doc-ctrl-label">Media type</td><td><code>application/json</code></td></tr><tr><td class="doc-ctrl-label">My role</td><td>Senior Technical Writer — event-delivery semantics, idempotency guidance</td></tr><tr><td class="doc-ctrl-label">Doc type</td><td>API reference &amp; integration guide</td></tr></tbody></table></div>
+    <div class="doc-layout">
+      <div class="doc-main">
+        <section class="doc-section" id="overview"><div class="doc-section-heading"><h2>Overview</h2></div><p>Stride runs automation workflows on your behalf. You start a <strong>run</strong> with a REST call; Stride executes it asynchronously and reports progress through signed <strong>events</strong> delivered to your webhook.</p><table class="doc-table"><thead><tr><th>Channel</th><th>Direction</th><th>Auth</th></tr></thead><tbody><tr><td>REST API</td><td>You → Stride</td><td>Bearer token in <code>Authorization</code>.</td></tr><tr><td>Webhooks</td><td>Stride → You</td><td>Signed payloads you verify with a per-endpoint secret.</td></tr></tbody></table><div class="doc-code"><div class="doc-code-bar"><span class="doc-code-lang">flow</span></div><pre>queued ─► running ─► succeeded
+               └─► failed ─► (optional) retried ─► running …</pre></div><p>Each transition emits an event: <code>run.started</code>, <code>run.step.completed</code>, <code>run.succeeded</code>, <code>run.failed</code>.</p></section>
+<section class="doc-section" id="auth"><div class="doc-section-heading"><h2>API authentication</h2></div><p>Authenticate REST calls with a secret API token as a bearer credential, scoped to a workspace and environment.</p><div class="doc-code"><div class="doc-code-bar"><span class="doc-code-lang">http</span></div><pre>GET /v2/runs/run_8Kd2 HTTP/1.1
+Host: api.stride.dev
+Authorization: Bearer sk_live_3pQ9…vT</pre></div><div class="doc-callout red"><strong>Important</strong><p>Treat <code>sk_live_</code> tokens as passwords &mdash; never ship them to a browser or mobile client. For front-end use, mint short-lived scoped tokens server-side via <code>POST /v2/tokens</code>.</p></div></section>
+<section class="doc-section" id="idempotency"><div class="doc-section-heading"><h2>Idempotent writes</h2></div><p>Any request that starts a run accepts an <code>Idempotency-Key</code> so a retried POST never starts the same run twice.</p><ul class="doc-list"><li>First request with a key runs; its response is cached for <strong>24 hours</strong>.</li><li>A repeat with the same key replays the cached response with <code>Stride-Idempotent-Replay: true</code>.</li><li>Same key, different body &rarr; <code>409 idempotency_conflict</code>.</li></ul></section>
+<section class="doc-section" id="runs"><div class="doc-section-heading"><h2>Starting a run</h2></div><div class="doc-endpoint"><span class="doc-verb post">POST</span><code>/v2/runs</code></div><table class="doc-table"><thead><tr><th>Field</th><th>Type</th><th></th><th>Description</th></tr></thead><tbody><tr><td><code>workflow_id</code></td><td>string</td><td><span class="doc-req">required</span></td><td>Workflow to execute, e.g. <code>wf_invoice_sync</code>.</td></tr><tr><td><code>input</code></td><td>object</td><td><span class="doc-req">required</span></td><td>Arbitrary JSON passed to the first step.</td></tr><tr><td><code>callback_url</code></td><td>string</td><td><span class="doc-opt">optional</span></td><td>Override the workspace default webhook endpoint for this run.</td></tr><tr><td><code>metadata</code></td><td>object</td><td><span class="doc-opt">optional</span></td><td>Up to 20 string pairs echoed on the run and its events.</td></tr></tbody></table><div class="doc-tabs"><div class="doc-tab-row"><button class="doc-tab is-active" data-tab="strn-0">Request</button><button class="doc-tab" data-tab="strn-1">202 Accepted</button></div><div class="doc-tab-panel is-active" id="strn-0"><div class="doc-code"><div class="doc-code-bar"><span class="doc-code-lang">http</span></div><pre>POST /v2/runs HTTP/1.1
+Host: api.stride.dev
+Authorization: Bearer sk_live_3pQ9…vT
+Idempotency-Key: 7b1f0a4c-9d2e-4a11-8c33-0f6e1d2a9b50
+Content-Type: application/json
+
+{
+  "workflow_id": "wf_invoice_sync",
+  "input": { "invoice_id": "inv_5521" }
+}</pre></div></div><div class="doc-tab-panel" id="strn-1"><div class="doc-code"><div class="doc-code-bar"><span class="doc-code-lang">json</span></div><pre>{
+  "id": "run_8Kd2",
+  "status": "queued",
+  "workflow_id": "wf_invoice_sync",
+  "created_at": "2025-12-11T14:00:15Z"
+}</pre></div></div></div><h3>Retrieve a run</h3><div class="doc-endpoint"><span class="doc-verb get">GET</span><code>/v2/runs/{run_id}</code></div><p>Polling is supported but secondary &mdash; webhooks are the intended way to learn about completion.</p></section>
+<section class="doc-section" id="webhooks"><div class="doc-section-heading"><h2>Webhooks</h2></div><p>Stride POSTs events as they happen. Your endpoint must be public HTTPS and return any <code>2xx</code> within <strong>10 seconds</strong>; the body is ignored.</p><div class="doc-code"><div class="doc-code-bar"><span class="doc-code-lang">http</span></div><pre>POST /your/webhook HTTP/1.1
+Stride-Signature: t=1733930535,v1=4f8c2a…e90b
+Content-Type: application/json
+
+{
+  "id": "evt_2Qa7",
+  "type": "run.succeeded",
+  "data": { "run_id": "run_8Kd2", "output": { "synced": 14 } }
+}</pre></div><h3>Verifying the signature</h3><p>Build the signed payload as <code>t</code>, a literal dot, and the <strong>raw body</strong>. HMAC-SHA256 it with the endpoint secret and compare in constant time.</p><div class="doc-code"><div class="doc-code-bar"><span class="doc-code-lang">text</span></div><pre>signed_payload = t + "." + raw_body
+expected       = hex( HMAC_SHA256( signing_secret, signed_payload ) )
+# accept if expected == v1  AND  now - t &lt;= 300 seconds</pre></div><div class="doc-callout amber"><strong>Watch out</strong><p>Verify against the <strong>raw bytes</strong> before any JSON parsing. Frameworks that hand you a re-serialized object produce a different hash and fail verification.</p></div></section>
+<section class="doc-section" id="delivery"><div class="doc-section-heading"><h2>Delivery &amp;amp; retries</h2></div><p>Stride guarantees <strong>at-least-once</strong> delivery. Duplicates and out-of-order events are possible.</p><ul class="doc-list"><li><strong>Deduplicate</strong> on <code>event.id</code>.</li><li><strong>Order by</strong> <code>created_at</code> and run state, not arrival time.</li><li><strong>Make handlers idempotent</strong> &mdash; applying an event twice equals applying it once.</li></ul><table class="doc-table"><thead><tr><th>Attempt</th><th>Delay (&plusmn;jitter)</th><th>Cumulative</th></tr></thead><tbody><tr><td>1</td><td>immediate</td><td>0s</td></tr><tr><td>2</td><td>1m</td><td>~1m</td></tr><tr><td>3</td><td>5m</td><td>~6m</td></tr><tr><td>4</td><td>30m</td><td>~36m</td></tr><tr><td>5</td><td>2h</td><td>~3h</td></tr><tr><td>6 (final)</td><td>12h</td><td>~15h</td></tr></tbody></table><div class="doc-endpoint"><span class="doc-verb get">GET</span><code>/v2/events?delivery=failed&amp;since=2025-12-11T00:00:00Z</code></div><div class="doc-endpoint"><span class="doc-verb post">POST</span><code>/v2/events/{event_id}/redeliver</code></div><div class="doc-callout blue"><strong>Note</strong><p>Failed events are retained for <strong>30 days</strong> for replay.</p></div></section>
+<section class="doc-section" id="credits"><div class="doc-section-heading"><h2>Usage &amp;amp; credits</h2></div><p>Runs consume credits from the workspace balance. Read it to surface usage or gate work before starting it.</p><div class="doc-endpoint"><span class="doc-verb get">GET</span><code>/v2/usage/credits</code></div><div class="doc-code"><div class="doc-code-bar"><span class="doc-code-lang">json</span></div><pre>{
+  "balance": 8420,
+  "included_monthly": 10000,
+  "resets_at": "2026-01-01T00:00:00Z",
+  "low_balance_threshold": 500
+}</pre></div><p>Crossing <code>low_balance_threshold</code> emits a <code>credits.low</code> event so you can prompt an upgrade before runs start failing with <code>402 insufficient_credits</code>.</p></section>
+<section class="doc-section" id="errors"><div class="doc-section-heading"><h2>Error reference</h2></div><table class="doc-table"><thead><tr><th>HTTP</th><th>code</th><th>Meaning</th></tr></thead><tbody><tr><td>400</td><td><code>validation_failed</code></td><td>A field is missing or malformed; see <code>field</code>.</td></tr><tr><td>401</td><td><code>invalid_token</code></td><td>Missing, expired, or revoked bearer token.</td></tr><tr><td>402</td><td><code>insufficient_credits</code></td><td>Credit balance too low to start the run.</td></tr><tr><td>403</td><td><code>scope_forbidden</code></td><td>Token lacks the scope for this resource.</td></tr><tr><td>409</td><td><code>idempotency_conflict</code></td><td>Key reused with a different body.</td></tr><tr><td>429</td><td><code>rate_limited</code></td><td>Too many requests; honour <code>Retry-After</code>.</td></tr><tr><td>500</td><td><code>internal_error</code></td><td>Transient fault &mdash; retry with the same idempotency key.</td></tr></tbody></table></section>
+      </div>
+      <aside class="doc-sidebar">
+        <div class="doc-toc-card">
+          <div class="doc-toc-title">On this page</div>
+          <nav class="doc-toc"><a class="toc-link" href="#overview"><span class="doc-toc-dot"></span>Overview</a><a class="toc-link" href="#auth"><span class="doc-toc-dot"></span>API authentication</a><a class="toc-link" href="#idempotency"><span class="doc-toc-dot"></span>Idempotent writes</a><a class="toc-link" href="#runs"><span class="doc-toc-dot"></span>Starting a run</a><a class="toc-link" href="#webhooks"><span class="doc-toc-dot"></span>Webhooks</a><a class="toc-link" href="#delivery"><span class="doc-toc-dot"></span>Delivery &amp; retries</a><a class="toc-link" href="#credits"><span class="doc-toc-dot"></span>Usage &amp; credits</a><a class="toc-link" href="#errors"><span class="doc-toc-dot"></span>Error reference</a></nav>
+        </div>
+        <div class="doc-quick-ref">
+          <div class="doc-quick-ref-title">Quick reference</div>
+          <div class="doc-quick-ref-row"><strong>Base URL</strong><code>api.stride.dev/v2</code></div><div class="doc-quick-ref-row"><strong>Auth</strong>Bearer + webhook signing</div><div class="doc-quick-ref-row"><strong>Media type</strong><code>application/json</code></div><div class="doc-quick-ref-row"><strong>Delivery</strong>at-least-once</div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</main>
+<script src="doc.js"></script>
+</body></html>

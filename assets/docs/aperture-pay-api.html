@@ -7,8 +7,9 @@
   <meta name="description" content="Senior Technical Writer portfolio: a payments/wallet API reference for Aperture Pay HMAC-SHA256 request signing, idempotent charges, reversals, signed settlement webhooks, delivery recovery, and a full error reference."/>
   <meta property="og:title" content="Aperture Pay Payments API Reference | Leslie Amadi"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:image" content="https://leslieamadi.github.io/lesliewrites.tech/assets/images/profile-image.png"/>
+  <meta property="og:image" content="https://leslieamadi.github.io/assets/images/profile-image.png"/>
   <link rel="stylesheet" href="../../assets/css/styles.css"/>
+  <script src="doc.js"></script>
 </head>
 <body>
 <div class="page-shell">
@@ -527,26 +528,10 @@ Content-Type: application/json
   </div>
 
   <footer>
-    <p>&copy; 2025 Leslie Amadi &middot; <a href="mailto:leslie">hello@lesliewrites.tech</a></p>
+    <p>&copy; 2025 Leslie Amadi &middot; <a href="mailto:lesliewrites.amadi@gmail.com">lesliewrites.amadi@gmail.com</a></p>
   </footer>
 
 </div>
-<script>
-  const toggle = document.querySelector('.nav-toggle');
-  const menu   = document.querySelector('.nav-menu');
-  if (toggle) toggle.addEventListener('click', () => menu.classList.toggle('open'));
 
-  const links = document.querySelectorAll('.ap-toc a');
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        links.forEach(l => l.classList.remove('toc-active'));
-        const active = document.querySelector('.ap-toc a[href="#' + e.target.id + '"]');
-        if (active) active.classList.add('toc-active');
-      }
-    });
-  }, { rootMargin: '-10% 0px -80% 0px' });
-  document.querySelectorAll('.ap-section[id]').forEach(s => obs.observe(s));
-</script>
 </body>
 </html>
