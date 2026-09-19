@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Stride Platform API Reference | Portfolio | Leslie Amadi</title>
-  <meta name="description" content="Senior Technical Writer portfolio: a B2B SaaS workflow-automation API for Stride bearer auth, idempotent run starts, signed at-least-once event webhooks, delivery retries, idempotent-consumer guidance, usage credits, and a full error reference."/>
+  <meta name="description" content="Senior Technical Writer portfolio: a B2B SaaS workflow-automation API for Stride bearer auth, idempotent run starts, signed doc-least-once event webhooks, delivery retries, idempotent-consumer guidance, usage credits, and a full error reference."/>
   <meta property="og:title" content="Stride Platform API Reference | Leslie Amadi"/>
   <meta property="og:type" content="article"/>
   <meta property="og:image" content="https://leslieamadi.github.io/assets/images/profile-image.png"/>
@@ -31,8 +31,8 @@
     </div>
   </nav>
 
-  <div class="sd-shell">
-    <main class="sd-content">
+  <div class="doc-shell">
+    <main class="doc-content">
 
       <div class="doc-breadcrumb" style="margin-bottom:1.25rem;">
         <a href="../../portfolio.html">Portfolio</a><span>&rsaquo;</span>
@@ -40,48 +40,48 @@
         <span>Stride Platform API</span>
       </div>
 
-      <div class="sd-hero">
-        <span class="sd-hero-eyebrow">&#9881;&#65039; API Reference &middot; B2B SaaS &middot; Workflow &amp; Events</span>
+      <div class="doc-hero">
+        <span class="doc-hero-eyebrow">&#9881;&#65039; API Reference &middot; B2B SaaS &middot; Workflow &amp; Events</span>
         <h1>Stride <span>Platform API</span></h1>
-        <p class="sd-hero-desc">
+        <p class="doc-hero-desc">
           A workflow-automation API: trigger runs over REST with bearer auth, and receive signed,
           <strong>at-least-once</strong> event webhooks as those runs progress built so retries never
           corrupt your data. The reference is organised around the one hard problem: consuming an
-          at-least-once stream safely.
+          doc-least-once stream safely.
         </p>
-        <div class="sd-hero-tags">
-          <span class="sd-hero-tag">Bearer auth</span>
-          <span class="sd-hero-tag">Idempotent writes</span>
-          <span class="sd-hero-tag">Signed webhooks</span>
-          <span class="sd-hero-tag">At-least-once delivery</span>
-          <span class="sd-hero-tag">Idempotent consumers</span>
-          <span class="sd-hero-tag">Usage credits</span>
+        <div class="doc-hero-tags">
+          <span class="doc-hero-tag">Bearer auth</span>
+          <span class="doc-hero-tag">Idempotent writes</span>
+          <span class="doc-hero-tag">Signed webhooks</span>
+          <span class="doc-hero-tag">At-least-once delivery</span>
+          <span class="doc-hero-tag">Idempotent consumers</span>
+          <span class="doc-hero-tag">Usage credits</span>
         </div>
       </div>
 
-      <div class="sd-control">
-        <table class="sd-ctrl-table">
+      <div class="doc-control">
+        <table class="doc-ctrl-table">
           <tbody>
-            <tr><td class="sd-ctrl-label">Discipline</td><td>API Documentation &middot; Developer Experience &middot; B2B SaaS</td></tr>
-            <tr><td class="sd-ctrl-label">Base URL</td><td><code>api.stride.dev/v2</code></td></tr>
-            <tr><td class="sd-ctrl-label">Auth</td><td>Bearer token + webhook signing</td></tr>
-            <tr><td class="sd-ctrl-label">Media type</td><td><code>application/json</code></td></tr>
-            <tr><td class="sd-ctrl-label">My role</td><td>Senior Technical Writer information architecture, field tables, runnable examples</td></tr>
-            <tr><td class="sd-ctrl-label">Doc type</td><td>API reference &amp; integration guide</td></tr>
-            <tr><td class="sd-ctrl-label">Version</td><td>v2 &middot; original demonstration piece</td></tr>
-            <tr><td class="sd-ctrl-label">Last reviewed</td><td>June 2026</td></tr>
+            <tr><td class="doc-ctrl-label">Discipline</td><td>API Documentation &middot; Developer Experience &middot; B2B SaaS</td></tr>
+            <tr><td class="doc-ctrl-label">Base URL</td><td><code>api.stride.dev/v2</code></td></tr>
+            <tr><td class="doc-ctrl-label">Auth</td><td>Bearer token + webhook signing</td></tr>
+            <tr><td class="doc-ctrl-label">Media type</td><td><code>application/json</code></td></tr>
+            <tr><td class="doc-ctrl-label">My role</td><td>Senior Technical Writer information architecture, field tables, runnable examples</td></tr>
+            <tr><td class="doc-ctrl-label">Doc type</td><td>API reference &amp; integration guide</td></tr>
+            <tr><td class="doc-ctrl-label">Version</td><td>v2 &middot; original demonstration piece</td></tr>
+            <tr><td class="doc-ctrl-label">Last reviewed</td><td>June 2026</td></tr>
           </tbody>
         </table>
       </div>
 
-      <div class="sd-layout">
-        <div class="sd-main">
+      <div class="doc-layout">
+        <div class="doc-main">
 
           <!-- OVERVIEW -->
-          <section class="sd-section" id="overview">
-            <div class="sd-section-heading"><h2>Overview</h2></div>
+          <section class="doc-section" id="overview">
+            <div class="doc-section-heading"><h2>Overview</h2></div>
             <p>Stride runs automation workflows on your behalf. You start a run with a REST call; Stride executes it asynchronously and reports progress through events delivered to your webhook endpoints. The two channels have separate, purpose-built auth.</p>
-            <table class="sd-table">
+            <table class="doc-table">
               <thead><tr><th>Channel</th><th>Direction</th><th>Auth</th></tr></thead>
               <tbody>
                 <tr><td>REST API</td><td>You &rarr; Stride</td><td>Bearer token in the <code>Authorization</code> header.</td></tr>
@@ -89,8 +89,8 @@
               </tbody>
             </table>
             <h3 id="run-states">Run states</h3>
-            <div class="sd-code">
-              <div class="sd-code-bar"><span class="sd-code-lang">Run state machine</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">Run state machine</span></div>
               <pre>queued &#9472;&#9472;&#9658; running &#9472;&#9472;&#9658; succeeded
               &#9474;
               &#9492;&#9472;&#9472;&#9472;&#9472;&#9472;&#9658; failed &#9472;&#9472;&#9658; (optional) retried &#9472;&#9472;&#9658; running &hellip;</pre>
@@ -99,26 +99,26 @@
           </section>
 
           <!-- AUTH -->
-          <section class="sd-section" id="auth">
-            <div class="sd-section-heading"><h2>API authentication</h2></div>
+          <section class="doc-section" id="auth">
+            <div class="doc-section-heading"><h2>API authentication</h2></div>
             <p>Authenticate REST calls with a secret API token as a bearer credential. Tokens are scoped to a workspace and an environment (<code>test</code> or <code>live</code>).</p>
-            <div class="sd-code">
-              <div class="sd-code-bar"><span class="sd-code-lang">Bearer auth</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">Bearer auth</span></div>
               <pre>GET /v2/runs/run_8Kd2 HTTP/1.1
 Host: api.stride.dev
 Authorization: Bearer sk_live_3pQ9&hellip;vT</pre>
             </div>
-            <div class="sd-callout red">
+            <div class="doc-callout red">
               <strong>&#9888; Treat live tokens as passwords</strong>
               <p>Never ship <code>sk_live_</code> tokens to a browser or mobile client. For front-end use, mint short-lived scoped tokens server-side via <code>POST /v2/tokens</code>.</p>
             </div>
           </section>
 
           <!-- IDEMPOTENT WRITES -->
-          <section class="sd-section" id="idempotency">
-            <div class="sd-section-heading"><h2>Idempotent writes</h2></div>
+          <section class="doc-section" id="idempotency">
+            <div class="doc-section-heading"><h2>Idempotent writes</h2></div>
             <p>Any request that starts a run accepts an <code>Idempotency-Key</code> so a retried <code>POST</code> never starts the same run twice.</p>
-            <ul class="sd-list">
+            <ul class="doc-list">
               <li>The first request with a key runs; its response is cached for <strong>24 hours</strong>.</li>
               <li>A repeat with the same key replays the cached response with <code>Stride-Idempotent-Replay: true</code>.</li>
               <li>A repeat with the same key but a different body returns <code>409 idempotency_conflict</code>.</li>
@@ -126,21 +126,21 @@ Authorization: Bearer sk_live_3pQ9&hellip;vT</pre>
           </section>
 
           <!-- STARTING A RUN -->
-          <section class="sd-section" id="runs">
-            <div class="sd-section-heading"><h2>Starting a run</h2></div>
-            <div class="sd-endpoint"><span class="sd-verb post">POST</span><code>/v2/runs</code></div>
-            <table class="sd-table">
+          <section class="doc-section" id="runs">
+            <div class="doc-section-heading"><h2>Starting a run</h2></div>
+            <div class="doc-endpoint"><span class="doc-verb post">POST</span><code>/v2/runs</code></div>
+            <table class="doc-table">
               <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
               <tbody>
-                <tr><td><code>workflow_id</code></td><td>string <span class="sd-req">required</span></td><td>The workflow to execute, e.g. <code>wf_invoice_sync</code>.</td></tr>
-                <tr><td><code>input</code></td><td>object <span class="sd-req">required</span></td><td>Arbitrary JSON passed to the workflow's first step.</td></tr>
-                <tr><td><code>idempotency_in_body</code></td><td>boolean <span class="sd-opt">optional</span></td><td>Deprecated. Use the <code>Idempotency-Key</code> header instead.</td></tr>
-                <tr><td><code>callback_url</code></td><td>string <span class="sd-opt">optional</span></td><td>Override the workspace default webhook endpoint for this run only.</td></tr>
-                <tr><td><code>metadata</code></td><td>object <span class="sd-opt">optional</span></td><td>Up to 20 string key/value pairs echoed on the run and its events.</td></tr>
+                <tr><td><code>workflow_id</code></td><td>string <span class="doc-req">required</span></td><td>The workflow to execute, e.g. <code>wf_invoice_sync</code>.</td></tr>
+                <tr><td><code>input</code></td><td>object <span class="doc-req">required</span></td><td>Arbitrary JSON passed to the workflow's first step.</td></tr>
+                <tr><td><code>idempotency_in_body</code></td><td>boolean <span class="doc-opt">optional</span></td><td>Deprecated. Use the <code>Idempotency-Key</code> header instead.</td></tr>
+                <tr><td><code>callback_url</code></td><td>string <span class="doc-opt">optional</span></td><td>Override the workspace default webhook endpoint for this run only.</td></tr>
+                <tr><td><code>metadata</code></td><td>object <span class="doc-opt">optional</span></td><td>Up to 20 string key/value pairs echoed on the run and its events.</td></tr>
               </tbody>
             </table>
-            <div class="sd-code">
-              <div class="sd-code-bar"><span class="sd-code-lang">Request</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">Request</span></div>
               <pre>POST /v2/runs HTTP/1.1
 Host: api.stride.dev
 Authorization: Bearer sk_live_3pQ9&hellip;vT
@@ -153,8 +153,8 @@ Content-Type: application/json
   "metadata": { "tenant": "acme" }
 }</pre>
             </div>
-            <div class="sd-code">
-              <div class="sd-code-bar"><span class="sd-code-lang">202 Accepted</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">202 Accepted</span></div>
               <pre>HTTP/1.1 202 Accepted
 Content-Type: application/json
 
@@ -168,17 +168,17 @@ Content-Type: application/json
 }</pre>
             </div>
             <h3 id="get-run">Retrieve a run</h3>
-            <div class="sd-endpoint"><span class="sd-verb get">GET</span><code>/v2/runs/{run_id}</code></div>
+            <div class="doc-endpoint"><span class="doc-verb get">GET</span><code>/v2/runs/{run_id}</code></div>
             <p>Polling is supported but secondary webhooks are the intended way to learn about completion. Use <code>GET</code> for reconciliation or after a missed event.</p>
           </section>
 
           <!-- WEBHOOKS -->
-          <section class="sd-section" id="webhooks">
-            <div class="sd-section-heading"><h2>Webhooks</h2></div>
+          <section class="doc-section" id="webhooks">
+            <div class="doc-section-heading"><h2>Webhooks</h2></div>
             <p>Stride POSTs events to your endpoint as they happen. Your endpoint must be public HTTPS and return any <code>2xx</code> within <strong>10 seconds</strong>. The response body is ignored; only the status matters.</p>
             <h3 id="wh-payload">Event shape</h3>
-            <div class="sd-code">
-              <div class="sd-code-bar"><span class="sd-code-lang">POST /your/webhook</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">POST /your/webhook</span></div>
               <pre>POST /your/webhook HTTP/1.1
 Stride-Signature: t=1733930535,v1=4f8c2a&hellip;e90b
 Content-Type: application/json
@@ -196,13 +196,13 @@ Content-Type: application/json
             </div>
             <h3 id="wh-verify">Verifying the signature</h3>
             <p>The <code>Stride-Signature</code> header carries a timestamp (<code>t</code>) and one or more signatures (<code>v1</code>). Build the signed payload as <code>t</code>, a literal dot, and the <strong>raw request body</strong>. HMAC-SHA256 it with the endpoint's signing secret and compare in constant time.</p>
-            <div class="sd-code">
-              <div class="sd-code-bar"><span class="sd-code-lang">Verification</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">Verification</span></div>
               <pre>signed_payload = t + "." + raw_body
 expected = hex( HMAC_SHA256( signing_secret, signed_payload ) )
 # accept if expected == v1 AND now - t &lt;= 300 seconds</pre>
             </div>
-            <table class="sd-table">
+            <table class="doc-table">
               <thead><tr><th colspan="2">Worked example verifying an event</th></tr></thead>
               <tbody>
                 <tr><td>t (from header)</td><td><code>1733930535</code></td></tr>
@@ -212,33 +212,33 @@ expected = hex( HMAC_SHA256( signing_secret, signed_payload ) )
                 <tr><td>recompute &amp; compare</td><td><code>hex( HMAC_SHA256(secret, signed_payload) ) == v1</code> &check;</td></tr>
               </tbody>
             </table>
-            <div class="sd-callout red">
+            <div class="doc-callout red">
               <strong>&#9888; Verify the raw bytes</strong>
               <p>Verify against the raw bytes of the body, <em>before</em> any JSON parsing or re-encoding. Frameworks that hand you a re-serialized object will produce a different hash and fail verification.</p>
             </div>
           </section>
 
           <!-- DELIVERY -->
-          <section class="sd-section" id="delivery">
-            <div class="sd-section-heading"><h2>Delivery &amp; retries</h2></div>
+          <section class="doc-section" id="delivery">
+            <div class="doc-section-heading"><h2>Delivery &amp; retries</h2></div>
             <p>Stride guarantees <strong>at-least-once</strong> delivery. A flaky network can produce duplicates, and events for one run can arrive out of order. Design consumers around both facts.</p>
-            <div class="sd-grid2">
-              <div class="sd-panel">
-                <div class="sd-panel-title">Deduplicate</div>
+            <div class="doc-grid2">
+              <div class="doc-panel">
+                <div class="doc-panel-title">Deduplicate</div>
                 <p>Record processed <code>event.id</code> values and skip repeats.</p>
               </div>
-              <div class="sd-panel">
-                <div class="sd-panel-title">Order by created_at</div>
+              <div class="doc-panel">
+                <div class="doc-panel-title">Order by created_at</div>
                 <p>Order by <code>created_at</code> (and run state) rather than arrival time.</p>
               </div>
             </div>
-            <div class="sd-callout green">
+            <div class="doc-callout green">
               <strong>&#9989; Make handlers idempotent</strong>
-              <p>Applying the same event twice must equal applying it once. This single property is what makes an at-least-once stream safe to consume.</p>
+              <p>Applying the same event twice must equal applying it once. This single property is what makes an doc-least-once stream safe to consume.</p>
             </div>
             <h3 id="retry-table">Retry schedule</h3>
             <p>A non-<code>2xx</code>, a timeout, or a connection error schedules a retry on an exponential back-off with jitter. Each attempt carries the same <code>event.id</code> and a fresh signature.</p>
-            <table class="sd-table">
+            <table class="doc-table">
               <thead><tr><th>Attempt</th><th>Delay (&plusmn;jitter)</th><th>Cumulative</th></tr></thead>
               <tbody>
                 <tr><td>1</td><td>immediate</td><td>0s</td></tr>
@@ -250,24 +250,24 @@ expected = hex( HMAC_SHA256( signing_secret, signed_payload ) )
               </tbody>
             </table>
             <h3 id="replay">Replaying missed events</h3>
-            <div class="sd-code">
-              <div class="sd-code-bar"><span class="sd-code-lang">Recover failed deliveries</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">Recover failed deliveries</span></div>
               <pre>GET  /v2/events?delivery=failed&amp;since=2025-12-11T00:00:00Z
 POST /v2/events/{event_id}/redeliver</pre>
             </div>
-            <div class="sd-callout blue">
+            <div class="doc-callout blue">
               <strong>&#8505; Delivery status &amp; retention</strong>
               <p>Endpoints surface a delivery status of <code>delivered</code>, <code>pending</code>, or <code>failed</code>. Failed events are retained for <strong>30 days</strong> for replay.</p>
             </div>
           </section>
 
           <!-- USAGE -->
-          <section class="sd-section" id="usage">
-            <div class="sd-section-heading"><h2>Usage &amp; credits</h2></div>
+          <section class="doc-section" id="usage">
+            <div class="doc-section-heading"><h2>Usage &amp; credits</h2></div>
             <p>Runs consume credits from the workspace balance. Read the balance to surface usage in your own product or to gate work before you start it.</p>
-            <div class="sd-endpoint"><span class="sd-verb get">GET</span><code>/v2/usage/credits</code></div>
-            <div class="sd-code">
-              <div class="sd-code-bar"><span class="sd-code-lang">200 OK</span></div>
+            <div class="doc-endpoint"><span class="doc-verb get">GET</span><code>/v2/usage/credits</code></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">200 OK</span></div>
               <pre>HTTP/1.1 200 OK
 Content-Type: application/json
 
@@ -282,11 +282,11 @@ Content-Type: application/json
           </section>
 
           <!-- ERRORS -->
-          <section class="sd-section" id="errors">
-            <div class="sd-section-heading"><h2>Error reference</h2></div>
+          <section class="doc-section" id="errors">
+            <div class="doc-section-heading"><h2>Error reference</h2></div>
             <p>Errors return a non-<code>2xx</code> status and a structured body with a stable <code>code</code>.</p>
-            <div class="sd-code">
-              <div class="sd-code-bar"><span class="sd-code-lang">Error shape</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">Error shape</span></div>
               <pre>{
   "error": {
     "code": "validation_failed",
@@ -295,7 +295,7 @@ Content-Type: application/json
   }
 }</pre>
             </div>
-            <table class="sd-table">
+            <table class="doc-table">
               <thead><tr><th>HTTP</th><th>code</th><th>Meaning</th></tr></thead>
               <tbody>
                 <tr><td>400</td><td><code>validation_failed</code></td><td>A field is missing or malformed; see <code>field</code>.</td></tr>
@@ -312,8 +312,8 @@ Content-Type: application/json
           </section>
 
           <!-- WRITER NOTE -->
-          <div class="sd-writer-note">
-            <span class="sd-writer-note-label">&#9997;&#65039; Writer's note</span>
+          <div class="doc-writer-note">
+            <span class="doc-writer-note-label">&#9997;&#65039; Writer's note</span>
             <p>
               The defining challenge of an event API isn't sending events it's helping the reader consume
               them <em>safely</em>. At-least-once delivery means duplicates and out-of-order arrival are normal, not
@@ -325,14 +325,14 @@ Content-Type: application/json
           </div>
 
           <!-- RELATED -->
-          <div class="sd-related">
+          <div class="doc-related">
             <h3>Related work</h3>
             <a href="./aperture-pay-api.html">Aperture Pay Payments API &rarr;</a>
             <a href="./helix-play-api.html">Helix Play Operator API &rarr;</a>
             <a href="./atlas-developer-platform.html">Atlas Developer Platform &rarr;</a>
           </div>
 
-          <div class="sd-bottom-nav">
+          <div class="doc-bottom-nav">
             <a href="../../portfolio.html">&larr; Back to portfolio</a>
             <a href="../../contact.html">Let's talk &rarr;</a>
           </div>
@@ -340,27 +340,27 @@ Content-Type: application/json
         </div>
 
         <!-- SIDEBAR -->
-        <aside class="sd-sidebar">
-          <div class="sd-toc-card">
-            <div class="sd-toc-title">On this page</div>
-            <nav class="sd-toc">
-              <a href="#overview"><span class="sd-toc-dot"></span>Overview</a>
-              <a href="#auth"><span class="sd-toc-dot"></span>Authentication</a>
-              <a href="#idempotency"><span class="sd-toc-dot"></span>Idempotent writes</a>
-              <a href="#runs"><span class="sd-toc-dot"></span>Starting a run</a>
-              <a href="#webhooks"><span class="sd-toc-dot"></span>Webhooks</a>
-              <a href="#delivery"><span class="sd-toc-dot"></span>Delivery &amp; retries</a>
-              <a href="#usage"><span class="sd-toc-dot"></span>Usage &amp; credits</a>
-              <a href="#errors"><span class="sd-toc-dot"></span>Error reference</a>
+        <aside class="doc-sidebar">
+          <div class="doc-toc-card">
+            <div class="doc-toc-title">On this page</div>
+            <nav class="doc-toc">
+              <a href="#overview"><span class="doc-toc-dot"></span>Overview</a>
+              <a href="#auth"><span class="doc-toc-dot"></span>Authentication</a>
+              <a href="#idempotency"><span class="doc-toc-dot"></span>Idempotent writes</a>
+              <a href="#runs"><span class="doc-toc-dot"></span>Starting a run</a>
+              <a href="#webhooks"><span class="doc-toc-dot"></span>Webhooks</a>
+              <a href="#delivery"><span class="doc-toc-dot"></span>Delivery &amp; retries</a>
+              <a href="#usage"><span class="doc-toc-dot"></span>Usage &amp; credits</a>
+              <a href="#errors"><span class="doc-toc-dot"></span>Error reference</a>
             </nav>
           </div>
-          <div class="sd-quick-ref">
-            <div class="sd-quick-ref-title">API at a glance</div>
-            <div class="sd-quick-ref-row"><span>Auth</span><code>Bearer</code></div>
-            <div class="sd-quick-ref-row"><span>Format</span><code>JSON / REST</code></div>
-            <div class="sd-quick-ref-row"><span>Events</span><code>signed webhooks</code></div>
-            <div class="sd-quick-ref-row"><span>Delivery</span><code>at-least-once</code></div>
-            <div class="sd-quick-ref-row"><span>Safe retry</span><code>Idempotency-Key</code></div>
+          <div class="doc-quick-ref">
+            <div class="doc-quick-ref-title">API at a glance</div>
+            <div class="doc-quick-ref-row"><span>Auth</span><code>Bearer</code></div>
+            <div class="doc-quick-ref-row"><span>Format</span><code>JSON / REST</code></div>
+            <div class="doc-quick-ref-row"><span>Events</span><code>signed webhooks</code></div>
+            <div class="doc-quick-ref-row"><span>Delivery</span><code>at-least-once</code></div>
+            <div class="doc-quick-ref-row"><span>Safe retry</span><code>Idempotency-Key</code></div>
           </div>
         </aside>
 

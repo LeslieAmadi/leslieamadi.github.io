@@ -31,8 +31,8 @@
     </div>
   </nav>
 
-  <div class="pd-shell">
-    <main class="pd-content">
+  <div class="doc-shell">
+    <main class="doc-content">
 
       <div class="doc-breadcrumb" style="margin-bottom:1.25rem;">
         <a href="../../portfolio.html">Portfolio</a><span>&rsaquo;</span>
@@ -40,42 +40,42 @@
         <span>Patient Outcomes Datasheet</span>
       </div>
 
-      <div class="pd-hero">
-        <span class="pd-hero-eyebrow">&#129516; Case Study &middot; Data Governance &middot; Healthcare ML &middot; Datasheet for Datasets</span>
+      <div class="doc-hero">
+        <span class="doc-hero-eyebrow">&#129516; Case Study &middot; Data Governance &middot; Healthcare ML &middot; Datasheet for Datasets</span>
         <h1>Patient Outcomes <span>Datasheet</span></h1>
-        <p class="pd-hero-desc">
+        <p class="doc-hero-desc">
           Before a model is trustworthy, its data must be accountable. This is a Datasheet for Datasets for
           an anonymised, multi-centre healthcare dataset documenting where the data came from, how it
           was de-identified, what it may and may not be used for, and the bias and fairness risks anyone
           building on it must confront. It's the governance artifact that makes a clinical ML dataset safe to use.
         </p>
-        <div class="pd-hero-tags">
-          <span class="pd-hero-tag">Datasheet</span>
-          <span class="pd-hero-tag">De-identification</span>
-          <span class="pd-hero-tag">Bias &amp; fairness</span>
-          <span class="pd-hero-tag">Intended use</span>
-          <span class="pd-hero-tag">Access controls</span>
-          <span class="pd-hero-tag">PHI / PII</span>
+        <div class="doc-hero-tags">
+          <span class="doc-hero-tag">Datasheet</span>
+          <span class="doc-hero-tag">De-identification</span>
+          <span class="doc-hero-tag">Bias &amp; fairness</span>
+          <span class="doc-hero-tag">Intended use</span>
+          <span class="doc-hero-tag">Access controls</span>
+          <span class="doc-hero-tag">PHI / PII</span>
         </div>
       </div>
 
-      <div class="pd-control">
-        <table class="pd-ctrl-table">
+      <div class="doc-control">
+        <table class="doc-ctrl-table">
           <tbody>
-            <tr><td class="pd-ctrl-label">Document type</td><td>Datasheet for Datasets (Gebru et al. framework)</td></tr>
-            <tr><td class="pd-ctrl-label">Dataset</td><td>Patient Outcomes Dataset anonymised multi-centre EHR</td></tr>
-            <tr><td class="pd-ctrl-label">My role</td><td>Lead Technical Writer datasheet structure, governance &amp; fairness sections</td></tr>
-            <tr><td class="pd-ctrl-label">Audience</td><td>ML researchers, data scientists, clinical stakeholders, governance boards</td></tr>
-            <tr><td class="pd-ctrl-label">Scale</td><td>~520,000 patients &middot; 7 medical centres</td></tr>
-            <tr><td class="pd-ctrl-label">Prepared by</td><td>LexiTech AI Research &middot; Author: Leslie Amadi</td></tr>
-            <tr><td class="pd-ctrl-label">Version</td><td>1.0 &middot; March 2025</td></tr>
-            <tr><td class="pd-ctrl-label">Last reviewed</td><td>June 2026</td></tr>
+            <tr><td class="doc-ctrl-label">Document type</td><td>Datasheet for Datasets (Gebru et al. framework)</td></tr>
+            <tr><td class="doc-ctrl-label">Dataset</td><td>Patient Outcomes Dataset anonymised multi-centre EHR</td></tr>
+            <tr><td class="doc-ctrl-label">My role</td><td>Lead Technical Writer datasheet structure, governance &amp; fairness sections</td></tr>
+            <tr><td class="doc-ctrl-label">Audience</td><td>ML researchers, data scientists, clinical stakeholders, governance boards</td></tr>
+            <tr><td class="doc-ctrl-label">Scale</td><td>~520,000 patients &middot; 7 medical centres</td></tr>
+            <tr><td class="doc-ctrl-label">Prepared by</td><td>LexiTech AI Research &middot; Author: Leslie Amadi</td></tr>
+            <tr><td class="doc-ctrl-label">Version</td><td>1.0 &middot; March 2025</td></tr>
+            <tr><td class="doc-ctrl-label">Last reviewed</td><td>June 2026</td></tr>
           </tbody>
         </table>
       </div>
 
-      <section class="pd-section" id="motivation">
-        <div class="pd-section-heading"><div class="pd-section-icon red">&#127919;</div><h2>Motivation &amp; the problem</h2></div>
+      <section class="doc-section" id="motivation">
+        <div class="doc-section-heading"><div class="doc-section-icon red">&#127919;</div><h2>Motivation &amp; the problem</h2></div>
         <p>
           A research team wants to train a model to flag patients at risk of a serious chronic condition.
           The data exists spread across seven hospitals' electronic health records but using
@@ -83,7 +83,7 @@
           patients are <em>missing</em> from it? What is it allowed to be used for? Without those answers
           written down, every team re-asks them, and worse, some don't ask at all.
         </p>
-        <div class="pd-callout red">
+        <div class="doc-callout red">
           <strong>A datasheet is accountability for data</strong>
           <p>
             The Patient Outcomes Dataset exists to support early detection and monitoring of chronic illness
@@ -95,32 +95,32 @@
         </div>
       </section>
 
-      <section class="pd-section" id="contribution">
-        <div class="pd-section-heading"><div class="pd-section-icon blue">&#9997;&#65039;</div><h2>My contribution</h2></div>
+      <section class="doc-section" id="contribution">
+        <div class="doc-section-heading"><div class="doc-section-icon blue">&#9997;&#65039;</div><h2>My contribution</h2></div>
         <p>I owned the datasheet that turned a sensitive data export into an accountable, governable research asset:</p>
-        <div class="pd-cards">
-          <div class="pd-card"><div class="pd-card-icon">&#128202;</div><h3>Dataset summary</h3><p>Documented population, coverage, record types, and target labels so consumers know exactly what they're modelling.</p></div>
-          <div class="pd-card"><div class="pd-card-icon">&#128193;</div><h3>Schema &amp; splits</h3><p>Defined feature groups and the patient-level split that prevents leakage across train and test.</p></div>
-          <div class="pd-card"><div class="pd-card-icon">&#128274;</div><h3>Collection &amp; governance</h3><p>Recorded source systems, the de-identification workflow, and the governance approvals behind the data.</p></div>
-          <div class="pd-card"><div class="pd-card-icon">&#9878;&#65039;</div><h3>Intended / out-of-scope</h3><p>Stated plainly what the data is for and the uses that are explicitly forbidden.</p></div>
-          <div class="pd-card"><div class="pd-card-icon">&#129489;&#8205;&#9877;&#65039;</div><h3>Bias &amp; fairness</h3><p>Named the known biases and the fairness checks any downstream model must run.</p></div>
-          <div class="pd-card"><div class="pd-card-icon">&#128737;&#65039;</div><h3>Access &amp; maintenance</h3><p>Documented access controls, retention, versioning, and the cadence that keeps it current.</p></div>
+        <div class="doc-cards">
+          <div class="doc-card"><div class="doc-card-icon">&#128202;</div><h3>Dataset summary</h3><p>Documented population, coverage, record types, and target labels so consumers know exactly what they're modelling.</p></div>
+          <div class="doc-card"><div class="doc-card-icon">&#128193;</div><h3>Schema &amp; splits</h3><p>Defined feature groups and the patient-level split that prevents leakage across train and test.</p></div>
+          <div class="doc-card"><div class="doc-card-icon">&#128274;</div><h3>Collection &amp; governance</h3><p>Recorded source systems, the de-identification workflow, and the governance approvals behind the data.</p></div>
+          <div class="doc-card"><div class="doc-card-icon">&#9878;&#65039;</div><h3>Intended / out-of-scope</h3><p>Stated plainly what the data is for and the uses that are explicitly forbidden.</p></div>
+          <div class="doc-card"><div class="doc-card-icon">&#129489;&#8205;&#9877;&#65039;</div><h3>Bias &amp; fairness</h3><p>Named the known biases and the fairness checks any downstream model must run.</p></div>
+          <div class="doc-card"><div class="doc-card-icon">&#128737;&#65039;</div><h3>Access &amp; maintenance</h3><p>Documented access controls, retention, versioning, and the cadence that keeps it current.</p></div>
         </div>
       </section>
 
-      <section class="pd-section" id="summary">
-        <div class="pd-section-heading"><div class="pd-section-icon purple">&#128202;</div><h2>Dataset summary</h2></div>
+      <section class="doc-section" id="summary">
+        <div class="doc-section-heading"><div class="doc-section-icon purple">&#128202;</div><h2>Dataset summary</h2></div>
         <p>Longitudinal records from adult patients across a mixed urban&ndash;suburban network of seven centres.</p>
-        <table class="pd-table">
+        <table class="doc-table">
           <tbody>
-            <tr><td class="pd-key">Patients</td><td>~520,000 unique anonymised records</td></tr>
-            <tr><td class="pd-key">Institutions</td><td>7 medical centres (acute care &amp; outpatient)</td></tr>
-            <tr><td class="pd-key">Geography</td><td>Single country; urban, peri-urban, and suburban mix</td></tr>
-            <tr><td class="pd-key">Record types</td><td>Demographics, vitals, medical history, lab tests, lifestyle indicators</td></tr>
+            <tr><td class="doc-key">Patients</td><td>~520,000 unique anonymised records</td></tr>
+            <tr><td class="doc-key">Institutions</td><td>7 medical centres (acute care &amp; outpatient)</td></tr>
+            <tr><td class="doc-key">Geography</td><td>Single country; urban, peri-urban, and suburban mix</td></tr>
+            <tr><td class="doc-key">Record types</td><td>Demographics, vitals, medical history, lab tests, lifestyle indicators</td></tr>
           </tbody>
         </table>
         <h3>Target labels</h3>
-        <table class="pd-table">
+        <table class="doc-table">
           <thead><tr><th>Label</th><th>Type</th><th>Definition</th></tr></thead>
           <tbody>
             <tr><td><code>high_risk</code></td><td>Binary (0/1)</td><td>A serious chronic condition confirmed within 12 months of the index date.</td></tr>
@@ -129,9 +129,9 @@
         </table>
       </section>
 
-      <section class="pd-section" id="schema">
-        <div class="pd-section-heading"><div class="pd-section-icon blue">&#128193;</div><h2>Schema &amp; data splits</h2></div>
-        <table class="pd-table">
+      <section class="doc-section" id="schema">
+        <div class="doc-section-heading"><div class="doc-section-icon blue">&#128193;</div><h2>Schema &amp; data splits</h2></div>
+        <table class="doc-table">
           <thead><tr><th>Feature group</th><th>Examples</th><th>Notes</th></tr></thead>
           <tbody>
             <tr><td>Demographics</td><td><code>age_band, sex, region, insurance_type</code></td><td>Highly aggregated to reduce re-identification risk</td></tr>
@@ -140,7 +140,7 @@
             <tr><td>Medical history</td><td>Diagnosis codes, comorbidities, prior admissions</td><td>Coded to a shared standard across sites</td></tr>
           </tbody>
         </table>
-        <div class="pd-callout blue">
+        <div class="doc-callout blue">
           <strong>Split by patient, never by encounter</strong>
           <p>
             The dataset is split by <em>patient</em> 70% train / 15% validation / 15% test not
@@ -151,15 +151,15 @@
         </div>
       </section>
 
-      <section class="pd-section" id="pipeline">
-        <div class="pd-section-heading"><div class="pd-section-icon purple">&#128260;</div><h2>Collection &amp; de-identification pipeline</h2></div>
+      <section class="doc-section" id="pipeline">
+        <div class="doc-section-heading"><div class="doc-section-icon purple">&#128260;</div><h2>Collection &amp; de-identification pipeline</h2></div>
         <p>
           The most governance-critical part of the datasheet is how raw hospital data becomes a safe research
           asset. Identifiers are removed <em>at the source institution</em>, before data ever reaches the
           central environment the single most important safeguard in the whole pipeline.
         </p>
 
-        <div class="pd-diagram">
+        <div class="doc-diagram">
           <svg width="100%" viewBox="0 0 680 300" role="img" xmlns="http://www.w3.org/2000/svg">
             <title>Data collection and de-identification pipeline</title>
             <defs><marker id="pdarr1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
@@ -174,41 +174,41 @@
             <line x1="600" y1="166" x2="600" y2="200" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#pdarr1)"/>
             <g class="c-green"><rect x="430" y="200" width="230" height="56" rx="8" stroke-width="0.5"/><text class="th" x="545" y="220" text-anchor="middle" dominant-baseline="central">ML-ready dataset</text><text class="ts" x="545" y="238" text-anchor="middle" dominant-baseline="central">patient-level train/val/test</text></g>
 
-            <rect x="140" y="36" width="410" height="44" rx="8" class="pd-enclave"/>
-            <text class="pd-enclave-label" x="345" y="58" text-anchor="middle" dominant-baseline="central">Secure research enclave (encrypted, audited)</text>
+            <rect x="140" y="36" width="410" height="44" rx="8" class="doc-enclave"/>
+            <text class="doc-enclave-label" x="345" y="58" text-anchor="middle" dominant-baseline="central">Secure research enclave (encrypted, audited)</text>
             <line x1="345" y1="80" x2="345" y2="108" stroke="#A32D2D" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#pdarr1)"/>
             <text class="ts" x="408" y="96" text-anchor="middle" fill="#94a3b8">boundary</text>
           </svg>
-          <p class="pd-diagram-caption">The pipeline. Direct identifiers are stripped at each hospital <em>before</em> transfer; only de-identified, highly aggregated data crosses into the secure, audited research enclave, where it's standardised, cleaned, and split by patient into the ML-ready dataset.</p>
+          <p class="doc-diagram-caption">The pipeline. Direct identifiers are stripped at each hospital <em>before</em> transfer; only de-identified, highly aggregated data crosses into the secure, audited research enclave, where it's standardised, cleaned, and split by patient into the ML-ready dataset.</p>
         </div>
 
         <h3>Governance behind the data</h3>
-        <table class="pd-table">
+        <table class="doc-table">
           <tbody>
-            <tr><td class="pd-key">Approval</td><td>Signed off by each centre's internal data governance board.</td></tr>
-            <tr><td class="pd-key">Permitted use</td><td>Research or ML evaluation under an approved protocol only.</td></tr>
-            <tr><td class="pd-key">Re-identification</td><td>Explicitly prohibited in all usage agreements.</td></tr>
-            <tr><td class="pd-key">PHI / PII</td><td>Direct identifiers removed at source; only aggregated attributes retained.</td></tr>
+            <tr><td class="doc-key">Approval</td><td>Signed off by each centre's internal data governance board.</td></tr>
+            <tr><td class="doc-key">Permitted use</td><td>Research or ML evaluation under an approved protocol only.</td></tr>
+            <tr><td class="doc-key">Re-identification</td><td>Explicitly prohibited in all usage agreements.</td></tr>
+            <tr><td class="doc-key">PHI / PII</td><td>Direct identifiers removed at source; only aggregated attributes retained.</td></tr>
           </tbody>
         </table>
       </section>
 
-      <section class="pd-section" id="uses">
-        <div class="pd-section-heading"><div class="pd-section-icon green">&#9878;&#65039;</div><h2>Intended &amp; out-of-scope uses</h2></div>
+      <section class="doc-section" id="uses">
+        <div class="doc-section-heading"><div class="doc-section-icon green">&#9878;&#65039;</div><h2>Intended &amp; out-of-scope uses</h2></div>
         <p>The pairing of what the data <em>is</em> for and what it must <em>never</em> be used for is the ethical core of the datasheet.</p>
-        <div class="pd-grid2">
-          <div class="pd-panel ok">
-            <div class="pd-panel-title ok">Intended uses</div>
-            <ul class="pd-list">
+        <div class="doc-grid2">
+          <div class="doc-panel ok">
+            <div class="doc-panel-title ok">Intended uses</div>
+            <ul class="doc-list">
               <li>Training models for early detection of chronic conditions.</li>
               <li>Developing readmission-risk and triage-prioritisation tools.</li>
               <li>Benchmarking model performance across demographic subgroups.</li>
               <li>Research into fair, transparent clinical ML.</li>
             </ul>
           </div>
-          <div class="pd-panel no">
-            <div class="pd-panel-title no">Out-of-scope uses</div>
-            <ul class="pd-list">
+          <div class="doc-panel no">
+            <div class="doc-panel-title no">Out-of-scope uses</div>
+            <ul class="doc-list">
               <li>Direct individual diagnosis or real-time treatment decisions.</li>
               <li>Sole evidence in clinical or legal decision-making.</li>
               <li>Insurance pricing, eligibility, or coverage scoring.</li>
@@ -218,13 +218,13 @@
         </div>
       </section>
 
-      <section class="pd-section" id="bias">
-        <div class="pd-section-heading"><div class="pd-section-icon amber">&#129489;&#8205;&#9877;&#65039;</div><h2>Bias, fairness &amp; ethics</h2></div>
+      <section class="doc-section" id="bias">
+        <div class="doc-section-heading"><div class="doc-section-icon amber">&#129489;&#8205;&#9877;&#65039;</div><h2>Bias, fairness &amp; ethics</h2></div>
         <p>
           A datasheet that hides its dataset's weaknesses is worse than none, because it lends false
           confidence. This section names the biases plainly so every downstream team confronts them.
         </p>
-        <table class="pd-table">
+        <table class="doc-table">
           <thead><tr><th>Known risk</th><th>Why it matters</th></tr></thead>
           <tbody>
             <tr><td>Demographic underrepresentation</td><td>Some age groups and regions are thin models may be less reliable for them.</td></tr>
@@ -232,7 +232,7 @@
             <tr><td>Incomplete social determinants</td><td>Income, environment, and other context are largely absent, limiting causal claims.</td></tr>
           </tbody>
         </table>
-        <div class="pd-callout amber">
+        <div class="doc-callout amber">
           <strong>&#9888; Required fairness checks for any model built on this data</strong>
           <p>
             The datasheet doesn't just warn it prescribes. Any model must evaluate performance
@@ -241,7 +241,7 @@
             turns &ldquo;be fair&rdquo; from an aspiration into a checklist.
           </p>
         </div>
-        <div class="pd-callout red">
+        <div class="doc-callout red">
           <strong>Ethical use guidance</strong>
           <p>
             Models derived from this dataset must undergo external validation and local clinical review
@@ -251,22 +251,22 @@
         </div>
       </section>
 
-      <section class="pd-section" id="access">
-        <div class="pd-section-heading"><div class="pd-section-icon purple">&#128737;&#65039;</div><h2>Distribution &amp; access controls</h2></div>
-        <table class="pd-table">
+      <section class="doc-section" id="access">
+        <div class="doc-section-heading"><div class="doc-section-icon purple">&#128737;&#65039;</div><h2>Distribution &amp; access controls</h2></div>
+        <table class="doc-table">
           <tbody>
-            <tr><td class="pd-key">Access scope</td><td>Internal research and approved collaborations only.</td></tr>
-            <tr><td class="pd-key">Access control</td><td>Role-based, via the institutional identity provider.</td></tr>
-            <tr><td class="pd-key">Data location</td><td>Secure research environment with audited access.</td></tr>
-            <tr><td class="pd-key">Retention</td><td>Default 5 years, subject to governance review.</td></tr>
-            <tr><td class="pd-key">External sharing</td><td>Aggregated form only; never row-level.</td></tr>
+            <tr><td class="doc-key">Access scope</td><td>Internal research and approved collaborations only.</td></tr>
+            <tr><td class="doc-key">Access control</td><td>Role-based, via the institutional identity provider.</td></tr>
+            <tr><td class="doc-key">Data location</td><td>Secure research environment with audited access.</td></tr>
+            <tr><td class="doc-key">Retention</td><td>Default 5 years, subject to governance review.</td></tr>
+            <tr><td class="doc-key">External sharing</td><td>Aggregated form only; never row-level.</td></tr>
           </tbody>
         </table>
       </section>
 
-      <section class="pd-section" id="maintenance">
-        <div class="pd-section-heading"><div class="pd-section-icon green">&#128260;</div><h2>Maintenance &amp; versioning</h2></div>
-        <table class="pd-table">
+      <section class="doc-section" id="maintenance">
+        <div class="doc-section-heading"><div class="doc-section-icon green">&#128260;</div><h2>Maintenance &amp; versioning</h2></div>
+        <table class="doc-table">
           <thead><tr><th>Aspect</th><th>Policy</th></tr></thead>
           <tbody>
             <tr><td>Refresh cadence</td><td>Major refresh annually; minor quality fixes as patch versions.</td></tr>
@@ -274,7 +274,7 @@
             <tr><td>Reproducibility</td><td>Consumers record the dataset version alongside each training and evaluation run.</td></tr>
           </tbody>
         </table>
-        <div class="pd-callout green">
+        <div class="doc-callout green">
           <strong>Version-stamp every run</strong>
           <p>
             The datasheet asks every consumer to log the dataset version with their model runs. It's a small
@@ -284,13 +284,13 @@
         </div>
       </section>
 
-      <section class="pd-section" id="results">
-        <div class="pd-section-heading"><div class="pd-section-icon green">&#128200;</div><h2>Results &amp; impact</h2></div>
-        <table class="pd-table">
+      <section class="doc-section" id="results">
+        <div class="doc-section-heading"><div class="doc-section-icon green">&#128200;</div><h2>Results &amp; impact</h2></div>
+        <table class="doc-table">
           <thead><tr><th>Measure</th><th>Before</th><th>After</th></tr></thead>
           <tbody>
             <tr><td>Data provenance</td><td>Asked case by case</td><td>Documented once, authoritative</td></tr>
-            <tr><td>De-identification</td><td>Assumed</td><td>Explicit at-source workflow on record</td></tr>
+            <tr><td>De-identification</td><td>Assumed</td><td>Explicit doc-source workflow on record</td></tr>
             <tr><td>Permitted use</td><td>Ambiguous</td><td>Intended vs out-of-scope stated plainly</td></tr>
             <tr><td>Fairness</td><td>&ldquo;Be careful&rdquo;</td><td>A prescribed checklist of subgroup checks</td></tr>
           </tbody>
@@ -298,52 +298,52 @@
       </section>
 
     
-      <section class="pd-section" id="learnings">
-        <div class="pd-section-heading"><div class="pd-section-icon amber">&#128161;</div><h2>Key learnings</h2></div>
-        <div class="pd-callout amber"><strong>Document the gaps, not just the contents.</strong><p>The most valuable section is the one naming who's underrepresented a datasheet that hides weaknesses lends false confidence.</p></div>
-        <div class="pd-callout blue"><strong>Split by patient is a governance decision.</strong><p>A single line split by patient, not encounter protects every downstream evaluation from leakage.</p></div>
-        <div class="pd-callout green"><strong>Prescribe, don't just warn.</strong><p>Turning &ldquo;be fair&rdquo; into a named list of required subgroup checks is what makes the ethics section actionable.</p></div>
+      <section class="doc-section" id="learnings">
+        <div class="doc-section-heading"><div class="doc-section-icon amber">&#128161;</div><h2>Key learnings</h2></div>
+        <div class="doc-callout amber"><strong>Document the gaps, not just the contents.</strong><p>The most valuable section is the one naming who's underrepresented a datasheet that hides weaknesses lends false confidence.</p></div>
+        <div class="doc-callout blue"><strong>Split by patient is a governance decision.</strong><p>A single line split by patient, not encounter protects every downstream evaluation from leakage.</p></div>
+        <div class="doc-callout green"><strong>Prescribe, don't just warn.</strong><p>Turning &ldquo;be fair&rdquo; into a named list of required subgroup checks is what makes the ethics section actionable.</p></div>
       </section>
 
-      <div class="pd-writer-note" id="writer-note">
-        <div class="pd-writer-note-label">&#128221; Writer's note</div>
+      <div class="doc-writer-note" id="writer-note">
+        <div class="doc-writer-note-label">&#128221; Writer's note</div>
         <p>A datasheet is one of the purest tests of technical writing in a governance context: it must be precise enough for a data scientist, clear enough for a clinician, and complete enough for a governance board all at once. I structured it on the established Datasheet-for-Datasets framework so it reads as a recognised, auditable artifact rather than an ad-hoc readme.</p>
         <p>The sections I weighted most heavily were de-identification, out-of-scope uses, and bias because in healthcare ML, the harm comes not from what the data does but from what people assume it can do. Stating the limits as firmly as the capabilities is the difference between a dataset that's merely available and one that's genuinely safe to build on.</p>
-        <div class="pd-related">
+        <div class="doc-related">
           <a href="../../model-cards.html">Model Cards &amp; Datasheets &rarr;</a>
           <a href="./neuralflow-eval.html">NeuralFlow Evaluation Suite &rarr;</a>
           <a href="./ai-healthcare-case-study.html">AI in Healthcare &rarr;</a>
         </div>
       </div>
 
-      <div class="pd-nav-bottom">
+      <div class="doc-nav-bottom">
         <a href="../../portfolio.html" class="btn-leslie">&larr; Back to Portfolio</a>
         <a href="../../contact.html" class="btn btn-accent">Discuss this work &rarr;</a>
       </div>
 
     </main>
 
-    <aside class="pd-sidebar">
-      <nav class="pd-toc">
-        <div class="pd-toc-title">On this page</div>
-        <a href="#motivation" class="toc-active"><span class="pd-toc-dot"></span>Motivation</a>
-        <a href="#contribution"><span class="pd-toc-dot"></span>My contribution</a>
-        <a href="#summary"><span class="pd-toc-dot"></span>Dataset summary</a>
-        <a href="#schema"><span class="pd-toc-dot"></span>Schema &amp; splits</a>
-        <a href="#pipeline"><span class="pd-toc-dot"></span>Collection pipeline</a>
-        <a href="#uses"><span class="pd-toc-dot"></span>Intended / out-of-scope</a>
-        <a href="#bias"><span class="pd-toc-dot"></span>Bias &amp; fairness</a>
-        <a href="#access"><span class="pd-toc-dot"></span>Access controls</a>
-        <a href="#maintenance"><span class="pd-toc-dot"></span>Maintenance</a>
-        <a href="#results"><span class="pd-toc-dot"></span>Results &amp; impact</a>
-        <a href="#learnings"><span class="pd-toc-dot"></span>Key learnings</a>
+    <aside class="doc-sidebar">
+      <nav class="doc-toc">
+        <div class="doc-toc-title">On this page</div>
+        <a href="#motivation" class="toc-active"><span class="doc-toc-dot"></span>Motivation</a>
+        <a href="#contribution"><span class="doc-toc-dot"></span>My contribution</a>
+        <a href="#summary"><span class="doc-toc-dot"></span>Dataset summary</a>
+        <a href="#schema"><span class="doc-toc-dot"></span>Schema &amp; splits</a>
+        <a href="#pipeline"><span class="doc-toc-dot"></span>Collection pipeline</a>
+        <a href="#uses"><span class="doc-toc-dot"></span>Intended / out-of-scope</a>
+        <a href="#bias"><span class="doc-toc-dot"></span>Bias &amp; fairness</a>
+        <a href="#access"><span class="doc-toc-dot"></span>Access controls</a>
+        <a href="#maintenance"><span class="doc-toc-dot"></span>Maintenance</a>
+        <a href="#results"><span class="doc-toc-dot"></span>Results &amp; impact</a>
+        <a href="#learnings"><span class="doc-toc-dot"></span>Key learnings</a>
       </nav>
-      <div class="pd-quick-ref">
-        <div class="pd-quick-ref-title">Dataset at a glance</div>
-        <div class="pd-quick-ref-row"><strong>Patients</strong><span>~520,000</span></div>
-        <div class="pd-quick-ref-row"><strong>Centres</strong><span>7</span></div>
-        <div class="pd-quick-ref-row"><strong>Split</strong><span>By patient</span></div>
-        <div class="pd-quick-ref-row"><strong>De-ID</strong><code>at source</code></div>
+      <div class="doc-quick-ref">
+        <div class="doc-quick-ref-title">Dataset at a glance</div>
+        <div class="doc-quick-ref-row"><strong>Patients</strong><span>~520,000</span></div>
+        <div class="doc-quick-ref-row"><strong>Centres</strong><span>7</span></div>
+        <div class="doc-quick-ref-row"><strong>Split</strong><span>By patient</span></div>
+        <div class="doc-quick-ref-row"><strong>De-ID</strong><code>at source</code></div>
       </div>
     </aside>
   </div>

@@ -33,8 +33,8 @@
     </div>
   </nav>
 
-  <div class="or-shell">
-    <main class="or-content">
+  <div class="doc-shell">
+    <main class="doc-content">
 
       <div class="doc-breadcrumb" style="margin-bottom:1.25rem;">
         <a href="../../portfolio.html">Portfolio</a><span>&rsaquo;</span>
@@ -43,45 +43,45 @@
       </div>
 
       <!-- HERO -->
-      <div class="or-hero">
-        <span class="or-hero-eyebrow">&#129518; Case Study &middot; MLOps &middot; Feature Store &middot; ML Data Infrastructure</span>
+      <div class="doc-hero">
+        <span class="doc-hero-eyebrow">&#129518; Case Study &middot; MLOps &middot; Feature Store &middot; ML Data Infrastructure</span>
         <h1>Orion <span>Feature Store</span></h1>
-        <p class="or-hero-desc">
+        <p class="doc-hero-desc">
           A feature store is the shared data layer that lets machine-learning teams compute a feature
           once and use it everywhere in training and in production without the two drifting
           apart. I documented the full system: offline and online stores, the feature registry,
           point-in-time correctness, materialisation, and the training/serving skew problem that a
           feature store exists to solve.
         </p>
-        <div class="or-hero-tags">
-          <span class="or-hero-tag">Offline store</span>
-          <span class="or-hero-tag">Online store</span>
-          <span class="or-hero-tag">Feature registry</span>
-          <span class="or-hero-tag">Point-in-time</span>
-          <span class="or-hero-tag">Materialisation</span>
-          <span class="or-hero-tag">Feature reuse</span>
+        <div class="doc-hero-tags">
+          <span class="doc-hero-tag">Offline store</span>
+          <span class="doc-hero-tag">Online store</span>
+          <span class="doc-hero-tag">Feature registry</span>
+          <span class="doc-hero-tag">Point-in-time</span>
+          <span class="doc-hero-tag">Materialisation</span>
+          <span class="doc-hero-tag">Feature reuse</span>
         </div>
       </div>
 
       <!-- DOC CONTROL -->
-      <div class="or-control">
-        <table class="or-ctrl-table">
+      <div class="doc-control">
+        <table class="doc-ctrl-table">
           <tbody>
-            <tr><td class="or-ctrl-label">Industry</td><td>Machine Learning Operations (MLOps) ML Data Infrastructure</td></tr>
-            <tr><td class="or-ctrl-label">Project</td><td>Orion Feature Store shared feature platform for training and serving</td></tr>
-            <tr><td class="or-ctrl-label">My role</td><td>Lead Technical Writer architecture docs, feature authoring guide, governance model</td></tr>
-            <tr><td class="or-ctrl-label">Audience</td><td>ML engineers, data engineers, data scientists, platform teams</td></tr>
-            <tr><td class="or-ctrl-label">Doc type</td><td>Architecture reference + feature authoring playbook</td></tr>
-            <tr><td class="or-ctrl-label">Tools</td><td>Python, Spark, a streaming layer, an online key-value store, a registry service</td></tr>
-            <tr><td class="or-ctrl-label">Version</td><td>1.0</td></tr>
-            <tr><td class="or-ctrl-label">Last reviewed</td><td>June 2026</td></tr>
+            <tr><td class="doc-ctrl-label">Industry</td><td>Machine Learning Operations (MLOps) ML Data Infrastructure</td></tr>
+            <tr><td class="doc-ctrl-label">Project</td><td>Orion Feature Store shared feature platform for training and serving</td></tr>
+            <tr><td class="doc-ctrl-label">My role</td><td>Lead Technical Writer architecture docs, feature authoring guide, governance model</td></tr>
+            <tr><td class="doc-ctrl-label">Audience</td><td>ML engineers, data engineers, data scientists, platform teams</td></tr>
+            <tr><td class="doc-ctrl-label">Doc type</td><td>Architecture reference + feature authoring playbook</td></tr>
+            <tr><td class="doc-ctrl-label">Tools</td><td>Python, Spark, a streaming layer, an online key-value store, a registry service</td></tr>
+            <tr><td class="doc-ctrl-label">Version</td><td>1.0</td></tr>
+            <tr><td class="doc-ctrl-label">Last reviewed</td><td>June 2026</td></tr>
           </tbody>
         </table>
       </div>
 
       <!-- PROBLEM -->
-      <section class="or-section" id="problem">
-        <div class="or-section-heading"><div class="or-section-icon red">&#127919;</div><h2>The business problem</h2></div>
+      <section class="doc-section" id="problem">
+        <div class="doc-section-heading"><div class="doc-section-icon red">&#127919;</div><h2>The business problem</h2></div>
         <p>
           A data scientist trains a fraud model. One of its strongest features is
           <em>average transaction amount over the last 7 days</em>. In training, that feature is computed
@@ -95,7 +95,7 @@
           and nobody can see why, because both the training query and the serving code look correct in
           isolation.
         </p>
-        <div class="or-callout red">
+        <div class="doc-callout red">
           <strong>This is training/serving skew and it is the problem Orion exists to solve</strong>
           <p>
             When a feature is computed one way for training and another way for serving, the model is
@@ -108,23 +108,23 @@
       </section>
 
       <!-- CONTRIBUTION -->
-      <section class="or-section" id="contribution">
-        <div class="or-section-heading"><div class="or-section-icon blue">&#9997;&#65039;</div><h2>My contribution</h2></div>
+      <section class="doc-section" id="contribution">
+        <div class="doc-section-heading"><div class="doc-section-icon blue">&#9997;&#65039;</div><h2>My contribution</h2></div>
         <p>I owned the documentation that turns a feature store from infrastructure into a shared discipline:</p>
-        <div class="or-cards">
-          <div class="or-card"><div class="or-card-icon">&#127959;&#65039;</div><h3>Architecture reference</h3><p>Documented how the offline store, online store, registry, and materialisation fit together and why each exists.</p></div>
-          <div class="or-card"><div class="or-card-icon">&#128221;</div><h3>Feature authoring guide</h3><p>A step-by-step guide for defining a feature once so it is correct in both training and serving.</p></div>
-          <div class="or-card"><div class="or-card-icon">&#9202;&#65039;</div><h3>Point-in-time correctness</h3><p>Explained the single most misunderstood concept in feature stores, with worked examples of how to avoid label leakage.</p></div>
-          <div class="or-card"><div class="or-card-icon">&#128260;</div><h3>Materialisation &amp; freshness</h3><p>Documented how features move into the online store and the freshness SLAs teams can rely on.</p></div>
-          <div class="or-card"><div class="or-card-icon">&#128193;</div><h3>Discovery &amp; reuse</h3><p>Wrote the registry and discovery guidance that lets teams find and reuse features instead of rebuilding them.</p></div>
-          <div class="or-card"><div class="or-card-icon">&#128737;&#65039;</div><h3>Ownership &amp; governance</h3><p>Defined ownership, versioning, and deprecation rules so features stay trustworthy over time.</p></div>
+        <div class="doc-cards">
+          <div class="doc-card"><div class="doc-card-icon">&#127959;&#65039;</div><h3>Architecture reference</h3><p>Documented how the offline store, online store, registry, and materialisation fit together and why each exists.</p></div>
+          <div class="doc-card"><div class="doc-card-icon">&#128221;</div><h3>Feature authoring guide</h3><p>A step-by-step guide for defining a feature once so it is correct in both training and serving.</p></div>
+          <div class="doc-card"><div class="doc-card-icon">&#9202;&#65039;</div><h3>Point-in-time correctness</h3><p>Explained the single most misunderstood concept in feature stores, with worked examples of how to avoid label leakage.</p></div>
+          <div class="doc-card"><div class="doc-card-icon">&#128260;</div><h3>Materialisation &amp; freshness</h3><p>Documented how features move into the online store and the freshness SLAs teams can rely on.</p></div>
+          <div class="doc-card"><div class="doc-card-icon">&#128193;</div><h3>Discovery &amp; reuse</h3><p>Wrote the registry and discovery guidance that lets teams find and reuse features instead of rebuilding them.</p></div>
+          <div class="doc-card"><div class="doc-card-icon">&#128737;&#65039;</div><h3>Ownership &amp; governance</h3><p>Defined ownership, versioning, and deprecation rules so features stay trustworthy over time.</p></div>
         </div>
       </section>
 
       <!-- DELIVERABLES -->
-      <section class="or-section" id="deliverables">
-        <div class="or-section-heading"><div class="or-section-icon green">&#128230;</div><h2>What I delivered</h2></div>
-        <table class="or-table">
+      <section class="doc-section" id="deliverables">
+        <div class="doc-section-heading"><div class="doc-section-icon green">&#128230;</div><h2>What I delivered</h2></div>
+        <table class="doc-table">
           <thead><tr><th>Deliverable</th><th>Purpose</th><th>Audience</th></tr></thead>
           <tbody>
             <tr><td><strong>Architecture reference</strong></td><td>The canonical description of each component and how they connect</td><td>ML &amp; data engineers</td></tr>
@@ -138,8 +138,8 @@
       </section>
 
       <!-- ARCHITECTURE -->
-      <section class="or-section" id="architecture">
-        <div class="or-section-heading"><div class="or-section-icon purple">&#127959;&#65039;</div><h2>Architecture</h2></div>
+      <section class="doc-section" id="architecture">
+        <div class="doc-section-heading"><div class="doc-section-icon purple">&#127959;&#65039;</div><h2>Architecture</h2></div>
         <p>
           The core idea is one transformation feeding two stores. A feature is defined and computed once,
           then materialised into an <strong>offline store</strong> tuned for large historical reads
@@ -147,7 +147,7 @@
           A central <strong>registry</strong> owns the definitions so both paths stay identical.
         </p>
 
-        <div class="or-diagram">
+        <div class="doc-diagram">
           <svg width="100%" viewBox="0 0 680 360" role="img" xmlns="http://www.w3.org/2000/svg">
             <title>Orion feature store architecture</title>
             <defs><marker id="orarr1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -179,12 +179,12 @@
             <line x1="260" y1="94" x2="260" y2="148" stroke="#BA7517" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#orarr1)"/>
             <text class="ts" x="307" y="124" text-anchor="middle" fill="#94a3b8">governs</text>
           </svg>
-          <p class="or-diagram-caption">Diagram 1 of 3 Architecture. One transformation feeds two stores. The offline store serves high-volume historical reads for 
+          <p class="doc-diagram-caption">Diagram 1 of 3 Architecture. One transformation feeds two stores. The offline store serves high-volume historical reads for 
             training; the online store serves low-latency single-row reads for production. The registry owns every definition so both paths compute the same feature 
             the same way.</p>
         </div>
 
-        <table class="or-table">
+        <table class="doc-table">
           <thead><tr><th>Component</th><th>Optimised for</th><th>Read pattern</th></tr></thead>
           <tbody>
             <tr><td><strong>Offline store</strong></td><td>Large historical scans across many rows and dates</td><td>Batch, high throughput</td></tr>
@@ -196,15 +196,15 @@
       </section>
 
       <!-- SKEW -->
-      <section class="or-section" id="skew">
-        <div class="or-section-heading"><div class="or-section-icon red">&#9889;</div><h2>Training/serving skew the core failure</h2></div>
+      <section class="doc-section" id="skew">
+        <div class="doc-section-heading"><div class="doc-section-icon red">&#9889;</div><h2>Training/serving skew the core failure</h2></div>
         <p>
           Skew happens when the feature used in training is not identical to the feature used in serving.
           The model learned a relationship using one set of numbers, then meets different numbers in
           production. The diagram shows the two worlds and where they diverge.
         </p>
 
-        <div class="or-diagram">
+        <div class="doc-diagram">
           <svg width="100%" viewBox="0 0 680 300" role="img" xmlns="http://www.w3.org/2000/svg">
             <title>Training/serving skew</title>
             <defs><marker id="orarr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -226,11 +226,11 @@
             <line x1="155" y1="130" x2="300" y2="188" stroke="#A32D2D" stroke-width="1.5" marker-end="url(#orarr2)"/>
             <line x1="525" y1="130" x2="380" y2="188" stroke="#A32D2D" stroke-width="1.5" marker-end="url(#orarr2)"/>
           </svg>
-          <p class="or-diagram-caption">Diagram 2 of 3 Training/serving skew. Two separate implementations of the same feature drift apart at the edges window boundaries, 
+          <p class="doc-diagram-caption">Diagram 2 of 3 Training/serving skew. Two separate implementations of the same feature drift apart at the edges window boundaries, 
             null handling, rounding. A feature store removes the second implementation: both paths read one definition.</p>
         </div>
 
-        <div class="or-callout amber">
+        <div class="doc-callout amber">
           <strong>&#9888; Why &ldquo;just be careful&rdquo; doesn't work</strong>
           <p>
             Skew is rarely a big, obvious bug. It hides in edge cases: how a 7-day window treats the
@@ -243,8 +243,8 @@
       </section>
 
       <!-- POINT IN TIME -->
-      <section class="or-section" id="pit">
-        <div class="or-section-heading"><div class="or-section-icon purple">&#9202;&#65039;</div><h2>Point-in-time correctness</h2></div>
+      <section class="doc-section" id="pit">
+        <div class="doc-section-heading"><div class="doc-section-icon purple">&#9202;&#65039;</div><h2>Point-in-time correctness</h2></div>
         <p>
           This is the concept that separates a real feature store from a glorified cache, and the one the
           documentation spends the most care on. When you build a training set, each training row must see
@@ -253,7 +253,7 @@
           model and produces training scores that collapse in production.
         </p>
 
-        <div class="or-diagram">
+        <div class="doc-diagram">
           <svg width="100%" viewBox="0 0 680 250" role="img" xmlns="http://www.w3.org/2000/svg">
             <title>Point-in-time correctness</title>
             <defs><marker id="orarr3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -277,11 +277,11 @@
             <circle cx="600" cy="125" r="6" class="c-red"/>
             <text class="ts" x="318" y="210" text-anchor="middle" fill="#94a3b8">A correct training row at the label event sees the past value, never the future one.</text>
           </svg>
-          <p class="or-diagram-caption">Diagram 3 of 3 Point-in-time correctness. For a training row anchored at the label event, the feature store joins the value 
+          <p class="doc-diagram-caption">Diagram 3 of 3 Point-in-time correctness. For a training row anchored at the label event, the feature store joins the value 
             that was known <em>before</em> that moment and excludes anything known only afterward. This is what prevents label leakage.</p>
         </div>
 
-        <div class="or-callout purple">
+        <div class="doc-callout purple">
           <strong>The tell-tale symptom</strong>
           <p>
             If an offline model looks almost too good near-perfect on the validation set 
@@ -294,14 +294,14 @@
       </section>
 
       <!-- MATERIALISATION -->
-      <section class="or-section" id="materialisation">
-        <div class="or-section-heading"><div class="or-section-icon blue">&#128260;</div><h2>Materialisation &amp; freshness</h2></div>
+      <section class="doc-section" id="materialisation">
+        <div class="doc-section-heading"><div class="doc-section-icon blue">&#128260;</div><h2>Materialisation &amp; freshness</h2></div>
         <p>
           Materialisation is how a computed feature actually lands in each store. The documentation makes
           the freshness contract explicit, because a serving team needs to know how old the value behind a
           feature can be before it stops being trustworthy.
         </p>
-        <table class="or-table">
+        <table class="doc-table">
           <thead><tr><th>Feature type</th><th>Materialised by</th><th>Typical freshness</th></tr></thead>
           <tbody>
             <tr><td><strong>Batch</strong> (e.g. 30-day averages)</td><td>Scheduled batch job</td><td>Hours refreshed daily or hourly</td></tr>
@@ -309,7 +309,7 @@
             <tr><td><strong>On-demand</strong> (e.g. request-time ratios)</td><td>Computed at serving time</td><td>Real-time, no staleness</td></tr>
           </tbody>
         </table>
-        <div class="or-callout blue">
+        <div class="doc-callout blue">
           <strong>Freshness is a contract, not a detail</strong>
           <p>
             A feature that is hours stale may be perfectly fine for one model and dangerous for another.
@@ -320,41 +320,41 @@
       </section>
 
       <!-- AUTHORING RUNBOOK -->
-      <section class="or-section" id="authoring">
-        <div class="or-section-heading"><div class="or-section-icon purple">&#128221;</div><h2>Feature authoring guide</h2></div>
+      <section class="doc-section" id="authoring">
+        <div class="doc-section-heading"><div class="doc-section-icon purple">&#128221;</div><h2>Feature authoring guide</h2></div>
         <p>The whole value of a feature store collapses if features are authored inconsistently. This is the guide an engineer follows to define a feature once, 
           correctly, for both paths.</p>
-        <div class="or-scenario">
-          <div class="or-scenario-hdr">Runbook define and register a new feature</div>
-          <div class="or-scenario-body">
-            <div class="or-runbook-key">1 &middot; Define the feature once</div>
-            <div class="or-code">
-              <div class="or-code-bar"><span class="or-code-lang">python &middot; one definition, both paths use it</span></div>
+        <div class="doc-scenario">
+          <div class="doc-scenario-hdr">Runbook define and register a new feature</div>
+          <div class="doc-scenario-body">
+            <div class="doc-runbook-key">1 &middot; Define the feature once</div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">python &middot; one definition, both paths use it</span></div>
               <pre>@feature(entity="customer", freshness="1h") def avg_txn_amount_7d(txns):
-                <span class="or-c"># single source of truth for training AND serving</span>
+                <span class="doc-c"># single source of truth for training AND serving</span>
                 window = last_n_days(txns, 7) return mean(window.amount) if window else 0.0</pre>
             </div>
-            <div class="or-runbook-key">2 &middot; Register it</div>
-            <div class="or-code">
-              <div class="or-code-bar"><span class="or-code-lang">shell &middot; publish to the registry with an owner</span></div>
+            <div class="doc-runbook-key">2 &middot; Register it</div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">shell &middot; publish to the registry with an owner</span></div>
               <pre>orion feature register avg_txn_amount_7d --owner fraud-team 
-              <span class="or-c"># now discoverable and reusable by any team</span></pre>
+              <span class="doc-c"># now discoverable and reusable by any team</span></pre>
             </div>
-            <div class="or-runbook-key">3 &middot; Build a training set (point-in-time correct)</div>
-            <div class="or-code">
-              <div class="or-code-bar"><span class="or-code-lang">python &middot; the store enforces no-future-leakage</span></div>
+            <div class="doc-runbook-key">3 &middot; Build a training set (point-in-time correct)</div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">python &middot; the store enforces no-future-leakage</span></div>
               <pre>training_df = orion.get_historical_features(entity_df=labels,            
-                <span class="or-c"># each row has its own event timestamp</span> features=["avg_txn_amount_7d"],)  
-                <span class="or-c"># joins values as-of each label's timestamp</span></pre>
+                <span class="doc-c"># each row has its own event timestamp</span> features=["avg_txn_amount_7d"],)  
+                <span class="doc-c"># joins values as-of each label's timestamp</span></pre>
             </div>
-            <div class="or-runbook-key">4 &middot; Read at serving time</div>
-            <div class="or-code">
-              <div class="or-code-bar"><span class="or-code-lang">python &middot; identical feature, low-latency read</span></div>
+            <div class="doc-runbook-key">4 &middot; Read at serving time</div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">python &middot; identical feature, low-latency read</span></div>
               <pre>features = orion.get_online_features(entity={"customer": cust_id}, features=["avg_txn_amount_7d"],)  
-                <span class="or-c"># same definition as training &rarr; no skew</span></pre>
+                <span class="doc-c"># same definition as training &rarr; no skew</span></pre>
             </div>
-            <div class="or-runbook-key">Checklist before publishing</div>
-            <ul class="or-list">
+            <div class="doc-runbook-key">Checklist before publishing</div>
+            <ul class="doc-list">
               <li>Feature has a named owner and a freshness SLA.</li>
               <li>Null / cold-start behaviour is defined explicitly (here, new customers return 0.0).</li>
               <li>Training reads use point-in-time joins, never a plain join on latest value.</li>
@@ -364,14 +364,14 @@
       </section>
 
       <!-- GOVERNANCE -->
-      <section class="or-section" id="governance">
-        <div class="or-section-heading"><div class="or-section-icon amber">&#128737;&#65039;</div><h2>Discovery, ownership &amp; governance</h2></div>
+      <section class="doc-section" id="governance">
+        <div class="doc-section-heading"><div class="doc-section-icon amber">&#128737;&#65039;</div><h2>Discovery, ownership &amp; governance</h2></div>
         <p>
           A feature store only pays off if teams reuse features instead of quietly rebuilding them. That
           requires features to be discoverable and trustworthy which is a governance and
           documentation problem as much as a technical one.
         </p>
-        <table class="or-table">
+        <table class="doc-table">
           <thead><tr><th>Concern</th><th>Rule documented</th></tr></thead>
           <tbody>
             <tr><td>Ownership</td><td>Every feature has a named owning team responsible for its correctness.</td></tr>
@@ -380,7 +380,7 @@
             <tr><td>Discovery</td><td>The registry is searchable with descriptions, owners, freshness, and lineage so teams find before they build.</td></tr>
           </tbody>
         </table>
-        <div class="or-callout green">
+        <div class="doc-callout green">
           <strong>Reuse is the real return on a feature store</strong>
           <p>
             The skew fix is what justifies a feature store technically, but reuse is what justifies it to a
@@ -392,9 +392,9 @@
       </section>
 
       <!-- RESULTS -->
-      <section class="or-section" id="results">
-        <div class="or-section-heading"><div class="or-section-icon green">&#128200;</div><h2>Results &amp; impact</h2></div>
-        <table class="or-table">
+      <section class="doc-section" id="results">
+        <div class="doc-section-heading"><div class="doc-section-icon green">&#128200;</div><h2>Results &amp; impact</h2></div>
+        <table class="doc-table">
           <thead><tr><th>Measure</th><th>Before</th><th>After</th></tr></thead>
           <tbody>
             <tr><td>Feature implementations per feature</td><td>One for training, one for serving</td><td>One shared definition</td></tr>
@@ -406,33 +406,33 @@
       </section>
 
       <!-- LEARNINGS -->
-      <section class="or-section" id="learnings">
-        <div class="or-section-heading"><div class="or-section-icon amber">&#128161;</div><h2>Key learnings</h2></div>
-        <div class="or-callout amber"><strong>The hardest concept deserves the most documentation.</strong><p>Point-in-time correctness is where teams trip, so it earned 
+      <section class="doc-section" id="learnings">
+        <div class="doc-section-heading"><div class="doc-section-icon amber">&#128161;</div><h2>Key learnings</h2></div>
+        <div class="doc-callout amber"><strong>The hardest concept deserves the most documentation.</strong><p>Point-in-time correctness is where teams trip, so it earned 
           the most worked examples. Documentation effort should follow conceptual difficulty, not section length conventions.</p></div>
-        <div class="or-callout blue"><strong>A feature store is a contract, not a database.</strong><p>The value isn't storage it's the promise that training and 
+        <div class="doc-callout blue"><strong>A feature store is a contract, not a database.</strong><p>The value isn't storage it's the promise that training and 
           serving see the same number. Framing every page around that contract made the docs cohere.</p></div>
-        <div class="or-callout green"><strong>Governance is what makes reuse safe.</strong><p>Discovery without ownership and versioning just spreads risk faster. 
+        <div class="doc-callout green"><strong>Governance is what makes reuse safe.</strong><p>Discovery without ownership and versioning just spreads risk faster. 
           The governance model was what turned reuse from a hazard into the platform's biggest win.</p></div>
       </section>
 
       <!-- WRITER NOTE -->
-      <div class="or-writer-note" id="writer-note">
-        <div class="or-writer-note-label">&#128221; Writer's note</div>
+      <div class="doc-writer-note" id="writer-note">
+        <div class="doc-writer-note-label">&#128221; Writer's note</div>
         <p>Feature stores are easy to document badly as a list of API calls. I built this around the one problem the whole system exists to solve, training/serving skew, 
           because an engineer who understands <em>why</em> the single-definition rule matters will follow it under deadline, while one who only memorised the API will 
           quietly re-implement a feature when it's faster.</p>
         <p>Point-in-time correctness got the most care because it's both the most powerful feature and the easiest to get catastrophically wrong. Connecting it to 
           the &ldquo;too-good offline score&rdquo; symptom links this page to the NeuralFlow evaluation work, so the portfolio reads as one coherent platform rather than 
           three unrelated documents.</p>
-        <div class="or-related">
+        <div class="doc-related">
           <a href="./neuralflow-eval.html">NeuralFlow Evaluation Suite &rarr;</a>
           <a href="./helios-model-serving.html">Helios Model Serving &rarr;</a>
           <a href="./finsight-risk-api-v2.html">FinSight Risk API &rarr;</a>
         </div>
       </div>
 
-      <div class="or-nav-bottom">
+      <div class="doc-nav-bottom">
         <a href="../../portfolio.html" class="btn-leslie">&larr; Back to Portfolio</a>
         <a href="../../contact.html" class="btn btn-accent">Discuss this work &rarr;</a>
       </div>
@@ -440,27 +440,27 @@
     </main>
 
     <!-- SIDEBAR -->
-    <aside class="or-sidebar">
-      <nav class="or-toc">
-        <div class="or-toc-title">On this page</div>
-        <a href="#problem" class="toc-active"><span class="or-toc-dot"></span>Business problem</a>
-        <a href="#contribution"><span class="or-toc-dot"></span>My contribution</a>
-        <a href="#deliverables"><span class="or-toc-dot"></span>Deliverables</a>
-        <a href="#architecture"><span class="or-toc-dot"></span>Architecture</a>
-        <a href="#skew"><span class="or-toc-dot"></span>Training/serving skew</a>
-        <a href="#pit"><span class="or-toc-dot"></span>Point-in-time</a>
-        <a href="#materialisation"><span class="or-toc-dot"></span>Materialisation</a>
-        <a href="#authoring"><span class="or-toc-dot"></span>Feature authoring</a>
-        <a href="#governance"><span class="or-toc-dot"></span>Governance</a>
-        <a href="#results"><span class="or-toc-dot"></span>Results &amp; impact</a>
-        <a href="#learnings"><span class="or-toc-dot"></span>Key learnings</a>
+    <aside class="doc-sidebar">
+      <nav class="doc-toc">
+        <div class="doc-toc-title">On this page</div>
+        <a href="#problem" class="toc-active"><span class="doc-toc-dot"></span>Business problem</a>
+        <a href="#contribution"><span class="doc-toc-dot"></span>My contribution</a>
+        <a href="#deliverables"><span class="doc-toc-dot"></span>Deliverables</a>
+        <a href="#architecture"><span class="doc-toc-dot"></span>Architecture</a>
+        <a href="#skew"><span class="doc-toc-dot"></span>Training/serving skew</a>
+        <a href="#pit"><span class="doc-toc-dot"></span>Point-in-time</a>
+        <a href="#materialisation"><span class="doc-toc-dot"></span>Materialisation</a>
+        <a href="#authoring"><span class="doc-toc-dot"></span>Feature authoring</a>
+        <a href="#governance"><span class="doc-toc-dot"></span>Governance</a>
+        <a href="#results"><span class="doc-toc-dot"></span>Results &amp; impact</a>
+        <a href="#learnings"><span class="doc-toc-dot"></span>Key learnings</a>
       </nav>
-      <div class="or-quick-ref">
-        <div class="or-quick-ref-title">Store at a glance</div>
-        <div class="or-quick-ref-row"><strong>Offline</strong><span>Training, batch</span></div>
-        <div class="or-quick-ref-row"><strong>Online</strong><span>Serving, low-latency</span></div>
-        <div class="or-quick-ref-row"><strong>Registry</strong><span>One definition</span></div>
-        <div class="or-quick-ref-row"><strong>Solves</strong><code>skew</code></div>
+      <div class="doc-quick-ref">
+        <div class="doc-quick-ref-title">Store at a glance</div>
+        <div class="doc-quick-ref-row"><strong>Offline</strong><span>Training, batch</span></div>
+        <div class="doc-quick-ref-row"><strong>Online</strong><span>Serving, low-latency</span></div>
+        <div class="doc-quick-ref-row"><strong>Registry</strong><span>One definition</span></div>
+        <div class="doc-quick-ref-row"><strong>Solves</strong><code>skew</code></div>
       </div>
     </aside>
   </div>

@@ -32,8 +32,8 @@
     </div>
   </nav>
 
-  <div class="hl-shell">
-    <main class="hl-content">
+  <div class="doc-shell">
+    <main class="doc-content">
 
       <div class="doc-breadcrumb" style="margin-bottom:1.25rem;">
         <a href="../../portfolio.html">Portfolio</a><span>›</span>
@@ -41,46 +41,46 @@
         <span>Operations Playbook</span>
       </div>
 
-      <div class="hl-hero">
-        <span class="hl-hero-eyebrow">📕 Companion Playbook · Disaster Recovery · Capacity Planning</span>
+      <div class="doc-hero">
+        <span class="doc-hero-eyebrow">📕 Companion Playbook · Disaster Recovery · Capacity Planning</span>
         <h1>Helios <span>Operations Playbook</span></h1>
-        <p class="hl-hero-desc">
+        <p class="doc-hero-desc">
           The operational depth behind the platform: disaster recovery procedures with RTO/RPO targets,
           a region-failover runbook, and the capacity-planning model the platform team uses to stay ahead
           of demand. This is the companion to the main Helios architecture documentation.
         </p>
-        <div class="hl-hero-tags">
-          <span class="hl-hero-tag">Disaster recovery</span>
-          <span class="hl-hero-tag">RTO / RPO</span>
-          <span class="hl-hero-tag">Region failover</span>
-          <span class="hl-hero-tag">Capacity planning</span>
-          <span class="hl-hero-tag">Headroom model</span>
+        <div class="doc-hero-tags">
+          <span class="doc-hero-tag">Disaster recovery</span>
+          <span class="doc-hero-tag">RTO / RPO</span>
+          <span class="doc-hero-tag">Region failover</span>
+          <span class="doc-hero-tag">Capacity planning</span>
+          <span class="doc-hero-tag">Headroom model</span>
         </div>
       </div>
 
-      <a class="hl-companion" href="./helios-model-serving.html">
-        <div class="hl-companion-icon">←</div>
-        <div class="hl-companion-body">
-          <div class="hl-companion-title">Back to the main page Helios Model Serving</div>
-          <div class="hl-companion-desc">Architecture, serving modes, promotion workflow, SLOs, incident response, and governance.</div>
+      <a class="doc-companion" href="./helios-model-serving.html">
+        <div class="doc-companion-icon">←</div>
+        <div class="doc-companion-body">
+          <div class="doc-companion-title">Back to the main page Helios Model Serving</div>
+          <div class="doc-companion-desc">Architecture, serving modes, promotion workflow, SLOs, incident response, and governance.</div>
         </div>
       </a>
 
       <!-- ── DR OVERVIEW ── -->
-      <section class="hl-section" id="dr-overview">
-        <div class="hl-section-heading"><div class="hl-section-icon red">🛡️</div><h2>Disaster recovery objectives</h2></div>
+      <section class="doc-section" id="dr-overview">
+        <div class="doc-section-heading"><div class="doc-section-icon red">🛡️</div><h2>Disaster recovery objectives</h2></div>
         <p>
           Disaster recovery answers two questions with numbers, not adjectives: <strong>how much data can we
           lose</strong> (RPO) and <strong>how fast must we be back</strong> (RTO). Every DR procedure on this
           page is built to hit the targets below. Vague promises like "highly available" are deliberately absent.
         </p>
-        <div class="hl-metrics">
-          <div class="hl-metric"><div class="hl-metric-value">&lt;15min</div><div class="hl-metric-label">RTO<br>recovery time objective</div></div>
-          <div class="hl-metric"><div class="hl-metric-value">&lt;5min</div><div class="hl-metric-label">RPO<br>recovery point objective</div></div>
-          <div class="hl-metric"><div class="hl-metric-value">3</div><div class="hl-metric-label">Regions<br>active-active capable</div></div>
-          <div class="hl-metric"><div class="hl-metric-value">Daily</div><div class="hl-metric-label">Registry backup<br>+ continuous artifact sync</div></div>
+        <div class="doc-metrics">
+          <div class="doc-metric"><div class="doc-metric-value">&lt;15min</div><div class="doc-metric-label">RTO<br>recovery time objective</div></div>
+          <div class="doc-metric"><div class="doc-metric-value">&lt;5min</div><div class="doc-metric-label">RPO<br>recovery point objective</div></div>
+          <div class="doc-metric"><div class="doc-metric-value">3</div><div class="doc-metric-label">Regions<br>active-active capable</div></div>
+          <div class="doc-metric"><div class="doc-metric-value">Daily</div><div class="doc-metric-label">Registry backup<br>+ continuous artifact sync</div></div>
         </div>
-        <table class="hl-table">
+        <table class="doc-table">
           <thead><tr><th>Term</th><th>Definition</th><th>Helios target</th></tr></thead>
           <tbody>
             <tr><td><strong>RTO</strong></td><td>Maximum acceptable time to restore service after an incident</td><td>Under 15 minutes for a regional failover</td></tr>
@@ -91,10 +91,10 @@
       </section>
 
       <!-- ── DR SCENARIOS ── -->
-      <section class="hl-section" id="dr-scenarios">
-        <div class="hl-section-heading"><div class="hl-section-icon amber">⚡</div><h2>Disaster scenarios &amp; response</h2></div>
+      <section class="doc-section" id="dr-scenarios">
+        <div class="doc-section-heading"><div class="doc-section-icon amber">⚡</div><h2>Disaster scenarios &amp; response</h2></div>
         <p>Three classes of disaster, each with a documented detection signal and response.</p>
-        <table class="hl-table">
+        <table class="doc-table">
           <thead><tr><th>Scenario</th><th>Detection</th><th>Response</th><th>Target</th></tr></thead>
           <tbody>
             <tr><td><strong>Single-region outage</strong></td><td>Region health checks fail; error rate spikes in one zone</td><td>Router fails traffic over to nearest healthy region automatically</td><td>RTO &lt; 15 min</td></tr>
@@ -103,32 +103,32 @@
           </tbody>
         </table>
 
-        <div class="hl-scenario">
-          <div class="hl-scenario-hdr">Executable runbook regional failover (SEV-1)</div>
-          <div class="hl-scenario-body">
-            <div class="hl-runbook-row"><span class="hl-runbook-key">Severity</span><span class="hl-runbook-val"><span class="hl-sev sev1">SEV-1</span> region down, user-facing impact</span></div>
-            <div class="hl-runbook-key">Symptoms</div>
-            <ul class="hl-list">
+        <div class="doc-scenario">
+          <div class="doc-scenario-hdr">Executable runbook regional failover (SEV-1)</div>
+          <div class="doc-scenario-body">
+            <div class="doc-runbook-row"><span class="doc-runbook-key">Severity</span><span class="doc-runbook-val"><span class="doc-sev sev1">SEV-1</span> region down, user-facing impact</span></div>
+            <div class="doc-runbook-key">Symptoms</div>
+            <ul class="doc-list">
               <li>Region health checks failing for &gt; 2 minutes.</li>
               <li>Error rate in the affected region &gt; 50%.</li>
               <li>Latency in-region climbing without recovery.</li>
             </ul>
-            <div class="hl-runbook-key">Verify</div>
-            <div class="hl-code">
-              <div class="hl-code-bar"><span class="hl-code-lang">shell · confirm the region is genuinely down</span></div>
-              <pre>kubectl --context eu-west get nodes        <span class="hl-c"># is the region reachable at all?</span>
-promtool query instant 'up{region="eu-west"}' <span class="hl-c"># health signal</span>
-<span class="hl-c"># confirm it is not a monitoring false positive before failing over</span></pre>
+            <div class="doc-runbook-key">Verify</div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">shell · confirm the region is genuinely down</span></div>
+              <pre>kubectl --context eu-west get nodes        <span class="doc-c"># is the region reachable at all?</span>
+promtool query instant 'up{region="eu-west"}' <span class="doc-c"># health signal</span>
+<span class="doc-c"># confirm it is not a monitoring false positive before failing over</span></pre>
             </div>
-            <div class="hl-runbook-key">Fail over</div>
-            <div class="hl-code">
-              <div class="hl-code-bar"><span class="hl-code-lang">shell · shift traffic to healthy region</span></div>
+            <div class="doc-runbook-key">Fail over</div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">shell · shift traffic to healthy region</span></div>
               <pre>helios-ctl failover --from eu-west --to eu-central
-helios-ctl traffic verify --region eu-central  <span class="hl-c"># confirm uptake</span>
-<span class="hl-c"># watch Grafana "Regional Traffic" until eu-central absorbs the load</span></pre>
+helios-ctl traffic verify --region eu-central  <span class="doc-c"># confirm uptake</span>
+<span class="doc-c"># watch Grafana "Regional Traffic" until eu-central absorbs the load</span></pre>
             </div>
-            <div class="hl-runbook-key">Success criteria</div>
-            <ul class="hl-list">
+            <div class="doc-runbook-key">Success criteria</div>
+            <ul class="doc-list">
               <li>Error rate back under 0.5% within 15 minutes (RTO met).</li>
               <li>No data loss beyond the 5-minute RPO window.</li>
               <li>Failed region drained, not serving partial traffic.</li>
@@ -137,7 +137,7 @@ helios-ctl traffic verify --region eu-central  <span class="hl-c"># confirm upta
           </div>
         </div>
 
-        <div class="hl-callout amber">
+        <div class="doc-callout amber">
           <strong>⚠ DR is only real if it is rehearsed</strong>
           <p>
             A disaster recovery plan that has never been executed is a hypothesis. The platform team runs a
@@ -149,8 +149,8 @@ helios-ctl traffic verify --region eu-central  <span class="hl-c"># confirm upta
       </section>
 
       <!-- ── CAPACITY PLANNING ── -->
-      <section class="hl-section" id="capacity">
-        <div class="hl-section-heading"><div class="hl-section-icon teal">📐</div><h2>Capacity planning</h2></div>
+      <section class="doc-section" id="capacity">
+        <div class="doc-section-heading"><div class="doc-section-icon teal">📐</div><h2>Capacity planning</h2></div>
         <p>
           Capacity planning is the discipline of having enough headroom to absorb growth and spikes
           <em>before</em> they happen without paying for idle GPUs all year. Helios plans capacity on a
@@ -158,7 +158,7 @@ helios-ctl traffic verify --region eu-central  <span class="hl-c"># confirm upta
         </p>
 
         <h3>The headroom model</h3>
-        <table class="hl-table">
+        <table class="doc-table">
           <thead><tr><th>Input</th><th>How it is measured</th><th>Planning use</th></tr></thead>
           <tbody>
             <tr><td><strong>Baseline demand</strong></td><td>Median RPS over the trailing 30 days, per model</td><td>The floor capacity must always cover</td></tr>
@@ -168,7 +168,7 @@ helios-ctl traffic verify --region eu-central  <span class="hl-c"># confirm upta
           </tbody>
         </table>
 
-        <div class="hl-callout blue">
+        <div class="doc-callout blue">
           <strong>The planning rule</strong>
           <p>
             Provision so that <strong>baseline demand × peak multiplier</strong> still lands inside the
@@ -180,7 +180,7 @@ helios-ctl traffic verify --region eu-central  <span class="hl-c"># confirm upta
         </div>
 
         <h3>Capacity review cadence</h3>
-        <table class="hl-table">
+        <table class="doc-table">
           <thead><tr><th>Review</th><th>Frequency</th><th>Owner</th><th>Trigger for action</th></tr></thead>
           <tbody>
             <tr><td><strong>Utilisation review</strong></td><td>Weekly</td><td>Platform team</td><td>Any model sustained &gt; 75% utilisation</td></tr>
@@ -189,7 +189,7 @@ helios-ctl traffic verify --region eu-central  <span class="hl-c"># confirm upta
           </tbody>
         </table>
 
-        <div class="hl-callout amber">
+        <div class="doc-callout amber">
           <strong>⚠ The pre-campaign check</strong>
           <p>
             The campaign-spike incident on the main page is exactly what this check prevents. Before any
@@ -202,40 +202,40 @@ helios-ctl traffic verify --region eu-central  <span class="hl-c"># confirm upta
       </section>
 
       <!-- ── WRITER NOTE ── -->
-      <div class="hl-writer-note" id="writer-note">
-        <div class="hl-writer-note-label">📝 About this companion page</div>
+      <div class="doc-writer-note" id="writer-note">
+        <div class="doc-writer-note-label">📝 About this companion page</div>
         <p>This operations playbook is the companion to the main Helios documentation. I split disaster recovery and capacity planning into their own page deliberately: 
           the main architecture document should be readable in one sitting, and operational reference material is consulted at different moments during an incident, or 
           during quarterly planning by different people.</p>
         <p>That split is itself a documentation decision. A 12,000-word page that tries to be both an introduction and an operations manual serves neither purpose well. 
           Two linked, focused documents one to understand the platform, one to operate it under pressure is how mature documentation estates are actually structured.</p>
-        <div class="hl-related">
+        <div class="doc-related">
           <a href="./helios-model-serving.html">← Helios Model Serving (main page)</a>
           <a href="./incident-response.html">NimbusTech Incident Report →</a>
         </div>
       </div>
 
-      <div class="hl-nav-bottom">
+      <div class="doc-nav-bottom">
         <a href="./helios-model-serving.html" class="btn-leslie">← Back to main Helios page</a>
         <a href="../../contact.html" class="btn btn-accent">Discuss this work →</a>
       </div>
 
     </main>
 
-    <aside class="hl-sidebar">
-      <nav class="hl-toc">
-        <div class="hl-toc-title">On this page</div>
-        <a href="#dr-overview" class="toc-active"><span class="hl-toc-dot"></span>DR objectives</a>
-        <a href="#dr-scenarios"><span class="hl-toc-dot"></span>DR scenarios</a>
-        <a href="#capacity"><span class="hl-toc-dot"></span>Capacity planning</a>
+    <aside class="doc-sidebar">
+      <nav class="doc-toc">
+        <div class="doc-toc-title">On this page</div>
+        <a href="#dr-overview" class="toc-active"><span class="doc-toc-dot"></span>DR objectives</a>
+        <a href="#dr-scenarios"><span class="doc-toc-dot"></span>DR scenarios</a>
+        <a href="#capacity"><span class="doc-toc-dot"></span>Capacity planning</a>
       </nav>
-      <div class="hl-quick-ref">
-        <div class="hl-quick-ref-title">Targets at a glance</div>
-        <div class="hl-quick-ref-row"><strong>RTO</strong><code>&lt;15 min</code></div>
-        <div class="hl-quick-ref-row"><strong>RPO</strong><code>&lt;5 min</code></div>
-        <div class="hl-quick-ref-row"><strong>Regions</strong><span>3, active-active</span></div>
-        <div class="hl-quick-ref-row"><strong>Utilisation band</strong><code>50–70%</code></div>
-        <div class="hl-quick-ref-row"><strong>DR drills</strong><span>Quarterly game days</span></div>
+      <div class="doc-quick-ref">
+        <div class="doc-quick-ref-title">Targets at a glance</div>
+        <div class="doc-quick-ref-row"><strong>RTO</strong><code>&lt;15 min</code></div>
+        <div class="doc-quick-ref-row"><strong>RPO</strong><code>&lt;5 min</code></div>
+        <div class="doc-quick-ref-row"><strong>Regions</strong><span>3, active-active</span></div>
+        <div class="doc-quick-ref-row"><strong>Utilisation band</strong><code>50–70%</code></div>
+        <div class="doc-quick-ref-row"><strong>DR drills</strong><span>Quarterly game days</span></div>
       </div>
     </aside>
   </div>

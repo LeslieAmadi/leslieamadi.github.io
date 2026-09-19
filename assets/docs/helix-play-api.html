@@ -32,8 +32,8 @@
     </div>
   </nav>
 
-  <div class="hx-shell">
-    <main class="hx-content">
+  <div class="doc-shell">
+    <main class="doc-content">
 
       <div class="doc-breadcrumb" style="margin-bottom:1.25rem;">
         <a href="../../portfolio.html">Portfolio</a><span>&rsaquo;</span>
@@ -41,53 +41,53 @@
         <span>Helix Play Operator API</span>
       </div>
 
-      <div class="hx-hero">
-        <span class="hx-hero-eyebrow">&#127918; API Reference &middot; iGaming &middot; Remote Game Server</span>
+      <div class="doc-hero">
+        <span class="doc-hero-eyebrow">&#127918; API Reference &middot; iGaming &middot; Remote Game Server</span>
         <h1>Helix Play <span>Operator API</span></h1>
-        <p class="hx-hero-desc">
+        <p class="doc-hero-desc">
           A seamless-wallet integration between the Helix remote game server and an operator's lobby and wallet:
           signed play sessions, real-time wallet hooks for every round, and reversal-based recovery when a hook
           can't be confirmed. Written for an operator's engineers to integrate safely against real money.
         </p>
-        <div class="hx-hero-tags">
-          <span class="hx-hero-tag">HTTP-Signature auth</span>
-          <span class="hx-hero-tag">Wager/payout hooks</span>
-          <span class="hx-hero-tag">Reversal recovery</span>
-          <span class="hx-hero-tag">Retry back-off</span>
-          <span class="hx-hero-tag">Bonus promotions</span>
-          <span class="hx-hero-tag">Error reference</span>
+        <div class="doc-hero-tags">
+          <span class="doc-hero-tag">HTTP-Signature auth</span>
+          <span class="doc-hero-tag">Wager/payout hooks</span>
+          <span class="doc-hero-tag">Reversal recovery</span>
+          <span class="doc-hero-tag">Retry back-off</span>
+          <span class="doc-hero-tag">Bonus promotions</span>
+          <span class="doc-hero-tag">Error reference</span>
         </div>
       </div>
 
-      <div class="hx-control">
-        <table class="hx-ctrl-table">
+      <div class="doc-control">
+        <table class="doc-ctrl-table">
           <tbody>
-            <tr><td class="hx-ctrl-label">Discipline</td><td>API Documentation &middot; Developer Experience &middot; iGaming</td></tr>
-            <tr><td class="hx-ctrl-label">Base URL</td><td><code>rgs.helixplay.io/2024-09</code></td></tr>
-            <tr><td class="hx-ctrl-label">Auth</td><td>HTTP Signatures (HMAC-SHA384)</td></tr>
-            <tr><td class="hx-ctrl-label">Media type</td><td><code>application/json</code></td></tr>
-            <tr><td class="hx-ctrl-label">My role</td><td>Senior Technical Writer information architecture, field tables, runnable examples</td></tr>
-            <tr><td class="hx-ctrl-label">Doc type</td><td>API reference &amp; integration guide</td></tr>
-            <tr><td class="hx-ctrl-label">Version</td><td>2024-09 &middot; original demonstration piece</td></tr>
-            <tr><td class="hx-ctrl-label">Last reviewed</td><td>June 2026</td></tr>
+            <tr><td class="doc-ctrl-label">Discipline</td><td>API Documentation &middot; Developer Experience &middot; iGaming</td></tr>
+            <tr><td class="doc-ctrl-label">Base URL</td><td><code>rgs.helixplay.io/2024-09</code></td></tr>
+            <tr><td class="doc-ctrl-label">Auth</td><td>HTTP Signatures (HMAC-SHA384)</td></tr>
+            <tr><td class="doc-ctrl-label">Media type</td><td><code>application/json</code></td></tr>
+            <tr><td class="doc-ctrl-label">My role</td><td>Senior Technical Writer information architecture, field tables, runnable examples</td></tr>
+            <tr><td class="doc-ctrl-label">Doc type</td><td>API reference &amp; integration guide</td></tr>
+            <tr><td class="doc-ctrl-label">Version</td><td>2024-09 &middot; original demonstration piece</td></tr>
+            <tr><td class="doc-ctrl-label">Last reviewed</td><td>June 2026</td></tr>
           </tbody>
         </table>
       </div>
 
-      <div class="hx-layout">
-        <div class="hx-main">
+      <div class="doc-layout">
+        <div class="doc-main">
 
           <!-- HOW IT WORKS -->
-          <section class="hx-section" id="how">
-            <div class="hx-section-heading"><h2>How the integration works</h2></div>
+          <section class="doc-section" id="how">
+            <div class="doc-section-heading"><h2>How the integration works</h2></div>
             <p>The operator owns the player's money. Helix owns the game logic. They meet at two surfaces:</p>
-            <ul class="hx-list">
+            <ul class="doc-list">
               <li>The operator <strong>opens a play session</strong> by calling Helix, and redirects the player to the returned game client.</li>
               <li>As the player plays, Helix calls the operator's <strong>wallet hook</strong> for every round, asking it to move money and report the resulting balance.</li>
             </ul>
 
             <h3 id="model">Roles &amp; terms</h3>
-            <table class="hx-table">
+            <table class="doc-table">
               <thead><tr><th>Term</th><th>Meaning</th></tr></thead>
               <tbody>
                 <tr><td>Play session</td><td>One player, one game, one currency. Created by the operator; identified by a <code>session_id</code>.</td></tr>
@@ -98,8 +98,8 @@
                 <tr><td><code>ledger_ref</code></td><td>The globally unique id Helix assigns to a round the key the operator stores to reconcile reversals.</td></tr>
               </tbody>
             </table>
-            <div class="hx-code">
-              <div class="hx-code-bar"><span class="hx-code-lang">Session &amp; round flow</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">Session &amp; round flow</span></div>
               <pre>operator              Helix RGS            player
    &#9474;                     &#9474;                  &#9474;
    &#9474; POST /sessions &#9472;&#9472;&#9472;&#9472;&#9658;&#9474;                  &#9474;
@@ -112,10 +112,10 @@
           </section>
 
           <!-- SIGNING -->
-          <section class="hx-section" id="signing">
-            <div class="hx-section-heading"><h2>Request signing</h2></div>
+          <section class="doc-section" id="signing">
+            <div class="doc-section-heading"><h2>Request signing</h2></div>
             <p>Helix uses HTTP message signatures. <strong>Both sides sign:</strong> the operator signs requests to Helix, and Helix signs every hook it sends to the operator. A request carries a <code>Digest</code> of its body and a <code>Signature</code> header naming exactly which fields were signed.</p>
-            <table class="hx-table">
+            <table class="doc-table">
               <thead><tr><th>Header</th><th>Description</th></tr></thead>
               <tbody>
                 <tr><td><code>Helix-Date</code></td><td>RFC 1123 timestamp of signing. Requests outside a &plusmn;60s window are rejected.</td></tr>
@@ -126,15 +126,15 @@
 
             <h3 id="signing-string">Building the signing string</h3>
             <p>Take the fields listed in <code>headers</code>, in order. Emit each as <code>name: value</code> on its own line, joined by newlines. The pseudo-field <code>(request-target)</code> is the lowercase method, a space, then the path. HMAC-SHA384 that string with the operator secret; base64 the result.</p>
-            <div class="hx-code">
-              <div class="hx-code-bar"><span class="hx-code-lang">Signing string</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">Signing string</span></div>
               <pre>(request-target): post /2024-09/sessions
 helix-date: Wed, 11 Dec 2025 14:00:15 GMT
 digest: SHA-384=Yk9u&hellip;q2A=
 
 signature = base64( HMAC_SHA384( secret, signing_string ) )</pre>
             </div>
-            <table class="hx-table">
+            <table class="doc-table">
               <thead><tr><th colspan="2">Worked example signing a session create</th></tr></thead>
               <tbody>
                 <tr><td>keyId</td><td><code>op_live_42</code></td></tr>
@@ -143,34 +143,34 @@ signature = base64( HMAC_SHA384( secret, signing_string ) )</pre>
                 <tr><td>Signature header</td><td><code>keyId="op_live_42",algorithm="hmac-sha384",headers="(request-target) helix-date digest",signature="QmF&hellip;9Zg="</code></td></tr>
               </tbody>
             </table>
-            <div class="hx-callout amber">
+            <div class="doc-callout amber">
               <strong>&#9888; Verify hooks before you trust them</strong>
               <p>Always reject a hook whose <code>Digest</code> doesn't match a freshly computed hash of the received body, then verify the signature over the named headers using a constant-time compare. Order matters: the <code>headers</code> list defines the exact lines and their sequence.</p>
             </div>
           </section>
 
           <!-- SESSIONS -->
-          <section class="hx-section" id="sessions">
-            <div class="hx-section-heading"><h2>Opening a play session</h2></div>
-            <div class="hx-endpoint"><span class="hx-verb post">POST</span><code>/2024-09/sessions</code></div>
-            <table class="hx-table">
+          <section class="doc-section" id="sessions">
+            <div class="doc-section-heading"><h2>Opening a play session</h2></div>
+            <div class="doc-endpoint"><span class="doc-verb post">POST</span><code>/2024-09/sessions</code></div>
+            <table class="doc-table">
               <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
               <tbody>
-                <tr><td><code>game_code</code></td><td>string <span class="hx-req">required</span></td><td>The game to launch, e.g. <code>helix.aurora_drift</code>.</td></tr>
-                <tr><td><code>player_ref</code></td><td>string <span class="hx-req">required</span></td><td>Operator's stable id for the player. Ties feature cycles together across sessions.</td></tr>
-                <tr><td><code>currency</code></td><td>string <span class="hx-req">required</span></td><td>ISO 4217 code. Fixes the currency for the whole session.</td></tr>
-                <tr><td><code>balance</code></td><td>integer <span class="hx-req">required</span></td><td>Opening balance in minor units, shown in the client until the first hook reply.</td></tr>
-                <tr><td><code>locale</code></td><td>string <span class="hx-req">required</span></td><td>BCP-47 tag, e.g. <code>en-GB</code>.</td></tr>
-                <tr><td><code>wallet_hook</code></td><td>string <span class="hx-req">required</span></td><td>HTTPS URL Helix calls per round.</td></tr>
-                <tr><td><code>reversal_hook</code></td><td>string <span class="hx-req">required</span></td><td>HTTPS URL Helix calls to unwind a round. Must differ from <code>wallet_hook</code>.</td></tr>
-                <tr><td><code>device</code></td><td>string <span class="hx-req">required</span></td><td><code>desktop</code> or <code>touch</code>.</td></tr>
-                <tr><td><code>limits</code></td><td>object <span class="hx-opt">optional</span></td><td>Optional per-session <code>min_stake</code>, <code>max_stake</code>, <code>max_return</code> in minor units.</td></tr>
-                <tr><td><code>return_url</code></td><td>string <span class="hx-opt">optional</span></td><td>Where the client sends the player on exit.</td></tr>
-                <tr><td><code>demo</code></td><td>boolean <span class="hx-opt">optional</span></td><td><code>true</code> runs fun-play; no wallet hooks fire.</td></tr>
+                <tr><td><code>game_code</code></td><td>string <span class="doc-req">required</span></td><td>The game to launch, e.g. <code>helix.aurora_drift</code>.</td></tr>
+                <tr><td><code>player_ref</code></td><td>string <span class="doc-req">required</span></td><td>Operator's stable id for the player. Ties feature cycles together across sessions.</td></tr>
+                <tr><td><code>currency</code></td><td>string <span class="doc-req">required</span></td><td>ISO 4217 code. Fixes the currency for the whole session.</td></tr>
+                <tr><td><code>balance</code></td><td>integer <span class="doc-req">required</span></td><td>Opening balance in minor units, shown in the client until the first hook reply.</td></tr>
+                <tr><td><code>locale</code></td><td>string <span class="doc-req">required</span></td><td>BCP-47 tag, e.g. <code>en-GB</code>.</td></tr>
+                <tr><td><code>wallet_hook</code></td><td>string <span class="doc-req">required</span></td><td>HTTPS URL Helix calls per round.</td></tr>
+                <tr><td><code>reversal_hook</code></td><td>string <span class="doc-req">required</span></td><td>HTTPS URL Helix calls to unwind a round. Must differ from <code>wallet_hook</code>.</td></tr>
+                <tr><td><code>device</code></td><td>string <span class="doc-req">required</span></td><td><code>desktop</code> or <code>touch</code>.</td></tr>
+                <tr><td><code>limits</code></td><td>object <span class="doc-opt">optional</span></td><td>Optional per-session <code>min_stake</code>, <code>max_stake</code>, <code>max_return</code> in minor units.</td></tr>
+                <tr><td><code>return_url</code></td><td>string <span class="doc-opt">optional</span></td><td>Where the client sends the player on exit.</td></tr>
+                <tr><td><code>demo</code></td><td>boolean <span class="doc-opt">optional</span></td><td><code>true</code> runs fun-play; no wallet hooks fire.</td></tr>
               </tbody>
             </table>
-            <div class="hx-code">
-              <div class="hx-code-bar"><span class="hx-code-lang">Request</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">Request</span></div>
               <pre>POST /2024-09/sessions HTTP/1.1
 Host: rgs.helixplay.io
 Helix-Date: Wed, 11 Dec 2025 14:00:15 GMT
@@ -191,8 +191,8 @@ Content-Type: application/json
   "limits": { "min_stake": 10, "max_stake": 50000, "max_return": 5000000 }
 }</pre>
             </div>
-            <div class="hx-code">
-              <div class="hx-code-bar"><span class="hx-code-lang">201 Created</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">201 Created</span></div>
               <pre>HTTP/1.1 201 Created
 Content-Type: application/json
 
@@ -202,41 +202,41 @@ Content-Type: application/json
   "expires_at": "2025-12-11T14:30:15Z"
 }</pre>
             </div>
-            <div class="hx-code">
-              <div class="hx-code-bar"><span class="hx-code-lang">422 Rejected</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">422 Rejected</span></div>
               <pre>HTTP/1.1 422 Unprocessable Entity
 Content-Type: application/json
 
 { "code": "hook_urls_identical",
   "message": "wallet_hook and reversal_hook must be different URLs." }</pre>
             </div>
-            <div class="hx-callout blue">
+            <div class="doc-callout blue">
               <strong>&#8505; Launching the client</strong>
               <p>Redirect the player to <code>client_url</code> by HTTP redirect, an <code>&lt;iframe&gt;</code>, or a native web view. If you omit <code>return_url</code>, make sure your shell can return the player to the lobby when the session ends.</p>
             </div>
           </section>
 
           <!-- WALLET HOOK -->
-          <section class="hx-section" id="wallet">
-            <div class="hx-section-heading"><h2>The wallet hook</h2></div>
+          <section class="doc-section" id="wallet">
+            <div class="doc-section-heading"><h2>The wallet hook</h2></div>
             <p>For every round Helix POSTs to your <code>wallet_hook</code>. The request is signed. Your job: apply the money movement and reply with the player's new balance or decline with a reason. Reply <code>200</code> within <strong>10 seconds</strong>; anything else is a failure and triggers recovery.</p>
 
             <h3 id="wallet-req">Hook request</h3>
-            <table class="hx-table">
+            <table class="doc-table">
               <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
               <tbody>
-                <tr><td><code>ledger_ref</code></td><td>string <span class="hx-req">required</span></td><td>Unique id of this round. Store it reversals reference it.</td></tr>
-                <tr><td><code>session_id</code></td><td>string <span class="hx-req">required</span></td><td>The session this round belongs to.</td></tr>
-                <tr><td><code>player_ref</code></td><td>string <span class="hx-req">required</span></td><td>Echoes the value from session create.</td></tr>
-                <tr><td><code>round</code></td><td>integer <span class="hx-req">required</span></td><td>Sequential index within the session, from 0.</td></tr>
-                <tr><td><code>stake</code></td><td>integer <span class="hx-req">required</span></td><td>Minor units to remove from the wallet (may be 0).</td></tr>
-                <tr><td><code>return</code></td><td>integer <span class="hx-req">required</span></td><td>Minor units to add to the wallet (may be 0).</td></tr>
-                <tr><td><code>feature_cycle</code></td><td>object <span class="hx-req">required</span></td><td><code>root_ref</code> plus <code>closes</code> whether the cycle ends with this round.</td></tr>
-                <tr><td><code>promotion</code></td><td>object <span class="hx-opt">optional</span></td><td>Present only during a bonus promotion. See Bonus rounds.</td></tr>
+                <tr><td><code>ledger_ref</code></td><td>string <span class="doc-req">required</span></td><td>Unique id of this round. Store it reversals reference it.</td></tr>
+                <tr><td><code>session_id</code></td><td>string <span class="doc-req">required</span></td><td>The session this round belongs to.</td></tr>
+                <tr><td><code>player_ref</code></td><td>string <span class="doc-req">required</span></td><td>Echoes the value from session create.</td></tr>
+                <tr><td><code>round</code></td><td>integer <span class="doc-req">required</span></td><td>Sequential index within the session, from 0.</td></tr>
+                <tr><td><code>stake</code></td><td>integer <span class="doc-req">required</span></td><td>Minor units to remove from the wallet (may be 0).</td></tr>
+                <tr><td><code>return</code></td><td>integer <span class="doc-req">required</span></td><td>Minor units to add to the wallet (may be 0).</td></tr>
+                <tr><td><code>feature_cycle</code></td><td>object <span class="doc-req">required</span></td><td><code>root_ref</code> plus <code>closes</code> whether the cycle ends with this round.</td></tr>
+                <tr><td><code>promotion</code></td><td>object <span class="doc-opt">optional</span></td><td>Present only during a bonus promotion. See Bonus rounds.</td></tr>
               </tbody>
             </table>
-            <div class="hx-code">
-              <div class="hx-code-bar"><span class="hx-code-lang">POST /helix/wallet</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">POST /helix/wallet</span></div>
               <pre>POST /helix/wallet HTTP/1.1
 Helix-Date: Wed, 11 Dec 2025 14:01:02 GMT
 Digest: SHA-384=Pp1c&hellip;7tQ=
@@ -257,22 +257,22 @@ Content-Type: application/json
 
             <h3 id="wallet-ok">Confirming a round</h3>
             <p>Compute the new balance as <code>balance &minus; stake + return</code>, guarding against a negative result before applying the return. Reply with the authoritative balance.</p>
-            <div class="hx-code">
-              <div class="hx-code-bar"><span class="hx-code-lang">200 OK</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">200 OK</span></div>
               <pre>HTTP/1.1 200 OK
 Content-Type: application/json
 
 { "balance": 49750, "ledger_ref": "lr_4Np7Kq2" }</pre>
             </div>
-            <div class="hx-callout red">
+            <div class="doc-callout red">
               <strong>&#9888; Persist in the same transaction</strong>
               <p>Persist the round against its <code>ledger_ref</code> in the same transaction that moves the money. If you can't look up a round by <code>ledger_ref</code> later, you cannot safely process its reversal.</p>
             </div>
 
             <h3 id="wallet-decline">Declining a round</h3>
             <p>To reject the round, still reply <code>200</code> but with a <code>decline</code> object. Helix discards the round and shows the player a message.</p>
-            <div class="hx-code">
-              <div class="hx-code-bar"><span class="hx-code-lang">200 OK declined</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">200 OK declined</span></div>
               <pre>HTTP/1.1 200 OK
 Content-Type: application/json
 
@@ -283,7 +283,7 @@ Content-Type: application/json
   }
 }</pre>
             </div>
-            <table class="hx-table">
+            <table class="doc-table">
               <thead><tr><th>reason</th><th>Meaning</th></tr></thead>
               <tbody>
                 <tr><td><code>insufficient_funds</code></td><td>Stake exceeds balance. No message required.</td></tr>
@@ -296,24 +296,24 @@ Content-Type: application/json
           </section>
 
           <!-- RECOVERY -->
-          <section class="hx-section" id="recovery">
-            <div class="hx-section-heading"><h2>Failure &amp; recovery</h2></div>
+          <section class="doc-section" id="recovery">
+            <div class="doc-section-heading"><h2>Failure &amp; recovery</h2></div>
             <p>A wallet hook can fail technically (timeout, 5xx, unreachable, unparseable) or simply not arrive. Helix offers two recovery modes per operator choose the one that matches what your wallet can do.</p>
-            <div class="hx-grid2">
-              <div class="hx-panel hx-panel-ok">
-                <div class="hx-panel-title">compensate (default)</div>
+            <div class="doc-grid2">
+              <div class="doc-panel doc-panel-ok">
+                <div class="doc-panel-title">compensate (default)</div>
                 <p>The round is unwound: Helix calls your <code>reversal_hook</code>, and the player may resume once it succeeds. Best for operators whose ledger can reverse an applied movement.</p>
               </div>
-              <div class="hx-panel hx-panel-no">
-                <div class="hx-panel-title">settle</div>
+              <div class="doc-panel doc-panel-no">
+                <div class="doc-panel-title">settle</div>
                 <p>The round is held and the wallet hook is retried until it succeeds; play is locked meanwhile. The reversal hook is never called. Best for operators who cannot reverse and prefer eventual consistency. Requires idempotent hooks.</p>
               </div>
             </div>
 
             <h3 id="reversal">The reversal hook</h3>
             <p>In <code>compensate</code> mode Helix POSTs the original round body to your <code>reversal_hook</code>, keyed by the same <code>ledger_ref</code>. Undo any movement you made for that round and reply with the corrected balance.</p>
-            <div class="hx-code">
-              <div class="hx-code-bar"><span class="hx-code-lang">POST /helix/reversal</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">POST /helix/reversal</span></div>
               <pre>POST /helix/reversal HTTP/1.1
 Helix-Date: Wed, 11 Dec 2025 14:01:20 GMT
 Digest: SHA-384=Re8v&hellip;0aQ=
@@ -322,14 +322,14 @@ Signature: keyId="helix_rgs",algorithm="hmac-sha384", &hellip;
 { "ledger_ref": "lr_4Np7Kq2", "session_id": "ses_0Ab9Qx", "round": 12,
   "stake": 250, "return": 0 }</pre>
             </div>
-            <div class="hx-callout blue">
+            <div class="doc-callout blue">
               <strong>&#8505; If you never saw the original</strong>
               <p>If the original wallet hook was lost in transit, there is nothing to undo. Make no change and reply with the current balance and the same <code>ledger_ref</code>. Reversals must be safe to receive more than once.</p>
             </div>
 
             <h3 id="retries">Retry schedule</h3>
             <p>Both hooks share one back-off. The first two attempts fire immediately; if they fail, play locks for that game and currency and Helix retries in the background.</p>
-            <table class="hx-table">
+            <table class="doc-table">
               <thead><tr><th>Attempt</th><th>Delay</th><th>Cumulative</th></tr></thead>
               <tbody>
                 <tr><td>r0 &middot; r1</td><td>immediate</td><td>0s</td></tr>
@@ -343,9 +343,9 @@ Signature: keyId="helix_rgs",algorithm="hmac-sha384", &hellip;
             </table>
 
             <h3 id="pending">Checking for a stuck round</h3>
-            <div class="hx-endpoint"><span class="hx-verb get">GET</span><code>/2024-09/sessions/{session_id}/pending</code></div>
-            <div class="hx-code">
-              <div class="hx-code-bar"><span class="hx-code-lang">200 OK</span></div>
+            <div class="doc-endpoint"><span class="doc-verb get">GET</span><code>/2024-09/sessions/{session_id}/pending</code></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">200 OK</span></div>
               <pre>HTTP/1.1 200 OK
 Content-Type: application/json
 
@@ -354,26 +354,26 @@ Content-Type: application/json
           </section>
 
           <!-- PROMOTIONS -->
-          <section class="hx-section" id="promotions">
-            <div class="hx-section-heading"><h2>Bonus-round promotions</h2></div>
+          <section class="doc-section" id="promotions">
+            <div class="doc-section-heading"><h2>Bonus-round promotions</h2></div>
             <p>A promotion grants a player a number of fixed-stake bonus rounds in a chosen game. While a promotion is active, wallet hooks carry a <code>promotion</code> object so you can account for bonus play separately.</p>
-            <div class="hx-endpoint"><span class="hx-verb post">POST</span><code>/2024-09/promotions/bonus-rounds</code></div>
-            <table class="hx-table">
+            <div class="doc-endpoint"><span class="doc-verb post">POST</span><code>/2024-09/promotions/bonus-rounds</code></div>
+            <table class="doc-table">
               <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
               <tbody>
-                <tr><td><code>name</code></td><td>string <span class="hx-req">required</span></td><td>Operator label. Max 64 chars.</td></tr>
-                <tr><td><code>operator_ref</code></td><td>string <span class="hx-req">required</span></td><td>Your id for the promotion; echoed in every related hook.</td></tr>
-                <tr><td><code>game_code</code></td><td>string <span class="hx-req">required</span></td><td>The single game the bonus rounds run in.</td></tr>
-                <tr><td><code>currency</code></td><td>string <span class="hx-req">required</span></td><td>Currency the bonus rounds are denominated in.</td></tr>
-                <tr><td><code>stake_per_round</code></td><td>integer <span class="hx-req">required</span></td><td>Fixed stake per bonus round, in minor units. Must be a valid bet step for the game.</td></tr>
-                <tr><td><code>rounds</code></td><td>integer <span class="hx-req">required</span></td><td>Number of bonus rounds granted to each player.</td></tr>
-                <tr><td><code>players</code></td><td>array <span class="hx-req">required</span></td><td>List of <code>player_ref</code> values eligible for the promotion.</td></tr>
-                <tr><td><code>starts_at</code></td><td>string <span class="hx-req">required</span></td><td>ISO-8601 start.</td></tr>
-                <tr><td><code>ends_at</code></td><td>string <span class="hx-req">required</span></td><td>ISO-8601 end.</td></tr>
+                <tr><td><code>name</code></td><td>string <span class="doc-req">required</span></td><td>Operator label. Max 64 chars.</td></tr>
+                <tr><td><code>operator_ref</code></td><td>string <span class="doc-req">required</span></td><td>Your id for the promotion; echoed in every related hook.</td></tr>
+                <tr><td><code>game_code</code></td><td>string <span class="doc-req">required</span></td><td>The single game the bonus rounds run in.</td></tr>
+                <tr><td><code>currency</code></td><td>string <span class="doc-req">required</span></td><td>Currency the bonus rounds are denominated in.</td></tr>
+                <tr><td><code>stake_per_round</code></td><td>integer <span class="doc-req">required</span></td><td>Fixed stake per bonus round, in minor units. Must be a valid bet step for the game.</td></tr>
+                <tr><td><code>rounds</code></td><td>integer <span class="doc-req">required</span></td><td>Number of bonus rounds granted to each player.</td></tr>
+                <tr><td><code>players</code></td><td>array <span class="doc-req">required</span></td><td>List of <code>player_ref</code> values eligible for the promotion.</td></tr>
+                <tr><td><code>starts_at</code></td><td>string <span class="doc-req">required</span></td><td>ISO-8601 start.</td></tr>
+                <tr><td><code>ends_at</code></td><td>string <span class="doc-req">required</span></td><td>ISO-8601 end.</td></tr>
               </tbody>
             </table>
-            <div class="hx-code">
-              <div class="hx-code-bar"><span class="hx-code-lang">Request</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">Request</span></div>
               <pre>POST /2024-09/promotions/bonus-rounds HTTP/1.1
 Host: rgs.helixplay.io
 Helix-Date: Wed, 11 Dec 2025 09:00:00 GMT
@@ -393,8 +393,8 @@ Content-Type: application/json
   "ends_at": "2025-12-15T23:59:59Z"
 }</pre>
             </div>
-            <div class="hx-code">
-              <div class="hx-code-bar"><span class="hx-code-lang">201 Created</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">201 Created</span></div>
               <pre>HTTP/1.1 201 Created
 Content-Type: application/json
 
@@ -402,8 +402,8 @@ Content-Type: application/json
             </div>
 
             <h3 id="promo-hook">Bonus round in a wallet hook</h3>
-            <div class="hx-code">
-              <div class="hx-code-bar"><span class="hx-code-lang">Wallet hook with promotion</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">Wallet hook with promotion</span></div>
               <pre>{
   "ledger_ref": "lr_9Qa1",
   "session_id": "ses_0Ab9Qx",
@@ -420,23 +420,23 @@ Content-Type: application/json
   }
 }</pre>
             </div>
-            <div class="hx-callout blue">
+            <div class="doc-callout blue">
               <strong>&#8505; Bonus stakes are your call</strong>
               <p>Whether bonus stakes draw from the real wallet is the operator's decision. If you choose not to deduct bonus stakes, treat the hook's <code>stake</code> as informational and reply with the unchanged balance.</p>
             </div>
 
             <h3 id="promo-stop">Stopping a promotion</h3>
-            <div class="hx-endpoint"><span class="hx-verb post">POST</span><code>/2024-09/promotions/{promotion_id}/stop</code></div>
+            <div class="doc-endpoint"><span class="doc-verb post">POST</span><code>/2024-09/promotions/{promotion_id}/stop</code></div>
             <p>Send <code>{ "grace_seconds": 900 }</code> to let players who already started keep playing for a window, or <code>0</code> to end it for everyone at once.</p>
           </section>
 
           <!-- HISTORY -->
-          <section class="hx-section" id="history">
-            <div class="hx-section-heading"><h2>Round history</h2></div>
+          <section class="doc-section" id="history">
+            <div class="doc-section-heading"><h2>Round history</h2></div>
             <p>Fetch a rendered view of any settled round for support and dispute handling.</p>
-            <div class="hx-endpoint"><span class="hx-verb get">GET</span><code>/2024-09/sessions/{session_id}/rounds/{round}/replay</code></div>
-            <div class="hx-code">
-              <div class="hx-code-bar"><span class="hx-code-lang">200 OK</span></div>
+            <div class="doc-endpoint"><span class="doc-verb get">GET</span><code>/2024-09/sessions/{session_id}/rounds/{round}/replay</code></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">200 OK</span></div>
               <pre>HTTP/1.1 200 OK
 Content-Type: application/json
 
@@ -445,10 +445,10 @@ Content-Type: application/json
           </section>
 
           <!-- ERRORS -->
-          <section class="hx-section" id="errors">
-            <div class="hx-section-heading"><h2>Error reference</h2></div>
+          <section class="doc-section" id="errors">
+            <div class="doc-section-heading"><h2>Error reference</h2></div>
             <p>Errors returned to the operator (session create, promotions) use a stable <code>code</code> with a human <code>message</code>. These are distinct from wallet-hook <code>decline.reason</code> values, which the operator sends to Helix.</p>
-            <table class="hx-table">
+            <table class="doc-table">
               <thead><tr><th>HTTP</th><th>code</th><th>Meaning</th></tr></thead>
               <tbody>
                 <tr><td>401</td><td><code>signature_invalid</code></td><td>Signature did not verify over the named headers.</td></tr>
@@ -467,8 +467,8 @@ Content-Type: application/json
           </section>
 
           <!-- WRITER NOTE -->
-          <div class="hx-writer-note">
-            <span class="hx-writer-note-label">&#9997;&#65039; Writer's note</span>
+          <div class="doc-writer-note">
+            <span class="doc-writer-note-label">&#9997;&#65039; Writer's note</span>
             <p>
               A seamless-wallet RGS integration is unforgiving: real money moves on every spin, and the hard part
               is the moment a hook <em>doesn't</em> get confirmed. I built this reference around that reality
@@ -481,14 +481,14 @@ Content-Type: application/json
           </div>
 
           <!-- RELATED -->
-          <div class="hx-related">
+          <div class="doc-related">
             <h3>Related work</h3>
             <a href="./aperture-pay-api.html">Aperture Pay Payments API &rarr;</a>
             <a href="./stride-api.html">Stride Platform API &rarr;</a>
             <a href="./crimson-temple.html">Crimson Temple (UX &amp; content) &rarr;</a>
           </div>
 
-          <div class="hx-bottom-nav">
+          <div class="doc-bottom-nav">
             <a href="../../portfolio.html">&larr; Back to portfolio</a>
             <a href="../../contact.html">Let's talk &rarr;</a>
           </div>
@@ -496,27 +496,27 @@ Content-Type: application/json
         </div>
 
         <!-- SIDEBAR -->
-        <aside class="hx-sidebar">
-          <div class="hx-toc-card">
-            <div class="hx-toc-title">On this page</div>
-            <nav class="hx-toc">
-              <a href="#how"><span class="hx-toc-dot"></span>How it works</a>
-              <a href="#signing"><span class="hx-toc-dot"></span>Request signing</a>
-              <a href="#sessions"><span class="hx-toc-dot"></span>Open a session</a>
-              <a href="#wallet"><span class="hx-toc-dot"></span>Wallet hook</a>
-              <a href="#recovery"><span class="hx-toc-dot"></span>Failure &amp; recovery</a>
-              <a href="#promotions"><span class="hx-toc-dot"></span>Bonus promotions</a>
-              <a href="#history"><span class="hx-toc-dot"></span>Round history</a>
-              <a href="#errors"><span class="hx-toc-dot"></span>Error reference</a>
+        <aside class="doc-sidebar">
+          <div class="doc-toc-card">
+            <div class="doc-toc-title">On this page</div>
+            <nav class="doc-toc">
+              <a href="#how"><span class="doc-toc-dot"></span>How it works</a>
+              <a href="#signing"><span class="doc-toc-dot"></span>Request signing</a>
+              <a href="#sessions"><span class="doc-toc-dot"></span>Open a session</a>
+              <a href="#wallet"><span class="doc-toc-dot"></span>Wallet hook</a>
+              <a href="#recovery"><span class="doc-toc-dot"></span>Failure &amp; recovery</a>
+              <a href="#promotions"><span class="doc-toc-dot"></span>Bonus promotions</a>
+              <a href="#history"><span class="doc-toc-dot"></span>Round history</a>
+              <a href="#errors"><span class="doc-toc-dot"></span>Error reference</a>
             </nav>
           </div>
-          <div class="hx-quick-ref">
-            <div class="hx-quick-ref-title">API at a glance</div>
-            <div class="hx-quick-ref-row"><span>Auth</span><code>HMAC-SHA384</code></div>
-            <div class="hx-quick-ref-row"><span>Model</span><code>seamless</code></div>
-            <div class="hx-quick-ref-row"><span>Per round</span><code>wallet hook</code></div>
-            <div class="hx-quick-ref-row"><span>Recovery</span><code>reversal</code></div>
-            <div class="hx-quick-ref-row"><span>Key</span><code>ledger_ref</code></div>
+          <div class="doc-quick-ref">
+            <div class="doc-quick-ref-title">API at a glance</div>
+            <div class="doc-quick-ref-row"><span>Auth</span><code>HMAC-SHA384</code></div>
+            <div class="doc-quick-ref-row"><span>Model</span><code>seamless</code></div>
+            <div class="doc-quick-ref-row"><span>Per round</span><code>wallet hook</code></div>
+            <div class="doc-quick-ref-row"><span>Recovery</span><code>reversal</code></div>
+            <div class="doc-quick-ref-row"><span>Key</span><code>ledger_ref</code></div>
           </div>
         </aside>
 

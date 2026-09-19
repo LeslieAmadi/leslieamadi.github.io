@@ -33,8 +33,8 @@
     </div>
   </nav>
 
-  <div class="ap-shell">
-    <main class="ap-content">
+  <div class="doc-shell">
+    <main class="doc-content">
 
       <div class="doc-breadcrumb" style="margin-bottom:1.25rem;">
         <a href="../../portfolio.html">Portfolio</a><span>&rsaquo;</span>
@@ -42,45 +42,45 @@
         <span>Aperture Pay API</span>
       </div>
 
-      <div class="ap-hero">
-        <span class="ap-hero-eyebrow">&#128179; API Reference &middot; Payments &middot; Wallet Orchestration</span>
+      <div class="doc-hero">
+        <span class="doc-hero-eyebrow">&#128179; API Reference &middot; Payments &middot; Wallet Orchestration</span>
         <h1>Aperture Pay <span>Payments API</span></h1>
-        <p class="ap-hero-desc">
+        <p class="doc-hero-desc">
           A REST API for charging, reversing, and reconciling payments against customer wallets with
           HMAC-signed requests, idempotent capture, and asynchronous settlement webhooks. This reference takes a
           developer from first signed call to edge-case recovery without leaving questions unanswered.
         </p>
-        <div class="ap-hero-tags">
-          <span class="ap-hero-tag">HMAC-SHA256 signing</span>
-          <span class="ap-hero-tag">Idempotency keys</span>
-          <span class="ap-hero-tag">Charges &amp; reversals</span>
-          <span class="ap-hero-tag">Settlement webhooks</span>
-          <span class="ap-hero-tag">Delivery recovery</span>
-          <span class="ap-hero-tag">Error reference</span>
+        <div class="doc-hero-tags">
+          <span class="doc-hero-tag">HMAC-SHA256 signing</span>
+          <span class="doc-hero-tag">Idempotency keys</span>
+          <span class="doc-hero-tag">Charges &amp; reversals</span>
+          <span class="doc-hero-tag">Settlement webhooks</span>
+          <span class="doc-hero-tag">Delivery recovery</span>
+          <span class="doc-hero-tag">Error reference</span>
         </div>
       </div>
 
-      <div class="ap-control">
-        <table class="ap-ctrl-table">
+      <div class="doc-control">
+        <table class="doc-ctrl-table">
           <tbody>
-            <tr><td class="ap-ctrl-label">Discipline</td><td>API Documentation &middot; Developer Experience &middot; Payments</td></tr>
-            <tr><td class="ap-ctrl-label">Base URL</td><td><code>api.aperturepay.dev/v1</code></td></tr>
-            <tr><td class="ap-ctrl-label">Auth</td><td>HMAC-SHA256 signed requests</td></tr>
-            <tr><td class="ap-ctrl-label">Media type</td><td><code>application/json</code></td></tr>
-            <tr><td class="ap-ctrl-label">My role</td><td>Senior Technical Writer information architecture, field tables, runnable examples</td></tr>
-            <tr><td class="ap-ctrl-label">Doc type</td><td>API reference &amp; integration guide</td></tr>
-            <tr><td class="ap-ctrl-label">Version</td><td>v1 &middot; original demonstration piece</td></tr>
-            <tr><td class="ap-ctrl-label">Last reviewed</td><td>June 2026</td></tr>
+            <tr><td class="doc-ctrl-label">Discipline</td><td>API Documentation &middot; Developer Experience &middot; Payments</td></tr>
+            <tr><td class="doc-ctrl-label">Base URL</td><td><code>api.aperturepay.dev/v1</code></td></tr>
+            <tr><td class="doc-ctrl-label">Auth</td><td>HMAC-SHA256 signed requests</td></tr>
+            <tr><td class="doc-ctrl-label">Media type</td><td><code>application/json</code></td></tr>
+            <tr><td class="doc-ctrl-label">My role</td><td>Senior Technical Writer information architecture, field tables, runnable examples</td></tr>
+            <tr><td class="doc-ctrl-label">Doc type</td><td>API reference &amp; integration guide</td></tr>
+            <tr><td class="doc-ctrl-label">Version</td><td>v1 &middot; original demonstration piece</td></tr>
+            <tr><td class="doc-ctrl-label">Last reviewed</td><td>June 2026</td></tr>
           </tbody>
         </table>
       </div>
 
-      <div class="ap-layout">
-        <div class="ap-main">
+      <div class="doc-layout">
+        <div class="doc-main">
 
           <!-- OVERVIEW -->
-          <section class="ap-section" id="overview">
-            <div class="ap-section-heading"><h2>Overview</h2></div>
+          <section class="doc-section" id="overview">
+            <div class="doc-section-heading"><h2>Overview</h2></div>
             <p>
               Aperture Pay sits between your checkout and a customer's funded wallet. Your server charges a wallet
               <strong>synchronously</strong> and receives an authoritative balance in the response. Final settlement
@@ -88,20 +88,20 @@
               Aperture notifies your server through a signed webhook.
             </p>
             <p>Two directions of traffic exist, and <strong>both are signed:</strong></p>
-            <div class="ap-grid2">
-              <div class="ap-panel">
-                <div class="ap-panel-title">Requests you send</div>
+            <div class="doc-grid2">
+              <div class="doc-panel">
+                <div class="doc-panel-title">Requests you send</div>
                 <p>Creating charges, issuing reversals, reading state. You sign these with your secret.</p>
               </div>
-              <div class="ap-panel">
-                <div class="ap-panel-title">Webhooks Aperture sends</div>
+              <div class="doc-panel">
+                <div class="doc-panel-title">Webhooks Aperture sends</div>
                 <p>Settlement and reversal outcomes. Aperture signs these; you verify them.</p>
               </div>
             </div>
 
             <h3 id="lifecycle">Charge lifecycle</h3>
-            <div class="ap-code">
-              <div class="ap-code-bar"><span class="ap-code-lang">Charge lifecycle</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">Charge lifecycle</span></div>
               <pre>customer checkout
    &#9474;
    &#9660;
@@ -116,17 +116,17 @@
    &#9660;
 [4] reconcile in your ledger</pre>
             </div>
-            <div class="ap-callout blue">
+            <div class="doc-callout blue">
               <strong>&#8505; A 201 is a commitment</strong>
               <p>A charge that returns <code>201</code> is committed against the wallet immediately. The settlement webhook confirms clearing and carries the final figures it does not re-authorize the charge.</p>
             </div>
           </section>
 
           <!-- AUTH -->
-          <section class="ap-section" id="auth">
-            <div class="ap-section-heading"><h2>Authenticating requests</h2></div>
+          <section class="doc-section" id="auth">
+            <div class="doc-section-heading"><h2>Authenticating requests</h2></div>
             <p>Every request to Aperture carries three headers. The signature is an HMAC-SHA256 of a canonical string built from the request, keyed by your API secret and base64-encoded.</p>
-            <table class="ap-table">
+            <table class="doc-table">
               <thead><tr><th>Header</th><th>Description</th></tr></thead>
               <tbody>
                 <tr><td><code>Aperture-Key</code></td><td>Your publishable key id, e.g. <code>apk_live_8Qz&hellip;</code>. Identifies the secret used to sign.</td></tr>
@@ -137,8 +137,8 @@
 
             <h3 id="canonical">The canonical string</h3>
             <p>Concatenate four fields with a single newline (<code>\n</code>) between each, in this exact order. The body hash is the lowercase hex SHA-256 of the raw request body; for requests with no body, hash the empty string.</p>
-            <div class="ap-code">
-              <div class="ap-code-bar"><span class="ap-code-lang">Canonical string</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">Canonical string</span></div>
               <pre>canonical = METHOD        # uppercase, e.g. POST
    + "\n" + PATH          # request path incl. query, e.g. /v1/charges
    + "\n" + BODY_SHA256   # hex sha256 of the raw body
@@ -147,7 +147,7 @@
 signature = base64( HMAC_SHA256( api_secret, canonical ) )
 header    = "v1=" + signature</pre>
             </div>
-            <table class="ap-table">
+            <table class="doc-table">
               <thead><tr><th colspan="2">Worked example signing a charge</th></tr></thead>
               <tbody>
                 <tr><td>method</td><td><code>POST</code></td></tr>
@@ -157,7 +157,7 @@ header    = "v1=" + signature</pre>
                 <tr><td>v1 signature</td><td><code>b3JpZ2luYWwtc2lnbmF0dXJl&hellip;K9xQ==</code></td></tr>
               </tbody>
             </table>
-            <div class="ap-callout red">
+            <div class="doc-callout red">
               <strong>&#9888; Sign the raw bytes you transmit</strong>
               <p>If you re-serialize the JSON after signing (changing key order or whitespace), the body hash won't match and Aperture returns <code>401 signature_mismatch</code>.</p>
             </div>
@@ -167,46 +167,46 @@ header    = "v1=" + signature</pre>
           </section>
 
           <!-- IDEMPOTENCY -->
-          <section class="ap-section" id="idempotency">
-            <div class="ap-section-heading"><h2>Idempotency</h2></div>
+          <section class="doc-section" id="idempotency">
+            <div class="doc-section-heading"><h2>Idempotency</h2></div>
             <p>Network failures make it impossible to know whether a charge committed. Retrying safely requires an <strong>idempotency key</strong>: a unique value you attach to a write so Aperture performs the operation <em>at most once</em>.</p>
-            <table class="ap-table">
+            <table class="doc-table">
               <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
               <tbody>
-                <tr><td><code>Idempotency-Key</code></td><td>string <span class="ap-req">required</span></td><td>A unique key per logical operation a UUID is ideal. Reusing a key replays the original outcome.</td></tr>
+                <tr><td><code>Idempotency-Key</code></td><td>string <span class="doc-req">required</span></td><td>A unique key per logical operation a UUID is ideal. Reusing a key replays the original outcome.</td></tr>
               </tbody>
             </table>
-            <ul class="ap-list">
+            <ul class="doc-list">
               <li>The first request with a key executes normally and the result is stored for <strong>24 hours</strong>.</li>
               <li>A replay with the same key returns the original status and body, plus <code>Aperture-Idempotent-Replay: true</code> even if the original failed.</li>
               <li>Reusing a key with a different body returns <code>409 idempotency_conflict</code>.</li>
             </ul>
-            <div class="ap-callout blue">
+            <div class="doc-callout blue">
               <strong>&#8505; Only mutating verbs consume keys</strong>
               <p><code>POST</code> requests consume idempotency keys. <code>GET</code> requests are already safe to retry and ignore the header.</p>
             </div>
           </section>
 
           <!-- CHARGES -->
-          <section class="ap-section" id="charges">
-            <div class="ap-section-heading"><h2>Charges</h2></div>
+          <section class="doc-section" id="charges">
+            <div class="doc-section-heading"><h2>Charges</h2></div>
             <h3 id="create-charge">Create a charge</h3>
             <p>Debits a customer wallet and returns the post-charge balance. Committed on a <code>201</code> response.</p>
-            <div class="ap-endpoint"><span class="ap-verb post">POST</span><code>/v1/charges</code></div>
-            <table class="ap-table">
+            <div class="doc-endpoint"><span class="doc-verb post">POST</span><code>/v1/charges</code></div>
+            <table class="doc-table">
               <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
               <tbody>
-                <tr><td><code>wallet_id</code></td><td>string <span class="ap-req">required</span></td><td>Identifier of the wallet to debit.</td></tr>
-                <tr><td><code>amount</code></td><td>integer <span class="ap-req">required</span></td><td>Amount in the currency's minor unit (e.g. <code>2500</code> = &euro;25.00).</td></tr>
-                <tr><td><code>currency</code></td><td>string <span class="ap-req">required</span></td><td>ISO 4217 code, lowercase, e.g. <code>eur</code>.</td></tr>
-                <tr><td><code>reference</code></td><td>string <span class="ap-req">required</span></td><td>Your order reference. Surfaced in reports and webhooks. Max 80 chars.</td></tr>
-                <tr><td><code>description</code></td><td>string <span class="ap-opt">optional</span></td><td>Human-readable note shown in the customer's statement.</td></tr>
-                <tr><td><code>capture</code></td><td>boolean <span class="ap-opt">optional</span></td><td><code>true</code> (default) settles immediately; <code>false</code> authorizes only, to be captured later.</td></tr>
-                <tr><td><code>metadata</code></td><td>object <span class="ap-opt">optional</span></td><td>Up to 20 key/value string pairs echoed back on every related object and webhook.</td></tr>
+                <tr><td><code>wallet_id</code></td><td>string <span class="doc-req">required</span></td><td>Identifier of the wallet to debit.</td></tr>
+                <tr><td><code>amount</code></td><td>integer <span class="doc-req">required</span></td><td>Amount in the currency's minor unit (e.g. <code>2500</code> = &euro;25.00).</td></tr>
+                <tr><td><code>currency</code></td><td>string <span class="doc-req">required</span></td><td>ISO 4217 code, lowercase, e.g. <code>eur</code>.</td></tr>
+                <tr><td><code>reference</code></td><td>string <span class="doc-req">required</span></td><td>Your order reference. Surfaced in reports and webhooks. Max 80 chars.</td></tr>
+                <tr><td><code>description</code></td><td>string <span class="doc-opt">optional</span></td><td>Human-readable note shown in the customer's statement.</td></tr>
+                <tr><td><code>capture</code></td><td>boolean <span class="doc-opt">optional</span></td><td><code>true</code> (default) settles immediately; <code>false</code> authorizes only, to be captured later.</td></tr>
+                <tr><td><code>metadata</code></td><td>object <span class="doc-opt">optional</span></td><td>Up to 20 key/value string pairs echoed back on every related object and webhook.</td></tr>
               </tbody>
             </table>
-            <div class="ap-code">
-              <div class="ap-code-bar"><span class="ap-code-lang">Request</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">Request</span></div>
               <pre>POST /v1/charges HTTP/1.1
 Host: api.aperturepay.dev
 Aperture-Key: apk_live_8QzR2pV0
@@ -225,8 +225,8 @@ Content-Type: application/json
   "metadata": { "cart_id": "c_9981" }
 }</pre>
             </div>
-            <div class="ap-code">
-              <div class="ap-code-bar"><span class="ap-code-lang">201 Created</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">201 Created</span></div>
               <pre>HTTP/1.1 201 Created
 Content-Type: application/json
 
@@ -245,8 +245,8 @@ Content-Type: application/json
   "metadata": { "cart_id": "c_9981" }
 }</pre>
             </div>
-            <div class="ap-code">
-              <div class="ap-code-bar"><span class="ap-code-lang">402 Declined</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">402 Declined</span></div>
               <pre>HTTP/1.1 402 Payment Required
 Content-Type: application/json
 
@@ -259,15 +259,15 @@ Content-Type: application/json
   }
 }</pre>
             </div>
-            <div class="ap-callout blue">
+            <div class="doc-callout blue">
               <strong>&#8505; status vs settlement</strong>
               <p><code>status</code> reports the authorization result; <code>settlement</code> moves from <code>pending</code> to <code>cleared</code> asynchronously, confirmed by the <code>charge.settled</code> webhook.</p>
             </div>
 
             <h3 id="get-charge">Retrieve a charge</h3>
-            <div class="ap-endpoint"><span class="ap-verb get">GET</span><code>/v1/charges/{charge_id}</code></div>
-            <div class="ap-code">
-              <div class="ap-code-bar"><span class="ap-code-lang">Request</span></div>
+            <div class="doc-endpoint"><span class="doc-verb get">GET</span><code>/v1/charges/{charge_id}</code></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">Request</span></div>
               <pre>GET /v1/charges/chg_7H2nQ4xL HTTP/1.1
 Host: api.aperturepay.dev
 Aperture-Key: apk_live_8QzR2pV0
@@ -277,19 +277,19 @@ Aperture-Signature: v1=Ym9keS1oYXNo&hellip;Lp0=</pre>
           </section>
 
           <!-- REVERSALS -->
-          <section class="ap-section" id="reversals">
-            <div class="ap-section-heading"><h2>Reversals</h2></div>
+          <section class="doc-section" id="reversals">
+            <div class="doc-section-heading"><h2>Reversals</h2></div>
             <p>A reversal returns funds to the wallet and unwinds the charge. Use it for refunds, cancellations, or to recover from a failure on your side after a charge committed. Reversals are themselves idempotent and may be partial.</p>
-            <div class="ap-endpoint"><span class="ap-verb post">POST</span><code>/v1/charges/{charge_id}/reversals</code></div>
-            <table class="ap-table">
+            <div class="doc-endpoint"><span class="doc-verb post">POST</span><code>/v1/charges/{charge_id}/reversals</code></div>
+            <table class="doc-table">
               <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
               <tbody>
-                <tr><td><code>amount</code></td><td>integer <span class="ap-opt">optional</span></td><td>Minor units to return. Omit to reverse the full remaining amount. Must not exceed it.</td></tr>
-                <tr><td><code>reason</code></td><td>string <span class="ap-opt">optional</span></td><td>One of <code>requested_by_customer</code>, <code>duplicate</code>, <code>fraud</code>, <code>operator_recovery</code>.</td></tr>
+                <tr><td><code>amount</code></td><td>integer <span class="doc-opt">optional</span></td><td>Minor units to return. Omit to reverse the full remaining amount. Must not exceed it.</td></tr>
+                <tr><td><code>reason</code></td><td>string <span class="doc-opt">optional</span></td><td>One of <code>requested_by_customer</code>, <code>duplicate</code>, <code>fraud</code>, <code>operator_recovery</code>.</td></tr>
               </tbody>
             </table>
-            <div class="ap-code">
-              <div class="ap-code-bar"><span class="ap-code-lang">Request</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">Request</span></div>
               <pre>POST /v1/charges/chg_7H2nQ4xL/reversals HTTP/1.1
 Host: api.aperturepay.dev
 Aperture-Key: apk_live_8QzR2pV0
@@ -300,8 +300,8 @@ Content-Type: application/json
 
 { "amount": 2500, "reason": "requested_by_customer" }</pre>
             </div>
-            <div class="ap-code">
-              <div class="ap-code-bar"><span class="ap-code-lang">201 Created</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">201 Created</span></div>
               <pre>HTTP/1.1 201 Created
 Content-Type: application/json
 
@@ -316,17 +316,17 @@ Content-Type: application/json
   "created_at": "2025-12-11T14:10:00Z"
 }</pre>
             </div>
-            <div class="ap-callout amber">
+            <div class="doc-callout amber">
               <strong>&#9888; Reversals claw back cashback</strong>
               <p>Reversing a charge whose cashback already settled also claws back the cashback. The net wallet movement is reported in <code>balance_after</code> and in the <code>reversal.completed</code> webhook so your ledger stays exact.</p>
             </div>
           </section>
 
           <!-- WEBHOOKS -->
-          <section class="ap-section" id="webhooks">
-            <div class="ap-section-heading"><h2>Settlement webhooks</h2></div>
+          <section class="doc-section" id="webhooks">
+            <div class="doc-section-heading"><h2>Settlement webhooks</h2></div>
             <p>Aperture delivers events to the endpoint registered on your account via signed <code>POST</code>. Your endpoint must be public HTTPS and must return a <code>2xx</code> within <strong>8 seconds</strong>. Anything else is treated as a delivery failure and retried.</p>
-            <table class="ap-table">
+            <table class="doc-table">
               <thead><tr><th>Event</th><th>When it fires</th></tr></thead>
               <tbody>
                 <tr><td><code>charge.settled</code></td><td>Funds cleared. Carries final amounts and any applied cashback.</td></tr>
@@ -336,8 +336,8 @@ Content-Type: application/json
               </tbody>
             </table>
             <h3 id="webhook-payload">Event payload</h3>
-            <div class="ap-code">
-              <div class="ap-code-bar"><span class="ap-code-lang">POST /your/webhook/endpoint</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">POST /your/webhook/endpoint</span></div>
               <pre>POST /your/webhook/endpoint HTTP/1.1
 Aperture-Webhook-Signature: v1=ZXZlbnQtc2lnbmF0dXJl&hellip;Qb8=
 Aperture-Timestamp: 1733931120
@@ -357,17 +357,17 @@ Content-Type: application/json
   }
 }</pre>
             </div>
-            <div class="ap-callout blue">
-              <strong>&#8505; Webhooks are at-least-once</strong>
+            <div class="doc-callout blue">
+              <strong>&#8505; Webhooks are doc-least-once</strong>
               <p>Deduplicate on <code>event.id</code> and treat handlers as idempotent a settled charge may be delivered more than once.</p>
             </div>
           </section>
 
           <!-- DELIVERY -->
-          <section class="ap-section" id="delivery">
-            <div class="ap-section-heading"><h2>Delivery &amp; recovery</h2></div>
+          <section class="doc-section" id="delivery">
+            <div class="doc-section-heading"><h2>Delivery &amp; recovery</h2></div>
             <p>If your endpoint fails to acknowledge an event, Aperture retries on an exponential back-off. Each attempt re-signs with a fresh timestamp; the <code>event.id</code> is stable across attempts.</p>
-            <table class="ap-table">
+            <table class="doc-table">
               <thead><tr><th>Attempt</th><th>Delay after previous</th><th>Cumulative</th></tr></thead>
               <tbody>
                 <tr><td>1</td><td>immediate</td><td>0s</td></tr>
@@ -380,36 +380,36 @@ Content-Type: application/json
               </tbody>
             </table>
             <p>After the final attempt the event is marked <code>undelivered</code>. You can list and replay missed events at any time:</p>
-            <div class="ap-code">
-              <div class="ap-code-bar"><span class="ap-code-lang">Recover undelivered events</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">Recover undelivered events</span></div>
               <pre>GET  /v1/events?status=undelivered
 POST /v1/events/{event_id}/redeliver</pre>
             </div>
-            <div class="ap-callout red">
+            <div class="doc-callout red">
               <strong>&#9888; Don't gate checkout on the webhook</strong>
               <p>The synchronous <code>201</code> from <code>POST /charges</code> is the source of truth for whether to fulfil the order; webhooks reconcile the ledger afterward.</p>
             </div>
           </section>
 
           <!-- CAMPAIGNS -->
-          <section class="ap-section" id="campaigns">
-            <div class="ap-section-heading"><h2>Cashback campaigns</h2></div>
+          <section class="doc-section" id="campaigns">
+            <div class="doc-section-heading"><h2>Cashback campaigns</h2></div>
             <p>A campaign returns a percentage of qualifying charges to the customer's wallet as cashback. Aperture evaluates campaigns automatically at settlement you don't compute incentives yourself.</p>
-            <div class="ap-endpoint"><span class="ap-verb post">POST</span><code>/v1/campaigns</code></div>
-            <table class="ap-table">
+            <div class="doc-endpoint"><span class="doc-verb post">POST</span><code>/v1/campaigns</code></div>
+            <table class="doc-table">
               <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
               <tbody>
-                <tr><td><code>name</code></td><td>string <span class="ap-req">required</span></td><td>Internal label for the campaign. Max 64 chars.</td></tr>
-                <tr><td><code>rate_bps</code></td><td>integer <span class="ap-req">required</span></td><td>Cashback rate in basis points <code>500</code> = 5%.</td></tr>
-                <tr><td><code>currency</code></td><td>string <span class="ap-req">required</span></td><td>Charges in other currencies are ignored by this campaign.</td></tr>
-                <tr><td><code>max_cashback</code></td><td>integer <span class="ap-opt">optional</span></td><td>Per-charge cap in minor units.</td></tr>
-                <tr><td><code>starts_at</code></td><td>string <span class="ap-req">required</span></td><td>ISO-8601 start time.</td></tr>
-                <tr><td><code>ends_at</code></td><td>string <span class="ap-req">required</span></td><td>ISO-8601 end time.</td></tr>
-                <tr><td><code>eligible_references</code></td><td>array <span class="ap-opt">optional</span></td><td>If set, only charges whose reference has one of these prefixes qualify.</td></tr>
+                <tr><td><code>name</code></td><td>string <span class="doc-req">required</span></td><td>Internal label for the campaign. Max 64 chars.</td></tr>
+                <tr><td><code>rate_bps</code></td><td>integer <span class="doc-req">required</span></td><td>Cashback rate in basis points <code>500</code> = 5%.</td></tr>
+                <tr><td><code>currency</code></td><td>string <span class="doc-req">required</span></td><td>Charges in other currencies are ignored by this campaign.</td></tr>
+                <tr><td><code>max_cashback</code></td><td>integer <span class="doc-opt">optional</span></td><td>Per-charge cap in minor units.</td></tr>
+                <tr><td><code>starts_at</code></td><td>string <span class="doc-req">required</span></td><td>ISO-8601 start time.</td></tr>
+                <tr><td><code>ends_at</code></td><td>string <span class="doc-req">required</span></td><td>ISO-8601 end time.</td></tr>
+                <tr><td><code>eligible_references</code></td><td>array <span class="doc-opt">optional</span></td><td>If set, only charges whose reference has one of these prefixes qualify.</td></tr>
               </tbody>
             </table>
-            <div class="ap-code">
-              <div class="ap-code-bar"><span class="ap-code-lang">Request</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">Request</span></div>
               <pre>POST /v1/campaigns HTTP/1.1
 Host: api.aperturepay.dev
 Aperture-Key: apk_live_8QzR2pV0
@@ -427,8 +427,8 @@ Content-Type: application/json
   "eligible_references": ["order_"]
 }</pre>
             </div>
-            <div class="ap-code">
-              <div class="ap-code-bar"><span class="ap-code-lang">200 OK</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">200 OK</span></div>
               <pre>HTTP/1.1 200 OK
 Content-Type: application/json
 
@@ -438,11 +438,11 @@ Content-Type: application/json
           </section>
 
           <!-- ERROR REFERENCE -->
-          <section class="ap-section" id="errors">
-            <div class="ap-section-heading"><h2>Error reference</h2></div>
+          <section class="doc-section" id="errors">
+            <div class="doc-section-heading"><h2>Error reference</h2></div>
             <p>Errors return a non-<code>2xx</code> status and a structured body. The <code>type</code> groups the failure; the <code>code</code> is stable and safe to branch on; <code>message</code> is human-readable and may change.</p>
-            <div class="ap-code">
-              <div class="ap-code-bar"><span class="ap-code-lang">Error shape</span></div>
+            <div class="doc-code">
+              <div class="doc-code-bar"><span class="doc-code-lang">Error shape</span></div>
               <pre>{
   "error": {
     "type": "invalid_request",
@@ -452,7 +452,7 @@ Content-Type: application/json
   }
 }</pre>
             </div>
-            <table class="ap-table">
+            <table class="doc-table">
               <thead><tr><th>Status</th><th>Code</th><th>Meaning</th></tr></thead>
               <tbody>
                 <tr><td>400</td><td><code>missing_parameter</code></td><td>A required field is absent.</td></tr>
@@ -470,8 +470,8 @@ Content-Type: application/json
           </section>
 
           <!-- WRITER NOTE -->
-          <div class="ap-writer-note">
-            <span class="ap-writer-note-label">&#9997;&#65039; Writer's note</span>
+          <div class="doc-writer-note">
+            <span class="doc-writer-note-label">&#9997;&#65039; Writer's note</span>
             <p>
               The craft in a payments API reference is honesty about failure. It's easy to document the happy path;
               the value is in the edge cases what a 201 actually commits, why you never gate checkout on a
@@ -483,14 +483,14 @@ Content-Type: application/json
           </div>
 
           <!-- RELATED -->
-          <div class="ap-related">
+          <div class="doc-related">
             <h3>Related work</h3>
             <a href="./helix-play-api.html">Helix Play Operator API &rarr;</a>
             <a href="./stride-api.html">Stride Platform API &rarr;</a>
             <a href="./atlas-developer-platform.html">Atlas Developer Platform &rarr;</a>
           </div>
 
-          <div class="ap-bottom-nav">
+          <div class="doc-bottom-nav">
             <a href="../../portfolio.html">&larr; Back to portfolio</a>
             <a href="../../contact.html">Let's talk &rarr;</a>
           </div>
@@ -498,28 +498,28 @@ Content-Type: application/json
         </div>
 
         <!-- SIDEBAR -->
-        <aside class="ap-sidebar">
-          <div class="ap-toc-card">
-            <div class="ap-toc-title">On this page</div>
-            <nav class="ap-toc">
-              <a href="#overview"><span class="ap-toc-dot"></span>Overview</a>
-              <a href="#auth"><span class="ap-toc-dot"></span>Authenticating</a>
-              <a href="#idempotency"><span class="ap-toc-dot"></span>Idempotency</a>
-              <a href="#charges"><span class="ap-toc-dot"></span>Charges</a>
-              <a href="#reversals"><span class="ap-toc-dot"></span>Reversals</a>
-              <a href="#webhooks"><span class="ap-toc-dot"></span>Settlement webhooks</a>
-              <a href="#delivery"><span class="ap-toc-dot"></span>Delivery &amp; recovery</a>
-              <a href="#campaigns"><span class="ap-toc-dot"></span>Cashback campaigns</a>
-              <a href="#errors"><span class="ap-toc-dot"></span>Error reference</a>
+        <aside class="doc-sidebar">
+          <div class="doc-toc-card">
+            <div class="doc-toc-title">On this page</div>
+            <nav class="doc-toc">
+              <a href="#overview"><span class="doc-toc-dot"></span>Overview</a>
+              <a href="#auth"><span class="doc-toc-dot"></span>Authenticating</a>
+              <a href="#idempotency"><span class="doc-toc-dot"></span>Idempotency</a>
+              <a href="#charges"><span class="doc-toc-dot"></span>Charges</a>
+              <a href="#reversals"><span class="doc-toc-dot"></span>Reversals</a>
+              <a href="#webhooks"><span class="doc-toc-dot"></span>Settlement webhooks</a>
+              <a href="#delivery"><span class="doc-toc-dot"></span>Delivery &amp; recovery</a>
+              <a href="#campaigns"><span class="doc-toc-dot"></span>Cashback campaigns</a>
+              <a href="#errors"><span class="doc-toc-dot"></span>Error reference</a>
             </nav>
           </div>
-          <div class="ap-quick-ref">
-            <div class="ap-quick-ref-title">API at a glance</div>
-            <div class="ap-quick-ref-row"><span>Auth</span><code>HMAC-SHA256</code></div>
-            <div class="ap-quick-ref-row"><span>Format</span><code>JSON / REST</code></div>
-            <div class="ap-quick-ref-row"><span>Safe retry</span><code>Idempotency-Key</code></div>
-            <div class="ap-quick-ref-row"><span>Events</span><code>webhooks</code></div>
-            <div class="ap-quick-ref-row"><span>Delivery</span><code>at-least-once</code></div>
+          <div class="doc-quick-ref">
+            <div class="doc-quick-ref-title">API at a glance</div>
+            <div class="doc-quick-ref-row"><span>Auth</span><code>HMAC-SHA256</code></div>
+            <div class="doc-quick-ref-row"><span>Format</span><code>JSON / REST</code></div>
+            <div class="doc-quick-ref-row"><span>Safe retry</span><code>Idempotency-Key</code></div>
+            <div class="doc-quick-ref-row"><span>Events</span><code>webhooks</code></div>
+            <div class="doc-quick-ref-row"><span>Delivery</span><code>at-least-once</code></div>
           </div>
         </aside>
 
