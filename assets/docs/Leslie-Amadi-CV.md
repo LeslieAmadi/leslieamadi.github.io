@@ -1,69 +1,71 @@
-# Leslie Amadi
+# LESLIE AMADI
 
-**Senior Technical Writer** · Documentation Governance · Knowledge Management · Process Standardisation
+Senior Technical Writer · Developer Documentation
 
-Hamburg, Germany · hello@lesliewrites.tech · +49 151 57618141
-▶ Portfolio: [lesliewrites.tech/portfolio](https://leslieamadi.github.io/lesliewrites.tech/portfolio.html) · [LinkedIn](https://www.linkedin.com/in/leslie-a-86ab251b3)
+Hamburg, Germany · lesliewrites.amadi@gmail.com · +49 151 57618141
 
-**Work authorization:** Authorized to work in Germany; no sponsorship required.
-**Languages:** English (fluent) · German (B1 intermediate) 
+[Portfolio](https://leslieamadi.github.io) · [LinkedIn](https://linkedin.com/in/leslieamadi) · [GitHub](https://github.com/LeslieAmadi)
+
+English (native) · German (B1) · Russian (B1) · Ukrainian (conversational) | Authorized to work in Germany; no sponsorship required.
+
+Almost six years documenting software, four of those as the first and only technical writer. Built the documentation function from nothing across seven departments, covering the API guide partner developers build against, integration guides, game engine manuals, IT setup guides, and the compliance and new-joiner handbooks. Set the templates everyone else writes to. Moved the docs onto Docusaurus and built the CI pipeline that publishes them. Reads code: one feature was documented from the repository, not from interviews.
 
 ---
 
-## Professional Summary
+## EXPERIENCE
 
-Senior Technical Writer with 5+ years of experience in documentation governance, knowledge management, and process standardisation. Sole Technical Writer responsible for 400+ knowledge assets across 7 departments, establishing organisation-wide documentation standards, template frameworks, review cycles, and content-governance practices. Experienced across AI/ML, API, and MLOps documentation, incident management, and operational process design, with demonstrated end-to-end ownership of business-critical documentation systems. Much of this experience is in regulated iGaming, where documentation standards, compliance, and audit-readiness are business-critical.
+### Senior Technical Writer
 
-## Core Competencies
+GC Software Development GmbH, Hamburg · Sole technical writer — October 2022 – June 2026
 
-Documentation Governance & Standards | Knowledge Management | Information Architecture | Template Framework Design | Process Mapping & Standardisation | Content Lifecycle & Audits | Confluence & Jira Administration | Incident & Service Operations | Onboarding Frameworks | API & MLOps Documentation | User Stories & Journey Mapping | SEO & Content Systems
+**Ownership and standards**
 
-See each competency demonstrated in the [documentation portfolio](https://leslieamadi.github.io/lesliewrites.tech/portfolio.html), organised by discipline.
+- Built the documentation function from nothing as the company's first technical writer: 400+ pages across seven departments, and the master template framework. Sole author, reviewer and approver.
+- Interviewed subject-matter experts in every department, then structured what they knew into an information architecture readers could navigate under time pressure. Recurring audits and gap analyses followed; documentation cleared internal and partner audits.
 
-## Professional Experience
+**Developer and partner documentation**
 
-### Senior Technical Writer Documentation Governance
-**GC Software Development GmbH · Hamburg, Germany** Oct 2022 – Jun 2026
-*Sole Technical Writer; contractual partner to Booming Games (Malta) Ltd.*
+- Owned the Operator API integration guide, the reference partner developers build against. Signed requests, session and launch flow, callbacks, rollbacks, retries, error codes.
+- Moved the API docs onto Docusaurus and put them behind CI: site setup, sidebars, a version per API release, GitLab pipeline. Docs now ship with the API instead of trailing it.
+- Wrote the quick-start taking an integrator from first launch to a confirmed transaction, with real requests and responses.
+- Wrote the major-version migration guide: every breaking change, before and after. Partners upgraded with almost zero to minimal support tickets raised.
+- Built a configuration form in the internal admin UI (React, Ant Design) and documented it from the shipped code, not from interviews.
 
-**Documentation Governance & Standards**
-- Owned documentation governance across 7 departments as the primary author, reviewer, and approver for **400+ knowledge assets**, establishing organisation-wide standards, review cycles, and content-ownership practices.
-- Designed and implemented the **BG Global Documentation Template framework** plus Process, Technical, Incident Report, Onboarding/Offboarding, and Compliance templates standardising structure and quality across the Operations, Incident Management, Compliance, Product/GCS, Technical, and BTC spaces.
-- Conducted recurring documentation audits and gap analyses across business functions; documentation subsequently passed internal and partner audits with no major findings.
-- Used **search-gap and support signals** frequent questions, unfindable topics to prioritise which knowledge assets to improve, raising findability and self-service.
+**Process and organisational documentation**
 
-**Process Documentation & Onboarding**
-- Documented and maintained **40+ end-to-end processes and 100+ supporting workflows**, creating auditable sources of truth that reduced reliance on undocumented tribal knowledge.
-- Developed organisation-wide and third-party integration onboarding frameworks repeatable knowledge-transfer models still in use, noticeably shortening new-hire and partner ramp-up time.
-- Produced process maps, swimlanes, and workflow models adopted as the primary reference for business-critical operations.
-- Completed the **restructuring of the Incident Management documentation space** and reorganised Operations documentation, measurably improving structure and usability.
-
-**Incident Management & Compliance**
-- Created incident response procedures, escalation workflows, and playbooks; maintained Jira workflow and change-management records used during live incidents.
-- Documented billing, reconciliation, and exception-handling with Finance and Compliance to meet audit and internal-control expectations.
+- Mapped 40+ end-to-end processes and 50+ supporting workflows across engineering, QA, project management, incident management, compliance and finance, including the cross-team custom integration workflow with decision gates and stage ownership.
+- Wrote user guides and manuals for the game engines, covering key features, workflows and day-to-day use.
+- Built the compliance handbook and Confluence new-joiner guide, covering company structure, compliance, Personio, leave processes, FAQs and key resources.
+- Wrote onboarding paths per department, from the HR welcome email through IT setup to the team page. Managers said new hires reached independent work in about a week, down from two or three.
 
 ### Technical Writer
-**Betinvest · Remote** Jan 2021 – Sep 2022
-- Produced technical documentation, release notes, and user-facing content with engineers, QA, and product managers.
-- Maintained knowledge repositories, improving content organisation and discoverability; supported coordinated release cycles.
 
-## Selected Portfolio Work
+Betinvest, Hybrid — January 2021 – September 2022
 
-Original demonstration pieces full portfolio at [lesliewrites.tech/portfolio](https://leslieamadi.github.io/lesliewrites.tech/portfolio.html), organised by discipline (governance, MLOps, process, developer experience, content systems).
+- Edited, maintained and wrote product docs, release notes and user-facing content with engineers, QA, marketing team and product managers, and reorganised the knowledge base so people could find things.
 
-- **Documentation Architecture:** information architecture, ownership model, content lifecycle, and governance for 400+ assets.
-- **Incident Response & Jira Workflow:** post-incident analysis with 5-Whys RCA and governed, multi-team ticket workflows.
-- **Patient Outcomes Datasheet:** data governance de-identification, intended-use limits, and prescribed fairness checks.
-- **Helios & Atlas (MLOps / API):** model-serving architecture, runbooks, RACI, and Stripe-style developer-experience references.
+---
 
-## Tools & Technical Skills
+## PROJECTS
 
-- **Documentation & KM:** Confluence, knowledge-base platforms, information architecture, template frameworks, content governance.
-- **Process & Product:** Jira, Draw.io, process mapping & swimlanes, user stories, journey mapping.
-- **Technical domains:** MLOps & model serving, API documentation, incident response, SEO & content systems.
-- **Productivity:** Microsoft Office, Google Workspace, Markdown, HTML/CSS.
+[Relay Health API docs](https://github.com/LeslieAmadi/relay-health-docs)
 
-## Education & Certifications
+Docs site for a demo clinical referral and scheduling API. Docusaurus from scratch, Diátaxis structure, broken links fail the build, versioned releases, GitHub Actions to deploy.
 
-- **[Degree / Field]** [Sumy State University Ukraine], [2015]
-- **Certifications:** [Google Certification]
+---
+
+## SKILLS
+
+**Docs-as-code:** Docusaurus, Git, GitHub, GitLab, GitHub Actions, GitLab CI, Markdown, YAML, npm, VS Code
+
+**Documentation:** Confluence, AsciiDoc, DITA XML, Oxygen XML, information architecture, templates, governance
+
+**Technical:** REST API docs, authentication and request signing, webhooks and callbacks, MLOps, incident response
+
+**Process & other:** BPMN, process mapping, Jira, Notion, Figma, Draw.io, user stories, journey mapping, React, Ant Design, HTML/CSS, SEO
+
+---
+
+## EDUCATION & CERTIFICATIONS
+
+**Doctor of Medicine (M.D.), Sumy State University, Ukraine** — 2015 · Udemy & Google Technical Writing & IT Support certificates, 2021
