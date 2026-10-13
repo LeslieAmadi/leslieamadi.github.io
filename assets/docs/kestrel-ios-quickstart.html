@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kestrel SDK: iOS Quickstart | Leslie Amadi</title>
+  <meta name="description" content="iOS rewarded-ad SDK integration quickstart: Swift Package Manager, Info.plist and SKAdNetwork, App Tracking Transparency timing, delegate retain cycles, main-actor dispatch, bounded retries, and reward eligibility."/>
+  <meta property="og:title" content="Kestrel SDK: iOS Quickstart | Leslie Amadi"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:image" content="https://leslieamadi.github.io/assets/images/profile-image.png"/>
+  <link rel="stylesheet" href="/assets/css/styles.css"/>
+</head>
+<body>
+<div class="page-shell">
+
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="/index.html" class="logo">
+        <span class="logo-badge">LA</span>
+        <span class="logo-text">Technical Writer<br>Leslie Amadi</span>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+      <div class="nav-menu">
+        <a href="/index.html">Home</a>
+        <a href="/portfolio.html" class="active">Portfolio</a>
+        <a href="/blog.html">Blog</a>
+        <a href="/about.html">About</a>
+        <a href="/leslie-amadi-cv.html">CV</a>
+        <a href="/contact.html" class="nav-cta">Let's Talk</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="doc-breadcrumb">
+    <a href="/portfolio.html">Portfolio</a> &rsaquo; Mobile SDK &amp; Developer Experience &rsaquo; Kestrel SDK iOS Quickstart
+  </div>
+
+  <header class="doc-hero">
+    <p class="doc-hero-eyebrow">Quickstart &middot; Mobile SDK &middot; iOS</p>
+    <h1>Kestrel SDK: iOS Quickstart</h1>
+    <p class="doc-hero-desc">
+      Integrate a rewarded-advertising SDK into an iOS application: add the package,
+      configure SKAdNetwork, request tracking authorisation at a moment when the system
+      will actually show the prompt, initialise at launch, avoid the delegate retain cycle,
+      and grant the reward only when it has been earned.
+    </p>
+    <div class="doc-hero-tags">
+      <span class="doc-hero-tag">Swift</span>
+      <span class="doc-hero-tag">Swift Package Manager</span>
+      <span class="doc-hero-tag">App lifecycle</span>
+      <span class="doc-hero-tag">Delegates retain cycles</span>
+      <span class="doc-hero-tag">App Tracking Transparency</span>
+      <span class="doc-hero-tag">Reward eligibility</span>
+    </div>
+  </header>
+
+  <section class="doc-quick-ref">
+    <p class="doc-quick-ref-title">At a glance</p>
+    <div class="doc-quick-ref-row"><span class="doc-ctrl-label">Discipline</span><span>Developer Documentation &middot; Mobile SDK &middot; AdTech</span></div>
+    <div class="doc-quick-ref-row"><span class="doc-ctrl-label">Platform</span><span>iOS 15.0 and above</span></div>
+    <div class="doc-quick-ref-row"><span class="doc-ctrl-label">Language</span><span><code>Swift 5.9</code> &middot; Xcode 16</span></div>
+    <div class="doc-quick-ref-row"><span class="doc-ctrl-label">Distribution</span><span>Swift Package Manager</span></div>
+    <div class="doc-quick-ref-row"><span class="doc-ctrl-label">Integration</span><span>Rewarded advertising</span></div>
+    <div class="doc-quick-ref-row"><span class="doc-ctrl-label">My role</span><span>Senior Technical Writer &mdash; information architecture, code samples, failure handling</span></div>
+    <div class="doc-quick-ref-row"><span class="doc-ctrl-label">Doc type</span><span>Quickstart (tutorial)</span></div>
+    <div class="doc-quick-ref-row"><span class="doc-ctrl-label">Version</span><span>v1.0 &middot; original demonstration piece</span></div>
+    <div class="doc-quick-ref-row"><span class="doc-ctrl-label">Last reviewed</span><span>October 2026</span></div>
+  </section>
+
+  <div class="doc-layout">
+
+    <aside class="doc-sidebar">
+      <nav class="doc-toc">
+        <p class="doc-toc-title">On this page</p>
+        <a href="#requirements"><span class="doc-toc-dot"></span>Requirements</a>
+        <a href="#package"><span class="doc-toc-dot"></span>1. Add the package</a>
+        <a href="#plist"><span class="doc-toc-dot"></span>2. Configure Info.plist</a>
+        <a href="#initialise"><span class="doc-toc-dot"></span>3. Initialise at launch</a>
+        <a href="#att"><span class="doc-toc-dot"></span>4. Request tracking authorisation</a>
+        <a href="#load-show"><span class="doc-toc-dot"></span>5. Load and show an ad</a>
+        <a href="#reward"><span class="doc-toc-dot"></span>6. Grant the reward</a>
+        <a href="#test"><span class="doc-toc-dot"></span>7. Test the integration</a>
+        <a href="#android"><span class="doc-toc-dot"></span>Coming from Android</a>
+        <a href="#troubleshooting"><span class="doc-toc-dot"></span>Troubleshooting</a>
+        <a href="#writer-note"><span class="doc-toc-dot"></span>Writer's note</a>
+      </nav>
+    </aside>
+
+    <main class="doc-main">
+
+      <div class="doc-callout blue">
+        <strong>About this sample.</strong> Kestrel is a fictional advertising SDK written
+        for this documentation piece. The API is invented, but the integration patterns,
+        platform constraints and failure modes reflect how real iOS ad SDKs behave.
+        The Android equivalent is
+        <a href="/assets/docs/kestrel-android-quickstart.html">here</a>.
+      </div>
+
+      <section class="doc-section" id="requirements">
+        <h2 class="doc-section-heading">Requirements</h2>
+        <p>
+          This quickstart integrates Kestrel into an iOS application: add the package,
+          initialise at launch, preload a rewarded ad, display it on demand, and grant
+          in-game currency when the user earns a reward.
+        </p>
+        <p>Before you start, you need:</p>
+        <ul class="doc-list">
+          <li>Xcode 16 or later.</li>
+          <li>An iOS application targeting iOS 15.0 or above.</li>
+          <li>A Kestrel application ID from the developer dashboard.</li>
+          <li>A physical device for testing. The simulator has no IDFA and will not show the tracking prompt.</li>
+        </ul>
+        <div class="doc-callout blue">
+          <strong>No network permission is required.</strong> Unlike Android, iOS grants
+          outbound network access by default. There is no equivalent of
+          <code>&lt;uses-permission android:name="android.permission.INTERNET" /&gt;</code>.
+        </div>
+      </section>
+
+      <section class="doc-section" id="package">
+        <h2 class="doc-section-heading">1. Add the package</h2>
+
+        <p>In Xcode, choose <strong>File &rsaquo; Add Package Dependencies</strong> and enter
+        the Kestrel repository URL:</p>
+
+        <div class="doc-code">
+          <div class="doc-code-bar"><span class="doc-code-lang">Package URL</span></div>
+          <pre><code>https://github.com/kestrel-ads/kestrel-ios</code></pre>
+        </div>
+
+        <p>Set the dependency rule to <strong>Up to Next Major Version</strong> from
+        <code>1.0.0</code>, then add the <code>KestrelAds</code> library to your app target.</p>
+
+        <p>For a package-based project, declare it in <code>Package.swift</code> instead:</p>
+
+        <div class="doc-code">
+          <div class="doc-code-bar"><span class="doc-code-lang">Package.swift</span></div>
+          <pre><code>dependencies: [
+    .package(
+        url: "https://github.com/kestrel-ads/kestrel-ios",
+        from: "1.0.0"
+    )
+],
+targets: [
+    .target(
+        name: "MyApp",
+        dependencies: [
+            .product(name: "KestrelAds", package: "kestrel-ios")
+        ]
+    )
+]</code></pre>
+        </div>
+
+        <div class="doc-callout green">
+          <strong>Expected result.</strong> <code>import KestrelAds</code> resolves and the
+          project builds.
+        </div>
+      </section>
+
+      <section class="doc-section" id="plist">
+        <h2 class="doc-section-heading">2. Configure Info.plist</h2>
+
+        <p>Two entries are required. Open <code>Info.plist</code> as source and add:</p>
+
+        <div class="doc-code">
+          <div class="doc-code-bar"><span class="doc-code-lang">Info.plist</span></div>
+          <pre><code>&lt;key&gt;KestrelAppID&lt;/key&gt;
+&lt;string&gt;YOUR_KESTREL_APP_ID&lt;/string&gt;
+
+&lt;key&gt;NSUserTrackingUsageDescription&lt;/key&gt;
+&lt;string&gt;This identifier will be used to show you more relevant rewarded offers.&lt;/string&gt;
+
+&lt;key&gt;SKAdNetworkItems&lt;/key&gt;
+&lt;array&gt;
+    &lt;dict&gt;
+        &lt;key&gt;SKAdNetworkIdentifier&lt;/key&gt;
+        &lt;string&gt;kestrel1a2b.skadnetwork&lt;/string&gt;
+    &lt;/dict&gt;
+&lt;/array&gt;</code></pre>
+        </div>
+
+        <table class="doc-table">
+          <thead>
+            <tr><th>Key</th><th>Purpose</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>KestrelAppID</code></td>
+              <td>Identifies your app to Kestrel. Safe to ship.</td>
+            </tr>
+            <tr>
+              <td><code>NSUserTrackingUsageDescription</code></td>
+              <td>The text shown in the tracking prompt. Without this key the prompt never appears and the app is rejected at review.</td>
+            </tr>
+            <tr>
+              <td><code>SKAdNetworkItems</code></td>
+              <td>Ad-network identifiers used for install attribution. Missing entries mean installs go unattributed and revenue is undercounted.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="doc-callout red">
+          <strong>Do not embed server credentials.</strong> An application ID identifies your
+          app and is safe to ship. Private keys are not:
+          <code>Info.plist</code> is readable in any unpacked <code>.ipa</code>.
+        </div>
+      </section>
+
+      <section class="doc-section" id="initialise">
+        <h2 class="doc-section-heading">3. Initialise at launch</h2>
+
+        <p>
+          Kestrel initialises once per app launch. The place for that is
+          <code>application(_:didFinishLaunchingWithOptions:)</code>, which runs before any
+          interface appears.
+        </p>
+
+        <p><strong>SwiftUI</strong> apps reach the app delegate through an adaptor:</p>
+
+        <div class="doc-code">
+          <div class="doc-code-bar"><span class="doc-code-lang">MyApp.swift (SwiftUI)</span></div>
+          <pre><code>import SwiftUI
+import KestrelAds
+
+@main
+struct MyApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
+}
+
+final class AppDelegate: NSObject, UIApplicationDelegate {
+
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions:
+            [UIApplication.LaunchOptionsKey: Any]? = nil
+    ) -> Bool {
+
+        KestrelAds.setLogLevel(.debug)
+        KestrelAds.initialize()
+
+        return true
+    }
+}</code></pre>
+        </div>
+
+        <p><strong>UIKit</strong> apps already have one:</p>
+
+        <div class="doc-code">
+          <div class="doc-code-bar"><span class="doc-code-lang">AppDelegate.swift (UIKit)</span></div>
+          <pre><code>import UIKit
+import KestrelAds
+
+@main
+final class AppDelegate: UIResponder, UIApplicationDelegate {
+
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions:
+            [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
+
+        KestrelAds.setLogLevel(.debug)
+        KestrelAds.initialize()
+
+        return true
+    }
+}</code></pre>
+        </div>
+
+        <p>
+          Set the log level <em>before</em> initialising, or initialisation itself produces no
+          output. Disable debug logging in release builds.
+        </p>
+
+        <div class="doc-callout red">
+          <strong>Warning 1 &mdash; initialise once, at launch.</strong> Do not initialise
+          Kestrel in <code>viewDidLoad()</code> or <code>.onAppear</code>. A view controller
+          is created and destroyed as the user navigates, and <code>.onAppear</code> fires
+          again every time a SwiftUI view returns to screen, so the SDK would initialise
+          repeatedly.
+        </div>
+      </section>
+
+      <section class="doc-section" id="att">
+        <h2 class="doc-section-heading">4. Request tracking authorisation</h2>
+
+        <p>
+          Rewarded advertising uses the advertising identifier (IDFA). Since iOS 14.5,
+          reading it requires the user's permission through App Tracking Transparency.
+        </p>
+
+        <div class="doc-code">
+          <div class="doc-code-bar"><span class="doc-code-lang">TrackingAuthorization.swift</span></div>
+          <pre><code>import AppTrackingTransparency
+import KestrelAds
+
+enum TrackingAuthorization {
+
+    /// Call only when the app is in the foreground and active.
+    static func request() {
+        ATTrackingManager.requestTrackingAuthorization { status in
+            // Kestrel serves ads regardless of the outcome.
+            // Denied authorisation means contextual rather than
+            // personalised ads, and lower revenue per impression.
+            KestrelAds.setTrackingAuthorizationStatus(status)
+        }
+    }
+}</code></pre>
+        </div>
+
+        <p>Call it once the app is genuinely active, not during launch:</p>
+
+        <div class="doc-code">
+          <div class="doc-code-bar"><span class="doc-code-lang">ContentView.swift</span></div>
+          <pre><code>import SwiftUI
+
+struct ContentView: View {
+    @Environment(\.scenePhase) private var scenePhase
+    @State private var hasRequestedTracking = false
+
+    var body: some View {
+        RewardedAdView()
+            .onChange(of: scenePhase) { _, newPhase in
+                guard newPhase == .active, !hasRequestedTracking else { return }
+                hasRequestedTracking = true
+                TrackingAuthorization.request()
+            }
+    }
+}</code></pre>
+        </div>
+
+        <div class="doc-callout red">
+          <strong>Warning 2 &mdash; the prompt fails silently before the app is active.</strong>
+          Calling <code>requestTrackingAuthorization</code> from
+          <code>didFinishLaunchingWithOptions</code> returns
+          <code>.denied</code> immediately without ever showing the prompt. There is no
+          error and nothing in the log. The app is still in the <code>.inactive</code>
+          state, and the system discards the request. Wait for
+          <code>.active</code>.
+        </div>
+
+        <p>
+          The user can only be asked once per install, so a request lost this way is lost for
+          good until the app is deleted and reinstalled.
+        </p>
+      </section>
+
+      <section class="doc-section" id="load-show">
+        <h2 class="doc-section-heading">5. Load and show a rewarded ad</h2>
+
+        <p>Preload the ad when the screen appears so the user never waits after tapping. The
+        flow is:</p>
+
+        <ol class="doc-list">
+          <li>Create a <code>KestrelRewardedAd</code> and assign the delegate.</li>
+          <li>Request the ad. Keep the button disabled while it loads.</li>
+          <li>Enable the button in <code>rewardedAdDidLoad(_:)</code>.</li>
+          <li>Present the preloaded ad when the user taps.</li>
+          <li>Grant the reward in <code>rewardedAd(_:didEarnReward:)</code>, never in <code>rewardedAdDidDismiss(_:)</code>.</li>
+          <li>Load the next ad after dismissal.</li>
+          <li>Retry transient failures with bounded exponential backoff.</li>
+        </ol>
+
+        <p>
+          Kestrel delivers delegate callbacks on a background queue, so every UI update is
+          dispatched to the main queue.
+        </p>
+
+        <div class="doc-code">
+          <div class="doc-code-bar"><span class="doc-code-lang">RewardedAdViewController.swift</span></div>
+          <pre><code>import UIKit
+import KestrelAds
+
+final class RewardedAdViewController: UIViewController {
+
+    @IBOutlet private weak var coinBalanceLabel: UILabel!
+    @IBOutlet private weak var watchAdButton: UIButton!
+    @IBOutlet private weak var retryButton: UIButton!
+
+    private var coins = 0
+    private var rewardedAd: KestrelRewardedAd?
+    private var adReady = false
+
+    private var retryCount = 0
+    private var retryWorkItem: DispatchWorkItem?
+    private let maxRetries = 3
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        watchAdButton.isEnabled = false
+        retryButton.isHidden = true
+
+        updateCoinBalance()
+        loadRewardedAd()
+    }
+
+    deinit {
+        retryWorkItem?.cancel()
+        rewardedAd?.delegate = nil
+    }
+
+    // MARK: - Loading
+
+    private func loadRewardedAd() {
+        adReady = false
+        watchAdButton.isEnabled = false
+
+        let ad = KestrelRewardedAd()
+        ad.delegate = self
+        rewardedAd = ad
+        ad.load()
+    }
+
+    private func scheduleRetry() {
+        guard retryWorkItem == nil else { return }
+
+        guard retryCount < maxRetries else {
+            retryButton.isHidden = false
+            return
+        }
+
+        let delay = 2.0 * pow(2.0, Double(retryCount))
+        retryCount += 1
+
+        let work = DispatchWorkItem { [weak self] in
+            self?.retryWorkItem = nil
+            self?.loadRewardedAd()
+        }
+        retryWorkItem = work
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: work)
+    }
+
+    // MARK: - Actions
+
+    @IBAction private func watchAdTapped(_ sender: UIButton) {
+        guard adReady, let ad = rewardedAd else { return }
+
+        adReady = false
+        watchAdButton.isEnabled = false
+        ad.present(from: self)
+    }
+
+    @IBAction private func retryTapped(_ sender: UIButton) {
+        retryCount = 0
+        retryButton.isHidden = true
+        loadRewardedAd()
+    }
+
+    private func updateCoinBalance() {
+        coinBalanceLabel.text = "Coins: \(coins)"
+    }
+}
+
+// MARK: - KestrelRewardedAdDelegate
+
+extension RewardedAdViewController: KestrelRewardedAdDelegate {
+
+    func rewardedAdDidLoad(_ ad: KestrelRewardedAd) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self, self.rewardedAd === ad else { return }
+
+            self.retryCount = 0
+            self.adReady = true
+            self.watchAdButton.isEnabled = true
+            self.retryButton.isHidden = true
+        }
+    }
+
+    func rewardedAd(_ ad: KestrelRewardedAd, didEarnReward amount: Int) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+
+            self.coins += amount
+            self.updateCoinBalance()
+        }
+    }
+
+    func rewardedAdDidDismiss(_ ad: KestrelRewardedAd) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self, self.rewardedAd === ad else { return }
+
+            self.rewardedAd = nil
+            self.adReady = false
+            self.loadRewardedAd()
+        }
+    }
+
+    func rewardedAd(_ ad: KestrelRewardedAd, didFailToLoad error: Error) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self, self.rewardedAd === ad else { return }
+
+            self.rewardedAd = nil
+            self.adReady = false
+            self.watchAdButton.isEnabled = false
+            self.scheduleRetry()
+        }
+    }
+}</code></pre>
+        </div>
+
+        <p>
+          Four details in that listing are worth noticing. <code>[weak self]</code> in every
+          closure prevents the view controller being kept alive by a pending callback. The
+          <code>rewardedAd === ad</code> check means a late callback from a discarded instance
+          cannot change the current state. Retries back off at two, four and eight seconds
+          and then stop, revealing a manual retry button rather than leaving a dead control.
+          And <code>deinit</code> cancels the pending retry and clears the delegate.
+        </p>
+
+        <div class="doc-callout red">
+          <strong>Warning 3 &mdash; the delegate must be weak.</strong> Kestrel declares
+          <code>weak var delegate</code>, so assigning <code>self</code> does not create a
+          retain cycle. If you write your own object that holds an ad strongly while the ad
+          holds it back strongly, neither is ever deallocated: Swift uses reference counting,
+          not garbage collection, so a cycle leaks silently. Clearing the delegate in
+          <code>deinit</code> is cheap insurance.
+        </div>
+
+        <div class="doc-callout red">
+          <strong>Warning 4 &mdash; update the UI on the main queue.</strong> UIKit and
+          SwiftUI may only be touched from the main queue. Kestrel's callbacks arrive on a
+          background queue, so every UI update goes through
+          <code>DispatchQueue.main.async</code>. Touching a view from a background queue
+          produces undefined behaviour: often a crash, sometimes a layout glitch that appears
+          only on a slower device.
+        </div>
+      </section>
+
+      <section class="doc-section" id="reward">
+        <h2 class="doc-section-heading">6. Grant the reward</h2>
+
+        <p>Kestrel reports two separate events, and the difference between them matters
+        commercially:</p>
+
+        <table class="doc-table">
+          <thead>
+            <tr><th>Callback</th><th>Fires when</th><th>Grant the reward?</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>rewardedAd(_:didEarnReward:)</code></td><td>The user completed the eligible interaction.</td><td>Yes</td></tr>
+            <tr><td><code>rewardedAdDidDismiss(_:)</code></td><td>The ad closed, whether completed or skipped.</td><td>No</td></tr>
+          </tbody>
+        </table>
+
+        <div class="doc-callout red">
+          <strong>Warning 5 &mdash; never grant on dismissal.</strong>
+          <code>rewardedAdDidDismiss(_:)</code> fires whether the user watched the ad or quit
+          after two seconds. Granting coins there teaches users to open an ad and immediately
+          close it: the publisher pays out rewards nobody earned, and the advertiser is
+          billed for impressions nobody saw.
+        </div>
+
+        <p>
+          The <code>coins</code> property in the sample lives in memory on the device. A
+          production rewards system should hold the authoritative balance on a trusted
+          backend, verify the reward event server side where supported, and make reward
+          processing idempotent so the same event cannot credit an account twice.
+        </p>
+      </section>
+
+      <section class="doc-section" id="test">
+        <h2 class="doc-section-heading">7. Test the integration</h2>
+
+        <p>
+          Test on a physical device. The simulator has no advertising identifier and will not
+          present the tracking prompt, so an integration that looks correct there can still
+          fail on hardware.
+        </p>
+
+        <table class="doc-table">
+          <thead>
+            <tr><th>Scenario</th><th>Expected result</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>App launches</td><td>Kestrel initialises once; debug logs appear in the console.</td></tr>
+            <tr><td>App becomes active</td><td>The tracking prompt is presented, once per install.</td></tr>
+            <tr><td>Tracking is denied</td><td>Ads still load and rewards still work.</td></tr>
+            <tr><td>Ad is loading</td><td>Watch Ad stays disabled.</td></tr>
+            <tr><td>Ad loads</td><td>Watch Ad becomes available.</td></tr>
+            <tr><td>User taps Watch Ad</td><td>The preloaded ad presents with no wait.</td></tr>
+            <tr><td>User completes the ad</td><td>Coin balance increases by the reported amount.</td></tr>
+            <tr><td>User closes early</td><td>No reward is granted.</td></tr>
+            <tr><td>Load fails once</td><td>A retry is scheduled after two seconds.</td></tr>
+            <tr><td>Load fails four times</td><td>Automatic retries stop; the manual retry button appears.</td></tr>
+            <tr><td>User leaves the screen mid-retry</td><td>The view controller deallocates; no callback fires into it.</td></tr>
+          </tbody>
+        </table>
+
+        <p>
+          Test the early-close case deliberately. An integration that grants rewards on
+          dismissal looks identical to a correct one until someone notices the payout
+          figures.
+        </p>
+
+        <p>
+          To confirm there is no retain cycle, navigate away from the screen and check that
+          <code>deinit</code> runs. Use the Memory Graph Debugger in Xcode if it does not.
+        </p>
+      </section>
+
+      <section class="doc-section" id="android">
+        <h2 class="doc-section-heading">Coming from Android</h2>
+
+        <p>If you have already integrated the
+        <a href="/assets/docs/kestrel-android-quickstart.html">Android SDK</a>, these are the
+        differences that matter:</p>
+
+        <table class="doc-table">
+          <thead>
+            <tr><th>Concern</th><th>Android</th><th>iOS</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Dependency</td><td>Gradle</td><td>Swift Package Manager</td></tr>
+            <tr><td>Configuration</td><td><code>AndroidManifest.xml</code></td><td><code>Info.plist</code></td></tr>
+            <tr><td>Network access</td><td><code>INTERNET</code> permission required</td><td>Granted by default</td></tr>
+            <tr><td>Initialisation point</td><td><code>Application.onCreate()</code></td><td><code>didFinishLaunchingWithOptions</code></td></tr>
+            <tr><td>Callback style</td><td>Listener interface</td><td>Delegate protocol, held weakly</td></tr>
+            <tr><td>Main thread dispatch</td><td><code>Handler.post {}</code></td><td><code>DispatchQueue.main.async {}</code></td></tr>
+            <tr><td>Memory management</td><td>Garbage collected</td><td>Reference counted; cycles leak</td></tr>
+            <tr><td>Tracking consent</td><td>No prompt required</td><td>ATT prompt, once per install</td></tr>
+            <tr><td>Attribution</td><td>Google Play Install Referrer</td><td><code>SKAdNetworkItems</code></td></tr>
+          </tbody>
+        </table>
+
+        <p>
+          The reward-eligibility rule is identical on both platforms, and it is the one that
+          costs money when it is wrong.
+        </p>
+      </section>
+
+      <section class="doc-section" id="troubleshooting">
+        <h2 class="doc-section-heading">Troubleshooting</h2>
+
+        <table class="doc-table">
+          <thead>
+            <tr><th>Symptom</th><th>Likely cause</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>The tracking prompt never appears</td>
+              <td>Requested before the app reached <code>.active</code>, <code>NSUserTrackingUsageDescription</code> is missing, the user already answered, or you are on the simulator.</td>
+            </tr>
+            <tr>
+              <td>Package fails to resolve</td>
+              <td>Wrong URL, a version rule excluding all releases, or stale package state. Reset via File &rsaquo; Packages &rsaquo; Reset Package Caches.</td>
+            </tr>
+            <tr>
+              <td>The ad never becomes available</td>
+              <td>Wrong <code>KestrelAppID</code>, no network, or the delegate was deallocated before the callback arrived.</td>
+            </tr>
+            <tr>
+              <td>Crash or layout glitch after a callback</td>
+              <td>A view is being updated from the background queue. Dispatch to main.</td>
+            </tr>
+            <tr>
+              <td>The SDK initialises repeatedly</td>
+              <td>Initialisation is in <code>viewDidLoad()</code> or <code>.onAppear</code> rather than the app delegate.</td>
+            </tr>
+            <tr>
+              <td>The view controller is never deallocated</td>
+              <td>A retain cycle. Check for a strong delegate reference and for closures capturing <code>self</code> strongly.</td>
+            </tr>
+            <tr>
+              <td>Users get rewards after closing early</td>
+              <td>Reward logic is in <code>rewardedAdDidDismiss(_:)</code> instead of <code>rewardedAd(_:didEarnReward:)</code>.</td>
+            </tr>
+            <tr>
+              <td>Installs are unattributed</td>
+              <td><code>SKAdNetworkItems</code> is missing the Kestrel identifier.</td>
+            </tr>
+            <tr>
+              <td>No debug logs</td>
+              <td><code>setLogLevel(_:)</code> runs after <code>initialize()</code>.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="doc-section" id="writer-note">
+        <h2 class="doc-section-heading">Writer's note</h2>
+        <div class="doc-writer-note">
+          <p class="doc-writer-note-label">About this piece</p>
+          <p>
+            Kestrel does not exist. I wrote the Android and iOS quickstarts as a pair to work
+            through where the platforms genuinely diverge, rather than translating one into
+            the other and changing the syntax.
+          </p>
+          <p>
+            Two of the five warnings here have no Android equivalent. The retain cycle exists
+            because Swift counts references instead of collecting garbage, so a delegate held
+            strongly in both directions leaks in silence. And the tracking prompt discards a
+            request made before the app is active &mdash; no error, no log, and the user
+            cannot be asked again until they reinstall. Both are invisible failures, which is
+            why they are callouts rather than prose: the ones that crash get found, and the
+            ones that quietly do nothing do not.
+          </p>
+        </div>
+      </section>
+
+      <nav class="doc-nav-bottom">
+        <a href="/assets/docs/kestrel-android-quickstart.html">&larr; Android quickstart</a>
+        <a href="/portfolio.html">Back to portfolio &rarr;</a>
+      </nav>
+
+    </main>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Leslie Amadi &middot; <a href="mailto:lesliewrites.amadi@gmail.com">Contact</a></p>
+  </footer>
+
+</div>
+<script src="/assets/docs/doc.js"></script>
+<script>
+  const toggle = document.querySelector('.nav-toggle');
+  const menu   = document.querySelector('.nav-menu');
+  if (toggle) toggle.addEventListener('click', () => menu.classList.toggle('open'));
+</script>
+</body>
+</html>

@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kestrel SDK: Android Quickstart | Leslie Amadi</title>
+  <meta name="description" content="Android rewarded-ad SDK integration quickstart: Gradle setup, manifest configuration, Application-lifecycle initialisation, preloading, callback threading, bounded retries, and reward eligibility."/>
+  <meta property="og:title" content="Kestrel SDK: Android Quickstart | Leslie Amadi"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:image" content="https://leslieamadi.github.io/assets/images/profile-image.png"/>
+  <link rel="stylesheet" href="/assets/css/styles.css"/>
+</head>
+<body>
+<div class="page-shell">
+
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="/index.html" class="logo">
+        <span class="logo-badge">LA</span>
+        <span class="logo-text">Technical Writer<br>Leslie Amadi</span>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+      <div class="nav-menu">
+        <a href="/index.html">Home</a>
+        <a href="/portfolio.html" class="active">Portfolio</a>
+        <a href="/blog.html">Blog</a>
+        <a href="/about.html">About</a>
+        <a href="/leslie-amadi-cv.html">CV</a>
+        <a href="/contact.html" class="nav-cta">Let's Talk</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="doc-breadcrumb">
+    <a href="/portfolio.html">Portfolio</a> &rsaquo; Mobile SDK &amp; Developer Experience &rsaquo; Kestrel SDK Android Quickstart
+  </div>
+
+  <header class="doc-hero">
+    <p class="doc-hero-eyebrow">Quickstart &middot; Mobile SDK &middot; Android</p>
+    <h1>Kestrel SDK: Android Quickstart</h1>
+    <p class="doc-hero-desc">
+      Integrate a rewarded-advertising SDK into an Android application: add the dependency,
+      initialise once in the application lifecycle, preload an ad, handle callbacks that
+      arrive off the main thread, retry transient failures, and grant the reward only when
+      it has actually been earned.
+    </p>
+    <div class="doc-hero-tags">
+      <span class="doc-hero-tag">Kotlin</span>
+      <span class="doc-hero-tag">Android lifecycle</span>
+      <span class="doc-hero-tag">Gradle</span>
+      <span class="doc-hero-tag">Callback threading</span>
+      <span class="doc-hero-tag">Bounded retries</span>
+      <span class="doc-hero-tag">Reward eligibility</span>
+    </div>
+  </header>
+
+  <section class="doc-quick-ref">
+    <p class="doc-quick-ref-title">At a glance</p>
+    <div class="doc-quick-ref-row"><span class="doc-ctrl-label">Discipline</span><span>Developer Documentation &middot; Mobile SDK &middot; AdTech</span></div>
+    <div class="doc-quick-ref-row"><span class="doc-ctrl-label">Platform</span><span>Android, API 23 (Android 6.0) and above</span></div>
+    <div class="doc-quick-ref-row"><span class="doc-ctrl-label">Language</span><span><code>Kotlin 2.0.21</code></span></div>
+    <div class="doc-quick-ref-row"><span class="doc-ctrl-label">Integration</span><span>Rewarded advertising</span></div>
+    <div class="doc-quick-ref-row"><span class="doc-ctrl-label">My role</span><span>Senior Technical Writer &mdash; information architecture, code samples, failure handling</span></div>
+    <div class="doc-quick-ref-row"><span class="doc-ctrl-label">Doc type</span><span>Quickstart (tutorial)</span></div>
+    <div class="doc-quick-ref-row"><span class="doc-ctrl-label">Version</span><span>v1.0 &middot; original demonstration piece</span></div>
+    <div class="doc-quick-ref-row"><span class="doc-ctrl-label">Last reviewed</span><span>October 2026</span></div>
+  </section>
+
+  <div class="doc-layout">
+
+    <aside class="doc-sidebar">
+      <nav class="doc-toc">
+        <p class="doc-toc-title">On this page</p>
+        <a href="#requirements"><span class="doc-toc-dot"></span>Requirements</a>
+        <a href="#dependency"><span class="doc-toc-dot"></span>1. Add the dependency</a>
+        <a href="#manifest"><span class="doc-toc-dot"></span>2. Configure the manifest</a>
+        <a href="#initialise"><span class="doc-toc-dot"></span>3. Initialise the SDK</a>
+        <a href="#load-show"><span class="doc-toc-dot"></span>4. Load and show an ad</a>
+        <a href="#reward"><span class="doc-toc-dot"></span>5. Grant the reward</a>
+        <a href="#test"><span class="doc-toc-dot"></span>6. Test the integration</a>
+        <a href="#troubleshooting"><span class="doc-toc-dot"></span>Troubleshooting</a>
+        <a href="#writer-note"><span class="doc-toc-dot"></span>Writer's note</a>
+      </nav>
+    </aside>
+
+    <main class="doc-main">
+
+      <div class="doc-callout blue">
+        <strong>About this sample.</strong> Kestrel is a fictional advertising SDK written
+        for this documentation piece. The API is invented, but the integration patterns,
+        failure modes and warnings reflect how real rewarded-ad SDKs behave.
+      </div>
+
+      <section class="doc-section" id="requirements">
+        <h2 class="doc-section-heading">Requirements</h2>
+        <p>
+          This quickstart integrates Kestrel into an Android application: initialise the
+          SDK, preload a rewarded ad, display it on demand, and grant in-game currency
+          when the user earns a reward.
+        </p>
+        <p>Before you start, you need:</p>
+        <ul class="doc-list">
+          <li>Android Studio, and an Android application written in Kotlin.</li>
+          <li><code>minSdk 23</code> or higher.</li>
+          <li>A Kestrel application ID from the developer dashboard.</li>
+          <li>An emulator or physical device for testing.</li>
+        </ul>
+        <p>
+          The example uses Kotlin 2.0.21 with a compatible Android Gradle Plugin and Gradle
+          wrapper.
+        </p>
+      </section>
+
+      <section class="doc-section" id="dependency">
+        <h2 class="doc-section-heading">1. Add the dependency</h2>
+
+        <p>In the project-level <code>build.gradle.kts</code>, declare the plugins:</p>
+
+        <div class="doc-code">
+          <div class="doc-code-bar"><span class="doc-code-lang">build.gradle.kts (project)</span></div>
+          <pre><code>plugins {
+    id("com.android.application") version "8.7.3" apply false
+    id("org.jetbrains.kotlin.android") version "2.0.21" apply false
+}</code></pre>
+        </div>
+
+        <p>In the app module's <code>app/build.gradle.kts</code>, apply them and add Kestrel:</p>
+
+        <div class="doc-code">
+          <div class="doc-code-bar"><span class="doc-code-lang">app/build.gradle.kts</span></div>
+          <pre><code>plugins {
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+}
+
+android {
+    defaultConfig {
+        minSdk = 23
+    }
+}
+
+dependencies {
+    implementation("com.kestrel.ads:kestrel-ads:1.0.0")
+}</code></pre>
+        </div>
+
+        <p>Sync the project with Gradle to resolve the dependency.</p>
+
+        <div class="doc-callout green">
+          <strong>Expected result.</strong> The project recognises the Kestrel classes and
+          compiles against them.
+        </div>
+      </section>
+
+      <section class="doc-section" id="manifest">
+        <h2 class="doc-section-heading">2. Configure the manifest</h2>
+
+        <p>Open <code>app/src/main/AndroidManifest.xml</code>. Add the Internet permission
+        outside the <code>&lt;application&gt;</code> element, then declare your application
+        class and application ID:</p>
+
+        <div class="doc-code">
+          <div class="doc-code-bar"><span class="doc-code-lang">AndroidManifest.xml</span></div>
+          <pre><code>&lt;uses-permission android:name="android.permission.INTERNET" /&gt;
+
+&lt;application
+    android:name=".KestrelApplication"
+    android:label="@string/app_name"
+    android:theme="@style/Theme.MyApp"&gt;
+
+    &lt;meta-data
+        android:name="com.kestrel.ads.APP_ID"
+        android:value="YOUR_KESTREL_APP_ID" /&gt;
+
+    &lt;!-- Keep your existing activity declarations here. --&gt;
+
+&lt;/application&gt;</code></pre>
+        </div>
+
+        <p>Replace <code>YOUR_KESTREL_APP_ID</code> with the ID from your dashboard, and keep
+        your existing launcher activity.</p>
+
+        <div class="doc-callout red">
+          <strong>Do not embed server credentials.</strong> An application ID identifies your
+          app and is safe to ship. Private keys and server secrets are not: values compiled
+          into an APK can be extracted.
+        </div>
+      </section>
+
+      <section class="doc-section" id="initialise">
+        <h2 class="doc-section-heading">3. Initialise the SDK</h2>
+
+        <p>
+          Android does not run an app as a single program with a <code>main()</code>. The
+          operating system creates and destroys components. The <code>Application</code>
+          object is created once when the process starts. An <code>Activity</code> is one
+          screen, and Android destroys and recreates it routinely, for example on rotation.
+        </p>
+        <p>
+          Kestrel initialises once per process, so it belongs in
+          <code>Application.onCreate()</code>.
+        </p>
+
+        <div class="doc-code">
+          <div class="doc-code-bar"><span class="doc-code-lang">KestrelApplication.kt</span></div>
+          <pre><code>package com.example.myapp
+
+import android.app.Application
+import com.kestrel.ads.KestrelAds
+import com.kestrel.ads.LogLevel
+
+class KestrelApplication : Application() {
+
+    override fun onCreate() {
+        super.onCreate()
+
+        KestrelAds.setLogLevel(LogLevel.DEBUG)
+        KestrelAds.initialize(this)
+    }
+}</code></pre>
+        </div>
+
+        <p>
+          Set the log level <em>before</em> initialising, or initialisation itself produces no
+          output. Disable debug logging in production builds.
+        </p>
+
+        <div class="doc-callout red">
+          <strong>Warning 1 &mdash; initialise once.</strong> Do not initialise Kestrel in
+          <code>Activity.onCreate()</code>. Android recreates activities on configuration
+          changes, so the SDK would initialise again on every rotation, registering duplicate
+          listeners and repeating process-level setup.
+        </div>
+      </section>
+
+      <section class="doc-section" id="load-show">
+        <h2 class="doc-section-heading">4. Load and show a rewarded ad</h2>
+
+        <p>Preload the ad when the screen opens so the user never waits for a network request
+        after tapping. The flow is:</p>
+
+        <ol class="doc-list">
+          <li>Create a <code>KestrelRewardedAd</code> and register a listener.</li>
+          <li>Request the ad. Keep the button disabled while it loads.</li>
+          <li>Enable the button on <code>onAdLoaded()</code>.</li>
+          <li>Show the preloaded ad when the user taps.</li>
+          <li>Grant the reward from <code>onUserEarnedReward()</code>, never from <code>onAdClosed()</code>.</li>
+          <li>Load the next ad after closure.</li>
+          <li>Retry transient load failures with bounded exponential backoff.</li>
+        </ol>
+
+        <p>
+          Kestrel delivers callbacks on a background thread, so every UI update is posted to
+          the main thread.
+        </p>
+
+        <div class="doc-code">
+          <div class="doc-code-bar"><span class="doc-code-lang">MainActivity.kt</span></div>
+          <pre><code>package com.example.myapp
+
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import com.kestrel.ads.KestrelRewardedAd
+import com.kestrel.ads.RewardedAdListener
+
+class MainActivity : AppCompatActivity() {
+
+    private val mainHandler = Handler(Looper.getMainLooper())
+
+    private lateinit var coinBalance: TextView
+    private lateinit var watchAdButton: Button
+    private lateinit var retryButton: Button
+
+    private var coins = 0
+    private var rewardedAd: KestrelRewardedAd? = null
+    private var adReady = false
+
+    private var retryCount = 0
+    private var retryPending = false
+    private val maxRetries = 3
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        coinBalance = findViewById(R.id.coinBalance)
+        watchAdButton = findViewById(R.id.watchAdButton)
+        retryButton = findViewById(R.id.retryButton)
+
+        watchAdButton.isEnabled = false
+        retryButton.visibility = Button.GONE
+
+        watchAdButton.setOnClickListener { showRewardedAd() }
+        retryButton.setOnClickListener {
+            retryCount = 0
+            retryButton.visibility = Button.GONE
+            loadRewardedAd()
+        }
+
+        updateCoinBalance()
+        loadRewardedAd()
+    }
+
+    private fun loadRewardedAd() {
+        adReady = false
+        watchAdButton.isEnabled = false
+
+        val ad = KestrelRewardedAd()
+        rewardedAd = ad
+
+        ad.setListener(object : RewardedAdListener {
+
+            override fun onAdLoaded() {
+                mainHandler.post {
+                    if (rewardedAd === ad) {
+                        retryCount = 0
+                        adReady = true
+                        watchAdButton.isEnabled = true
+                        retryButton.visibility = Button.GONE
+                    }
+                }
+            }
+
+            override fun onUserEarnedReward(rewardAmount: Int) {
+                mainHandler.post {
+                    coins += rewardAmount
+                    updateCoinBalance()
+                }
+            }
+
+            override fun onAdClosed() {
+                mainHandler.post {
+                    if (rewardedAd === ad) {
+                        rewardedAd = null
+                        adReady = false
+                        loadRewardedAd()
+                    }
+                }
+            }
+
+            override fun onAdFailedToLoad(error: String) {
+                mainHandler.post {
+                    if (rewardedAd === ad) {
+                        rewardedAd = null
+                        adReady = false
+                        watchAdButton.isEnabled = false
+                        scheduleRetry()
+                    }
+                }
+            }
+        })
+
+        ad.load()
+    }
+
+    private fun scheduleRetry() {
+        if (retryPending) return
+
+        if (retryCount >= maxRetries) {
+            retryButton.visibility = Button.VISIBLE
+            return
+        }
+
+        val delayMs = 2_000L * (1L shl retryCount)
+        retryCount++
+        retryPending = true
+
+        mainHandler.postDelayed({
+            retryPending = false
+            loadRewardedAd()
+        }, delayMs)
+    }
+
+    private fun showRewardedAd() {
+        val ad = rewardedAd
+        if (!adReady || ad == null) return
+
+        adReady = false
+        watchAdButton.isEnabled = false
+        ad.show(this)
+    }
+
+    private fun updateCoinBalance() {
+        coinBalance.text = "Coins: $coins"
+    }
+
+    override fun onDestroy() {
+        mainHandler.removeCallbacksAndMessages(null)
+        rewardedAd = null
+        super.onDestroy()
+    }
+}</code></pre>
+        </div>
+
+        <p>
+          Three details in that listing are worth noticing. The
+          <code>rewardedAd === ad</code> check means a late callback from a discarded instance
+          cannot change the current state. Retries back off at two, four and eight seconds and
+          stop after three attempts, revealing a manual retry button rather than leaving the
+          user with a dead control. And <code>onDestroy()</code> clears pending callbacks so a
+          scheduled retry cannot fire into a destroyed activity.
+        </p>
+
+        <div class="doc-callout red">
+          <strong>Warning 2 &mdash; respect callback threading.</strong> Android UI elements
+          may only be touched on the main thread. Kestrel's callbacks arrive on a background
+          thread, so every UI update goes through <code>mainHandler.post()</code>. Touching a
+          view directly from a callback throws
+          <code>CalledFromWrongThreadException</code>.
+        </div>
+      </section>
+
+      <section class="doc-section" id="reward">
+        <h2 class="doc-section-heading">5. Grant the reward</h2>
+
+        <p>Kestrel reports two separate events, and the difference between them matters
+        commercially:</p>
+
+        <table class="doc-table">
+          <thead>
+            <tr><th>Callback</th><th>Fires when</th><th>Grant the reward?</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>onUserEarnedReward()</code></td><td>The user completed the eligible interaction.</td><td>Yes</td></tr>
+            <tr><td><code>onAdClosed()</code></td><td>The ad closed, whether completed or skipped.</td><td>No</td></tr>
+          </tbody>
+        </table>
+
+        <div class="doc-callout red">
+          <strong>Warning 3 &mdash; never grant on ad closure.</strong>
+          <code>onAdClosed()</code> fires whether the user watched the ad or quit after two
+          seconds. Granting coins there teaches users to open an ad and immediately close it:
+          the publisher pays out rewards nobody earned, and the advertiser is billed for
+          impressions nobody saw.
+        </div>
+
+        <p>
+          The <code>coins</code> variable in the sample lives in memory on the device. A
+          production rewards system should hold the authoritative balance on a trusted
+          backend, verify the reward event server side where supported, and make reward
+          processing idempotent so the same event cannot credit an account twice.
+        </p>
+      </section>
+
+      <section class="doc-section" id="test">
+        <h2 class="doc-section-heading">6. Test the integration</h2>
+
+        <p>Run on an emulator or device using Kestrel's test mode and test ad units.</p>
+
+        <table class="doc-table">
+          <thead>
+            <tr><th>Scenario</th><th>Expected result</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Application starts</td><td>Kestrel initialises once; debug logs appear.</td></tr>
+            <tr><td>Ad is loading</td><td>Watch Ad stays disabled.</td></tr>
+            <tr><td>Ad loads</td><td>Watch Ad becomes available.</td></tr>
+            <tr><td>User taps Watch Ad</td><td>The preloaded ad displays with no wait.</td></tr>
+            <tr><td>User completes the ad</td><td>Coin balance increases by the reported amount.</td></tr>
+            <tr><td>User closes early</td><td>No reward is granted.</td></tr>
+            <tr><td>Load fails once</td><td>A retry is scheduled after two seconds.</td></tr>
+            <tr><td>Load fails four times</td><td>Automatic retries stop; the manual retry button appears.</td></tr>
+            <tr><td>Device rotates</td><td>The activity is recreated without reinitialising the SDK.</td></tr>
+            <tr><td>Activity is destroyed mid-retry</td><td>No pending callback fires into the destroyed activity.</td></tr>
+          </tbody>
+        </table>
+
+        <p>
+          Test the early-close case deliberately. An integration that grants rewards on
+          closure looks identical to a correct one until someone notices the payout figures.
+        </p>
+
+        <p>
+          Watch Logcat for initialisation messages, load failures and callback events. Do not
+          log credentials or user data.
+        </p>
+      </section>
+
+      <section class="doc-section" id="troubleshooting">
+        <h2 class="doc-section-heading">Troubleshooting</h2>
+
+        <table class="doc-table">
+          <thead>
+            <tr><th>Symptom</th><th>Likely cause</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Gradle cannot resolve the dependency</td>
+              <td>Wrong coordinates, missing repository, or an incompatible Kotlin plugin, AGP and Gradle wrapper combination.</td>
+            </tr>
+            <tr>
+              <td>The ad never becomes available</td>
+              <td>Wrong application ID, no network, or the load callback is not reaching the listener.</td>
+            </tr>
+            <tr>
+              <td><code>CalledFromWrongThreadException</code></td>
+              <td>A view is being updated directly from a background callback. Post to the main thread.</td>
+            </tr>
+            <tr>
+              <td>The SDK initialises repeatedly</td>
+              <td>Initialisation is in an activity rather than <code>Application.onCreate()</code>.</td>
+            </tr>
+            <tr>
+              <td>Users get rewards after closing early</td>
+              <td>Reward logic is in <code>onAdClosed()</code> instead of <code>onUserEarnedReward()</code>.</td>
+            </tr>
+            <tr>
+              <td>No debug logs</td>
+              <td><code>setLogLevel()</code> runs after <code>initialize()</code>, or Logcat is filtered to another process.</td>
+            </tr>
+            <tr>
+              <td>Crash after leaving the screen</td>
+              <td>A pending retry fired into a destroyed activity. Clear callbacks in <code>onDestroy()</code>.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="doc-section" id="writer-note">
+        <h2 class="doc-section-heading">Writer's note</h2>
+        <div class="doc-writer-note">
+          <p class="doc-writer-note-label">About this piece</p>
+          <p>
+            Kestrel does not exist. I wrote this to work through how mobile SDK documentation
+            differs from the server-to-server REST documentation I have written
+            professionally: initialisation is tied to an operating-system lifecycle rather
+            than to a request, callbacks arrive on threads the developer did not choose, and
+            platform configuration lives in files outside the code.
+          </p>
+          <p>
+            The three warnings are the ones I would expect a real integration to get wrong.
+            Initialising in an activity is invisible until something breaks under rotation.
+            Touching a view from a background callback crashes immediately but only on the
+            path that is hardest to test. Granting a reward on ad closure never crashes at
+            all: it just quietly costs money, which is why it is the one in a red callout
+            rather than a footnote.
+          </p>
+        </div>
+      </section>
+
+      <nav class="doc-nav-bottom">
+        <a href="/portfolio.html">&larr; Back to portfolio</a>
+        <a href="/assets/docs/helix-play-api.html">Helix Play API reference &rarr;</a>
+      </nav>
+
+    </main>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Leslie Amadi &middot; <a href="mailto:lesliewrites.amadi@gmail.com">Contact</a></p>
+  </footer>
+
+</div>
+<script src="/assets/docs/doc.js"></script>
+<script>
+  const toggle = document.querySelector('.nav-toggle');
+  const menu   = document.querySelector('.nav-menu');
+  if (toggle) toggle.addEventListener('click', () => menu.classList.toggle('open'));
+</script>
+</body>
+</html>
