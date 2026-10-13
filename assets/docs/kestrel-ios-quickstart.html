@@ -48,7 +48,7 @@
       <span class="doc-hero-tag">Swift</span>
       <span class="doc-hero-tag">Swift Package Manager</span>
       <span class="doc-hero-tag">App lifecycle</span>
-      <span class="doc-hero-tag">Delegates retain cycles</span>
+      <span class="doc-hero-tag">Delegates &amp; retain cycles</span>
       <span class="doc-hero-tag">App Tracking Transparency</span>
       <span class="doc-hero-tag">Reward eligibility</span>
     </div>
@@ -68,24 +68,6 @@
   </section>
 
   <div class="doc-layout">
-
-    <aside class="doc-sidebar">
-      <nav class="doc-toc">
-        <p class="doc-toc-title">On this page</p>
-        <a href="#requirements"><span class="doc-toc-dot"></span>Requirements</a>
-        <a href="#package"><span class="doc-toc-dot"></span>1. Add the package</a>
-        <a href="#plist"><span class="doc-toc-dot"></span>2. Configure Info.plist</a>
-        <a href="#initialise"><span class="doc-toc-dot"></span>3. Initialise at launch</a>
-        <a href="#att"><span class="doc-toc-dot"></span>4. Request tracking authorisation</a>
-        <a href="#load-show"><span class="doc-toc-dot"></span>5. Load and show an ad</a>
-        <a href="#reward"><span class="doc-toc-dot"></span>6. Grant the reward</a>
-        <a href="#test"><span class="doc-toc-dot"></span>7. Test the integration</a>
-        <a href="#android"><span class="doc-toc-dot"></span>Coming from Android</a>
-        <a href="#troubleshooting"><span class="doc-toc-dot"></span>Troubleshooting</a>
-        <a href="#writer-note"><span class="doc-toc-dot"></span>Writer's note</a>
-      </nav>
-    </aside>
-
     <main class="doc-main">
 
       <div class="doc-callout blue">
@@ -125,7 +107,7 @@
 
         <div class="doc-code">
           <div class="doc-code-bar"><span class="doc-code-lang">Package URL</span></div>
-          <pre><code>https://github.com/kestrel-ads/kestrel-ios</code></pre>
+          <pre>https://github.com/kestrel-ads/kestrel-ios</pre>
         </div>
 
         <p>Set the dependency rule to <strong>Up to Next Major Version</strong> from
@@ -135,7 +117,7 @@
 
         <div class="doc-code">
           <div class="doc-code-bar"><span class="doc-code-lang">Package.swift</span></div>
-          <pre><code>dependencies: [
+          <pre>dependencies: [
     .package(
         url: "https://github.com/kestrel-ads/kestrel-ios",
         from: "1.0.0"
@@ -148,7 +130,7 @@ targets: [
             .product(name: "KestrelAds", package: "kestrel-ios")
         ]
     )
-]</code></pre>
+]</pre>
         </div>
 
         <div class="doc-callout green">
@@ -164,7 +146,7 @@ targets: [
 
         <div class="doc-code">
           <div class="doc-code-bar"><span class="doc-code-lang">Info.plist</span></div>
-          <pre><code>&lt;key&gt;KestrelAppID&lt;/key&gt;
+          <pre>&lt;key&gt;KestrelAppID&lt;/key&gt;
 &lt;string&gt;YOUR_KESTREL_APP_ID&lt;/string&gt;
 
 &lt;key&gt;NSUserTrackingUsageDescription&lt;/key&gt;
@@ -176,7 +158,7 @@ targets: [
         &lt;key&gt;SKAdNetworkIdentifier&lt;/key&gt;
         &lt;string&gt;kestrel1a2b.skadnetwork&lt;/string&gt;
     &lt;/dict&gt;
-&lt;/array&gt;</code></pre>
+&lt;/array&gt;</pre>
         </div>
 
         <table class="doc-table">
@@ -219,7 +201,7 @@ targets: [
 
         <div class="doc-code">
           <div class="doc-code-bar"><span class="doc-code-lang">MyApp.swift (SwiftUI)</span></div>
-          <pre><code>import SwiftUI
+          <pre>import SwiftUI
 import KestrelAds
 
 @main
@@ -246,14 +228,14 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
 
         return true
     }
-}</code></pre>
+}</pre>
         </div>
 
         <p><strong>UIKit</strong> apps already have one:</p>
 
         <div class="doc-code">
           <div class="doc-code-bar"><span class="doc-code-lang">AppDelegate.swift (UIKit)</span></div>
-          <pre><code>import UIKit
+          <pre>import UIKit
 import KestrelAds
 
 @main
@@ -270,7 +252,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
         return true
     }
-}</code></pre>
+}</pre>
         </div>
 
         <p>
@@ -297,7 +279,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
         <div class="doc-code">
           <div class="doc-code-bar"><span class="doc-code-lang">TrackingAuthorization.swift</span></div>
-          <pre><code>import AppTrackingTransparency
+          <pre>import AppTrackingTransparency
 import KestrelAds
 
 enum TrackingAuthorization {
@@ -311,14 +293,14 @@ enum TrackingAuthorization {
             KestrelAds.setTrackingAuthorizationStatus(status)
         }
     }
-}</code></pre>
+}</pre>
         </div>
 
         <p>Call it once the app is genuinely active, not during launch:</p>
 
         <div class="doc-code">
           <div class="doc-code-bar"><span class="doc-code-lang">ContentView.swift</span></div>
-          <pre><code>import SwiftUI
+          <pre>import SwiftUI
 
 struct ContentView: View {
     @Environment(\.scenePhase) private var scenePhase
@@ -332,7 +314,7 @@ struct ContentView: View {
                 TrackingAuthorization.request()
             }
     }
-}</code></pre>
+}</pre>
         </div>
 
         <div class="doc-callout red">
@@ -374,7 +356,7 @@ struct ContentView: View {
 
         <div class="doc-code">
           <div class="doc-code-bar"><span class="doc-code-lang">RewardedAdViewController.swift</span></div>
-          <pre><code>import UIKit
+          <pre>import UIKit
 import KestrelAds
 
 final class RewardedAdViewController: UIViewController {
@@ -502,7 +484,7 @@ extension RewardedAdViewController: KestrelRewardedAdDelegate {
             self.scheduleRetry()
         }
     }
-}</code></pre>
+}</pre>
         </div>
 
         <p>
@@ -710,6 +692,23 @@ extension RewardedAdViewController: KestrelRewardedAdDelegate {
       </nav>
 
     </main>
+
+    <aside class="doc-sidebar">
+      <nav class="doc-toc">
+        <p class="doc-toc-title">On this page</p>
+        <a href="#requirements"><span class="doc-toc-dot"></span>Requirements</a>
+        <a href="#package"><span class="doc-toc-dot"></span>1. Add the package</a>
+        <a href="#plist"><span class="doc-toc-dot"></span>2. Configure Info.plist</a>
+        <a href="#initialise"><span class="doc-toc-dot"></span>3. Initialise at launch</a>
+        <a href="#att"><span class="doc-toc-dot"></span>4. Request tracking authorisation</a>
+        <a href="#load-show"><span class="doc-toc-dot"></span>5. Load and show an ad</a>
+        <a href="#reward"><span class="doc-toc-dot"></span>6. Grant the reward</a>
+        <a href="#test"><span class="doc-toc-dot"></span>7. Test the integration</a>
+        <a href="#android"><span class="doc-toc-dot"></span>Coming from Android</a>
+        <a href="#troubleshooting"><span class="doc-toc-dot"></span>Troubleshooting</a>
+        <a href="#writer-note"><span class="doc-toc-dot"></span>Writer's note</a>
+      </nav>
+    </aside>
   </div>
 
   <footer>

@@ -67,22 +67,6 @@
   </section>
 
   <div class="doc-layout">
-
-    <aside class="doc-sidebar">
-      <nav class="doc-toc">
-        <p class="doc-toc-title">On this page</p>
-        <a href="#requirements"><span class="doc-toc-dot"></span>Requirements</a>
-        <a href="#dependency"><span class="doc-toc-dot"></span>1. Add the dependency</a>
-        <a href="#manifest"><span class="doc-toc-dot"></span>2. Configure the manifest</a>
-        <a href="#initialise"><span class="doc-toc-dot"></span>3. Initialise the SDK</a>
-        <a href="#load-show"><span class="doc-toc-dot"></span>4. Load and show an ad</a>
-        <a href="#reward"><span class="doc-toc-dot"></span>5. Grant the reward</a>
-        <a href="#test"><span class="doc-toc-dot"></span>6. Test the integration</a>
-        <a href="#troubleshooting"><span class="doc-toc-dot"></span>Troubleshooting</a>
-        <a href="#writer-note"><span class="doc-toc-dot"></span>Writer's note</a>
-      </nav>
-    </aside>
-
     <main class="doc-main">
 
       <div class="doc-callout blue">
@@ -118,17 +102,17 @@
 
         <div class="doc-code">
           <div class="doc-code-bar"><span class="doc-code-lang">build.gradle.kts (project)</span></div>
-          <pre><code>plugins {
+          <pre>plugins {
     id("com.android.application") version "8.7.3" apply false
     id("org.jetbrains.kotlin.android") version "2.0.21" apply false
-}</code></pre>
+}</pre>
         </div>
 
         <p>In the app module's <code>app/build.gradle.kts</code>, apply them and add Kestrel:</p>
 
         <div class="doc-code">
           <div class="doc-code-bar"><span class="doc-code-lang">app/build.gradle.kts</span></div>
-          <pre><code>plugins {
+          <pre>plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 }
@@ -141,7 +125,7 @@ android {
 
 dependencies {
     implementation("com.kestrel.ads:kestrel-ads:1.0.0")
-}</code></pre>
+}</pre>
         </div>
 
         <p>Sync the project with Gradle to resolve the dependency.</p>
@@ -161,7 +145,7 @@ dependencies {
 
         <div class="doc-code">
           <div class="doc-code-bar"><span class="doc-code-lang">AndroidManifest.xml</span></div>
-          <pre><code>&lt;uses-permission android:name="android.permission.INTERNET" /&gt;
+          <pre>&lt;uses-permission android:name="android.permission.INTERNET" /&gt;
 
 &lt;application
     android:name=".KestrelApplication"
@@ -174,7 +158,7 @@ dependencies {
 
     &lt;!-- Keep your existing activity declarations here. --&gt;
 
-&lt;/application&gt;</code></pre>
+&lt;/application&gt;</pre>
         </div>
 
         <p>Replace <code>YOUR_KESTREL_APP_ID</code> with the ID from your dashboard, and keep
@@ -203,7 +187,7 @@ dependencies {
 
         <div class="doc-code">
           <div class="doc-code-bar"><span class="doc-code-lang">KestrelApplication.kt</span></div>
-          <pre><code>package com.example.myapp
+          <pre>package com.example.myapp
 
 import android.app.Application
 import com.kestrel.ads.KestrelAds
@@ -217,7 +201,7 @@ class KestrelApplication : Application() {
         KestrelAds.setLogLevel(LogLevel.DEBUG)
         KestrelAds.initialize(this)
     }
-}</code></pre>
+}</pre>
         </div>
 
         <p>
@@ -256,7 +240,7 @@ class KestrelApplication : Application() {
 
         <div class="doc-code">
           <div class="doc-code-bar"><span class="doc-code-lang">MainActivity.kt</span></div>
-          <pre><code>package com.example.myapp
+          <pre>package com.example.myapp
 
 import android.os.Bundle
 import android.os.Handler
@@ -393,7 +377,7 @@ class MainActivity : AppCompatActivity() {
         rewardedAd = null
         super.onDestroy()
     }
-}</code></pre>
+}</pre>
         </div>
 
         <p>
@@ -548,6 +532,21 @@ class MainActivity : AppCompatActivity() {
       </nav>
 
     </main>
+
+    <aside class="doc-sidebar">
+      <nav class="doc-toc">
+        <p class="doc-toc-title">On this page</p>
+        <a href="#requirements"><span class="doc-toc-dot"></span>Requirements</a>
+        <a href="#dependency"><span class="doc-toc-dot"></span>1. Add the dependency</a>
+        <a href="#manifest"><span class="doc-toc-dot"></span>2. Configure the manifest</a>
+        <a href="#initialise"><span class="doc-toc-dot"></span>3. Initialise the SDK</a>
+        <a href="#load-show"><span class="doc-toc-dot"></span>4. Load and show an ad</a>
+        <a href="#reward"><span class="doc-toc-dot"></span>5. Grant the reward</a>
+        <a href="#test"><span class="doc-toc-dot"></span>6. Test the integration</a>
+        <a href="#troubleshooting"><span class="doc-toc-dot"></span>Troubleshooting</a>
+        <a href="#writer-note"><span class="doc-toc-dot"></span>Writer's note</a>
+      </nav>
+    </aside>
   </div>
 
   <footer>
